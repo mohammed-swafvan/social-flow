@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "79279217626",
+    "project_id": "social-flow-clone",
+    "storage_bucket": "social-flow-clone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79279217626:android:83de0c530dc700b175bee3",
+        "android_client_info": {
+          "package_name": "com.example.social_flow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79279217626-oie6dkh29b6kim4easfpnl7bn38pn9u4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxEUrCAlwAbZqwlDTYuzVfF_0JViqMmm8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "79279217626-oie6dkh29b6kim4easfpnl7bn38pn9u4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "79279217626-lg72d9grlrr67eam80ob6htghdfkmurg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.socialFlow"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
