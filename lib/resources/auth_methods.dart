@@ -1,13 +1,20 @@
 import 'dart:developer';
 import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:social_flow/models/user_model.dart';
 import 'package:social_flow/resources/storage_method.dart';
 
 class AuthMethods {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  Future<UserModel> getUserDetails() async {
+    User currentUser = auth.currentUser!;
+
+    DocumentSnapshot snapShot = await firestore.collection('users').doc(currentUser.uid).get();
+    return UserModel.fromSnapShot(snapShot);
+  }
 
 ///////////////// signup user //////////////////////
 
@@ -30,6 +37,7 @@ class AuthMethods {
         res = "Please enter your bio";
       }
 
+      // ignore: unnecessary_null_comparison
       if (email.isNotEmpty || username.isNotEmpty || password.isNotEmpty || bio.isNotEmpty || file != null) {
         // register user
         final UserCredential cred = await auth.createUserWithEmailAndPassword(email: email, password: password);
@@ -39,15 +47,18 @@ class AuthMethods {
         String photoUrl = await StorageMethods().uploadImageToStorage('ProfilePic', file, false);
 
         // add user to our database
-        await firestore.collection("users").doc(cred.user!.uid).set({
-          'username': username,
-          'uid': cred.user!.uid,
-          'email': email,
-          'bio': bio,
-          'followers': [],
-          'following': [],
-          'photoUrl': photoUrl,
-        });
+
+        UserModel userModel = UserModel(
+          email: email,
+          uid: cred.user!.uid,
+          photoUrl: photoUrl,
+          username: username,
+          bio: bio,
+          followers: [],
+          following: [],
+        );
+
+        await firestore.collection("users").doc(cred.user!.uid).set(userModel.toJson());
 
         res = "success";
       }
@@ -83,7 +94,7 @@ class AuthMethods {
       if (email.isNotEmpty && password.isNotEmpty) {
         await auth.signInWithEmailAndPassword(email: email, password: password);
         res = "success";
-      } 
+      }
     } on FirebaseAuthException catch (error) {
       if (error.code == 'user-not-found') {
         res = "This user doesn't exist";

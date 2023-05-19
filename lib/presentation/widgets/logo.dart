@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:social_flow/utils/colors.dart';
+import 'package:social_flow/presentation/utils/colors.dart';
 
-class Logo extends StatelessWidget {
-  const Logo({super.key, required this.radius});
+class SocilaFlowLogo extends StatelessWidget {
+  const SocilaFlowLogo({super.key, required this.radius});
 
   final double radius;
 

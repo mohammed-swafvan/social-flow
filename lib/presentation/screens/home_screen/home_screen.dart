@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:social_flow/utils/colors.dart';
+import 'package:social_flow/presentation/utils/colors.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

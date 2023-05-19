@@ -2,13 +2,17 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:social_flow/presentation/screens/login_screen/login_screen.dart';
 import 'package:social_flow/presentation/widgets/circular_progress.dart';
 import 'package:social_flow/presentation/widgets/text.dart';
 import 'package:social_flow/presentation/widgets/text_field_input.dart';
 import 'package:social_flow/resources/auth_methods.dart';
-import 'package:social_flow/utils/colors.dart';
-import 'package:social_flow/utils/utils.dart';
-import 'package:social_flow/utils/dimensions.dart';
+import 'package:social_flow/responsive/mobile_screen_layout.dart';
+import 'package:social_flow/responsive/responsive_layout_screen.dart';
+import 'package:social_flow/responsive/web_screen_layout.dart';
+import 'package:social_flow/presentation/utils/colors.dart';
+import 'package:social_flow/presentation/utils/utils.dart';
+import 'package:social_flow/presentation/utils/global_variables.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -132,7 +136,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       child: isLoading
                           ? const CircularProgressWidget()
-                          : TextWidget(
+                          : CustomTextWidget(
                               name: "Sign up",
                               size: 18,
                               fontWeight: FontWeight.w500,
@@ -152,18 +156,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: const Text(
-                        "Don't have an account?",
+                        "Do you have an account?",
                         style: TextStyle(
                           color: Colors.white,
                         ),
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+                      },
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         child: const Text(
-                          "Sign up",
+                          "Log in",
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -206,7 +212,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
 
     if (res != "success") {
+      // ignore: use_build_context_synchronously
       showSnackbar(res, context);
+    }else{
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
     }
   }
 }

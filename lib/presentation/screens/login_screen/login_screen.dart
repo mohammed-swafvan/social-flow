@@ -1,14 +1,17 @@
+
 import 'package:flutter/material.dart';
-import 'package:social_flow/presentation/home_screen/home_screen.dart';
-import 'package:social_flow/presentation/sign_up_screen/sign_up_screen.dart';
+import 'package:social_flow/presentation/screens/sign_up_screen/sign_up_screen.dart';
 import 'package:social_flow/presentation/widgets/circular_progress.dart';
 import 'package:social_flow/presentation/widgets/logo.dart';
 import 'package:social_flow/presentation/widgets/text.dart';
 import 'package:social_flow/presentation/widgets/text_field_input.dart';
 import 'package:social_flow/resources/auth_methods.dart';
-import 'package:social_flow/utils/colors.dart';
-import 'package:social_flow/utils/utils.dart';
-import 'package:social_flow/utils/dimensions.dart';
+import 'package:social_flow/responsive/mobile_screen_layout.dart';
+import 'package:social_flow/responsive/responsive_layout_screen.dart';
+import 'package:social_flow/responsive/web_screen_layout.dart';
+import 'package:social_flow/presentation/utils/colors.dart';
+import 'package:social_flow/presentation/utils/utils.dart';
+import 'package:social_flow/presentation/utils/global_variables.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -43,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 flex: 1,
                 child: Container(),
               ),
-              const Logo(radius: 80),
+              const SocilaFlowLogo(radius: 80),
               kSizedBox30,
               kSizedBox30,
               TextFieldWidget(
@@ -79,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     child: isLoading
                         ? const CircularProgressWidget()
-                        : TextWidget(
+                        : CustomTextWidget(
                             name: "Log in",
                             size: 18,
                             fontWeight: FontWeight.w500,
@@ -139,8 +142,18 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     if (res == "success") {
-      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
     } else {
+      // ignore: use_build_context_synchronously
       showSnackbar(res, context);
     }
 
