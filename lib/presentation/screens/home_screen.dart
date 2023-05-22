@@ -1,0 +1,85 @@
+import 'package:flutter/material.dart';
+import 'package:social_flow/presentation/utils/colors.dart';
+import 'package:social_flow/presentation/widgets/logo.dart';
+import 'package:social_flow/presentation/widgets/text.dart';
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: const MyAppBar(),
+        body: Center(
+          child: Text(
+            "home",
+            style: TextStyle(color: kWhiteColor),
+          ),
+        )
+        // StreamBuilder(
+        //   stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+        //   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapShot) {
+        //     if (snapShot.connectionState == ConnectionState.waiting) {
+        //       return const Center(
+        //         child: CircularProgressWidget(),
+        //       );
+        //     }
+
+        //     return ListView.builder(
+        //       itemCount: snapShot.data!.docs.length,
+        //       itemBuilder: (context, index) => PostCardWidget(
+        //         snap: snapShot.data!.docs[index].data(),
+        //       ),
+        //     );
+        //   },
+        // ),
+        );
+  }
+}
+
+class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const MyAppBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: AppBar(
+        leadingWidth: 45,
+        backgroundColor: kBackgroundColor,
+        leading: const SocilaFlowLogo(radius: 30),
+        title: Row(
+          children: [
+            CustomTextWidget(
+              name: "Social Flow",
+              size: 24,
+              fontWeight: FontWeight.bold,
+              textColor: kYellowColor,
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+            Icon(
+              Icons.arrow_drop_down,
+              color: kYellowColor,
+              size: 30,
+            ),
+          ],
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.messenger_outline,
+              color: kMainColor,
+              size: 28,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}

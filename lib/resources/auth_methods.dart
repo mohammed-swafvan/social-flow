@@ -16,6 +16,7 @@ class AuthMethods {
     return UserModel.fromSnapShot(snapShot);
   }
 
+
 ///////////////// signup user //////////////////////
 
   Future<String> singnUpUser({
@@ -68,7 +69,7 @@ class AuthMethods {
       } else if (error.code == 'weak-password') {
         res = "Password should be atleast 6 characters";
       }
-      if (error.code == 'eamil-already-in-use') {
+      if (error.code == 'email-already-in-use') {
         res = "This email is already exist";
       }
     } catch (err) {

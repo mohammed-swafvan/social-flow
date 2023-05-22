@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
+import 'package:social_flow/presentation/widgets/text.dart';
 
 pickImage(ImageSource source) async {
   final ImagePicker imagePicker = ImagePicker();
@@ -43,3 +44,21 @@ TextStyle customTextStyle(Color textColor, double size, FontWeight fontWeight) {
   );
 }
 
+Column customStatColumn(String number, String item) {
+  return Column(
+    children: [
+      CustomTextWidget(
+        name: number,
+        size: 18,
+        fontWeight: FontWeight.bold,
+        textColor: kWhiteColor,
+      ),
+      CustomTextWidget(
+        name: item,
+        size: 12,
+        fontWeight: FontWeight.w400,
+        textColor: kWhiteColor,
+      ),
+    ],
+  );
+}

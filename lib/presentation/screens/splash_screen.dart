@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:social_flow/presentation/screens/login_screen/login_screen.dart';
+import 'package:social_flow/presentation/screens/login_screen.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/global_variables.dart';
 import 'package:social_flow/presentation/widgets/circular_progress.dart';

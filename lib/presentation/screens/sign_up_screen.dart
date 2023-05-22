@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:social_flow/presentation/screens/login_screen/login_screen.dart';
+import 'package:social_flow/presentation/screens/login_screen.dart';
 import 'package:social_flow/presentation/widgets/circular_progress.dart';
 import 'package:social_flow/presentation/widgets/text.dart';
 import 'package:social_flow/presentation/widgets/text_field_input.dart';

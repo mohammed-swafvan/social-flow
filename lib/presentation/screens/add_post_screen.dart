@@ -7,6 +7,7 @@ import 'package:social_flow/models/user_model.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/global_variables.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
+import 'package:social_flow/presentation/widgets/circular_progress.dart';
 import 'package:social_flow/presentation/widgets/text.dart';
 import 'package:social_flow/providers/user_provider.dart';
 import 'package:social_flow/resources/firestore_methods.dart';
@@ -21,6 +22,7 @@ class AddPostScreen extends StatefulWidget {
 class _AddPostScreenState extends State<AddPostScreen> {
   Uint8List? file;
   TextEditingController decriptionController = TextEditingController();
+  bool isLoading = false;
 
   @override
   void dispose() {
@@ -31,6 +33,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   @override
   Widget build(BuildContext context) {
     final UserModel userDetails = Provider.of<UserProvider>(context).getUser;
+
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return file == null
@@ -48,7 +51,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
             appBar: AppBar(
               backgroundColor: kBackgroundColor,
               leading: IconButton(
-                onPressed: () {},
+                onPressed: clearImage,
                 icon: Icon(
                   Icons.arrow_back_ios_new,
                   color: kWhiteColor.withOpacity(0.7),
@@ -76,7 +79,11 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       height: screenHeight * 0.45,
                       width: screenWidth * 0.75,
                       decoration: BoxDecoration(
-                        image: DecorationImage(image: MemoryImage(file!), fit: BoxFit.cover, alignment: FractionalOffset.center),
+                        image: DecorationImage(
+                          image: MemoryImage(file!),
+                          fit: BoxFit.cover,
+                          alignment: FractionalOffset.center,
+                        ),
                       ),
                     )
                   ],
@@ -136,12 +143,14 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         ),
                         color: kMainColor,
                       ),
-                      child: CustomTextWidget(
-                        name: "Post",
-                        size: 18,
-                        fontWeight: FontWeight.w500,
-                        textColor: kWhiteColor,
-                      ),
+                      child: isLoading
+                          ? const CircularProgressWidget()
+                          : CustomTextWidget(
+                              name: "Post",
+                              size: 18,
+                              fontWeight: FontWeight.w500,
+                              textColor: kWhiteColor,
+                            ),
                     ),
                   ),
                 ),
@@ -214,6 +223,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
   }
 
   void postImage({required String uid, required String username, required String profImage}) async {
+    setState(() {
+      isLoading = true;
+    });
     try {
       String res = await FirestoreMethods().uploadPost(
         decriptionController.text,
@@ -224,14 +236,27 @@ class _AddPostScreenState extends State<AddPostScreen> {
       );
 
       if (res == "success") {
+        setState(() {
+          isLoading = false;
+        });
         // ignore: use_build_context_synchronously
         showSnackbar("Posted", context);
+        clearImage();
       } else {
+        setState(() {
+          isLoading = false;
+        });
         // ignore: use_build_context_synchronously
         showSnackbar(res, context);
       }
     } catch (error) {
       showSnackbar(error.toString(), context);
     }
+  }
+
+  clearImage() {
+    setState(() {
+      file = null;
+    });
   }
 }

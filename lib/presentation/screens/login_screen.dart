@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:social_flow/presentation/screens/sign_up_screen/sign_up_screen.dart';
+import 'package:social_flow/presentation/screens/sign_up_screen.dart';
 import 'package:social_flow/presentation/widgets/circular_progress.dart';
 import 'package:social_flow/presentation/widgets/logo.dart';
 import 'package:social_flow/presentation/widgets/text.dart';
