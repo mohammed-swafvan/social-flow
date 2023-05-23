@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/widgets/post_cart.dart';
@@ -7,7 +6,7 @@ import 'package:social_flow/presentation/widgets/text.dart';
 class SinglePostScreen extends StatelessWidget {
   const SinglePostScreen({super.key,required this.snap});
 
-  final  snap;
+  final snap;
 
   @override
   Widget build(BuildContext context) {

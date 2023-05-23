@@ -38,12 +38,20 @@ class _AddPostScreenState extends State<AddPostScreen> {
     var screenWidth = MediaQuery.of(context).size.width;
     return file == null
         ? Center(
-            child: IconButton(
-              onPressed: () => selectImage(context),
-              icon: Icon(
-                Icons.upload,
-                color: kYellowColor.withOpacity(0.6),
-                size: 40,
+            child: InkWell(
+              onTap: () => selectImage(context),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.add_circle_outline,
+                    color: kYellowColor.withOpacity(0.7),
+                    size: 40,
+                  ),
+                  kHeight10,
+                  CustomTextWidget(
+                      name: "  Add  Post", size: 18, fontWeight: FontWeight.w500, textColor: kYellowColor.withOpacity(0.7))
+                ],
               ),
             ),
           )
@@ -66,7 +74,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
             ),
             body: ListView(
               children: [
-                kSizedBox10,
+                kHeight10,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +96,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     )
                   ],
                 ),
-                kSizedBox20,
+                kHeight20,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Row(
@@ -121,8 +129,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     ],
                   ),
                 ),
-                kSizedBox30,
-                kSizedBox20,
+                kHeight30,
+                kHeight20,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: InkWell(
@@ -164,7 +172,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
       context: context,
       builder: (context) {
         return SimpleDialog(
-          backgroundColor: kWhiteColor.withOpacity(0.2),
+          backgroundColor: kSmallContextsColor,
           title: CustomTextWidget(
             name: "Create a post",
             size: 18,

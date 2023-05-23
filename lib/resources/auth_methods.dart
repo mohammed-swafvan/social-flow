@@ -68,8 +68,7 @@ class AuthMethods {
         res = "The email address is baddly formated";
       } else if (error.code == 'weak-password') {
         res = "Password should be atleast 6 characters";
-      }
-      if (error.code == 'email-already-in-use') {
+      } else if (error.code == 'email-already-in-use') {
         res = "This email is already exist";
       }
     } catch (err) {
@@ -86,9 +85,11 @@ class AuthMethods {
   }) async {
     String res = "Incorrect email or password";
     try {
-      if (email.isEmpty) {
-        res = "Enter your email";
-      } else if (password.isEmpty) {
+      if (email.isEmpty && password.isEmpty) {
+        res = "Enter your email and password";
+      } else if (email.isEmpty) {
+        res = "enter your email";
+      }else if (password.isEmpty) {
         res = "enter your password";
       }
 
@@ -101,6 +102,8 @@ class AuthMethods {
         res = "This user doesn't exist";
       } else if (error.code == 'invalid-email') {
         res = 'Enter your email properly';
+      }else if (error.code == 'invalid-password') {
+        res = 'Enter your password properly';
       }
     } catch (error) {
       res = error.toString();

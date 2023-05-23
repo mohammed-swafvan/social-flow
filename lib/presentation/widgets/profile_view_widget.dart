@@ -5,7 +5,7 @@ import 'package:social_flow/presentation/utils/utils.dart';
 class ProfileViewWidget extends StatelessWidget {
   const ProfileViewWidget({super.key, required this.userDetails, required this.postLength});
 
-  final userDetails;
+  final Map userDetails;
   final int postLength;
 
   @override

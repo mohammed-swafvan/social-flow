@@ -5,6 +5,22 @@ import 'package:image_picker/image_picker.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/widgets/text.dart';
 
+ThemeData themeData() {
+  return ThemeData(
+    primaryColor: kMainColor,
+    primarySwatch: Colors.purple,
+    scaffoldBackgroundColor: kBackgroundColor,
+    fontFamily: GoogleFonts.irishGrover().fontFamily,
+    textTheme: TextTheme(
+      bodyLarge: TextStyle(
+        color: kWhiteColor,
+      ),
+      bodySmall: TextStyle(color: kWhiteColor),
+      bodyMedium: TextStyle(color: kWhiteColor),
+    ),
+  );
+}
+
 pickImage(ImageSource source) async {
   final ImagePicker imagePicker = ImagePicker();
   XFile? file = await imagePicker.pickImage(source: source);

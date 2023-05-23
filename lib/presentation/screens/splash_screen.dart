@@ -34,9 +34,9 @@ class _SplashScreenState extends State<SplashScreen> {
             width: MediaQuery.of(context).size.width * 0.7,
             child: Column(
               children: [
-                kSizedBox10,
+                kHeight10,
                 const SocilaFlowLogo(radius: 110),
-                kSizedBox10,
+                kHeight10,
                 CustomTextWidget(
                   name: "Social Flow",
                   size: 28,

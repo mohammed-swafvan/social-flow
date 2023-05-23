@@ -47,15 +47,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Container(),
               ),
               const SocilaFlowLogo(radius: 80),
-              kSizedBox30,
-              kSizedBox30,
+              kHeight30,
+              kHeight30,
               TextFieldWidget(
                 textEdingController: emailController,
                 hintText: "enter your email",
                 labelText: "email",
                 textInputType: TextInputType.emailAddress,
               ),
-              kSizedBox15,
+              kHeight15,
               TextFieldWidget(
                 textEdingController: passwordController,
                 hintText: "enter your password",
@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 textInputType: TextInputType.text,
                 isPass: true,
               ),
-              kSizedBox30,
+              kHeight30,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: InkWell(
@@ -91,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              kSizedBox20,
+              kHeight20,
               Flexible(
                 flex: 1,
                 child: Container(),

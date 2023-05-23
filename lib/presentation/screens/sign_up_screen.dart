@@ -81,22 +81,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     )
                   ],
                 ),
-                kSizedBox30,
-                kSizedBox30,
+                kHeight30,
+                kHeight30,
                 TextFieldWidget(
                   textEdingController: usernameController,
                   hintText: "enter your username",
                   labelText: "username",
                   textInputType: TextInputType.text,
                 ),
-                kSizedBox15,
+                kHeight15,
                 TextFieldWidget(
                   textEdingController: emailController,
                   hintText: "enter your email",
                   labelText: "email",
                   textInputType: TextInputType.emailAddress,
                 ),
-                kSizedBox15,
+                kHeight15,
                 TextFieldWidget(
                   textEdingController: passwordController,
                   hintText: "enter your password",
@@ -104,14 +104,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   textInputType: TextInputType.text,
                   isPass: true,
                 ),
-                kSizedBox15,
+                kHeight15,
                 TextFieldWidget(
                   textEdingController: bioController,
                   hintText: "enter your bio",
                   labelText: "bio",
                   textInputType: TextInputType.text,
                 ),
-                kSizedBox30,
+                kHeight30,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: InkWell(
@@ -145,7 +145,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 ),
-                kSizedBox20,
+                kHeight20,
                 Flexible(
                   flex: 1,
                   child: Container(),
