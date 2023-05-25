@@ -50,7 +50,11 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   ),
                   kHeight10,
                   CustomTextWidget(
-                      name: "  Add  Post", size: 18, fontWeight: FontWeight.w500, textColor: kYellowColor.withOpacity(0.7))
+                    name: "Add Post",
+                    size: 18,
+                    fontWeight: FontWeight.bold,
+                    textColor: kYellowColor.withOpacity(0.8),
+                  )
                 ],
               ),
             ),

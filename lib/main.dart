@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/screens/splash_screen.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
+import 'package:social_flow/providers/google_button_provider.dart';
 import 'package:social_flow/providers/user_provider.dart';
 
 void main() async {
@@ -29,7 +30,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => UserProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => GoogleButtonProvider()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Social Flow',

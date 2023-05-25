@@ -12,7 +12,7 @@ class CustomTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       name,
-      style: GoogleFonts.irishGrover(
+      style: GoogleFonts.kalam(
         textStyle: TextStyle(
           color: textColor,
           fontSize: size,

@@ -62,15 +62,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 physics: const NeverScrollableScrollPhysics(),
                 headerSliverBuilder: (context, isScrolled) {
                   return [
-                    SliverAppBar(
-                      backgroundColor: kBackgroundColor,
-                      collapsedHeight: screenHeight * 0.24,
-                      expandedHeight: screenHeight * 0.24,
-                      flexibleSpace: ProfileViewWidget(
-                        userDetails: userData,
-                        postLength: postLength,
-                      ),
-                    ),
+                    userData['bio'] == ""
+                        ? SliverAppBar(
+                            backgroundColor: kBackgroundColor,
+                            collapsedHeight: screenHeight * 0.2,
+                            expandedHeight: screenHeight * 0.2,
+                            flexibleSpace: ProfileViewWidget(
+                              userDetails: userData,
+                              postLength: postLength,
+                            ),
+                          )
+                        : SliverAppBar(
+                            backgroundColor: kBackgroundColor,
+                            collapsedHeight: screenHeight * 0.24,
+                            expandedHeight: screenHeight * 0.24,
+                            flexibleSpace: ProfileViewWidget(
+                              userDetails: userData,
+                              postLength: postLength,
+                            ),
+                          ),
                     SliverPersistentHeader(
                       floating: true,
                       pinned: true,

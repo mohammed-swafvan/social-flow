@@ -36,7 +36,14 @@ class ProfileViewWidget extends StatelessWidget {
               text: userDetails['username'],
               style: TextStyle(color: kWhiteColor, fontWeight: FontWeight.bold),
             ),
-            TextSpan(
+            userDetails['bio'] == ""
+            ? TextSpan(
+              
+              text: '\n${userDetails['email']}',
+              style: TextStyle(color: kWhiteColor.withOpacity(0.8), fontWeight: FontWeight.w400),
+            )
+            : TextSpan(
+              
               text: '\n${userDetails['email']} \n${userDetails['bio']}',
               style: TextStyle(color: kWhiteColor.withOpacity(0.8), fontWeight: FontWeight.w400),
             ),

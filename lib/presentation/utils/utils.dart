@@ -10,7 +10,7 @@ ThemeData themeData() {
     primaryColor: kMainColor,
     primarySwatch: Colors.purple,
     scaffoldBackgroundColor: kBackgroundColor,
-    fontFamily: GoogleFonts.irishGrover().fontFamily,
+    fontFamily: GoogleFonts.kalam().fontFamily,
     textTheme: TextTheme(
       bodyLarge: TextStyle(
         color: kWhiteColor,
@@ -51,7 +51,7 @@ BottomNavigationBarItem bottomNavItems({required IconData navIcon, required int 
 }
 
 TextStyle customTextStyle(Color textColor, double size, FontWeight fontWeight) {
-  return GoogleFonts.irishGrover(
+  return GoogleFonts.kalam(
     textStyle: TextStyle(
       color: textColor,
       fontSize: size,
@@ -76,5 +76,16 @@ Column customStatColumn(String number, String item) {
         textColor: kWhiteColor,
       ),
     ],
+  );
+}
+
+Container customLine(screenWidth) {
+  return Container(
+    height: 2,
+    width: screenWidth * 0.38,
+    decoration: BoxDecoration(
+      borderRadius: const BorderRadius.all(Radius.circular(10)),
+      color: kMainColor,
+    ),
   );
 }

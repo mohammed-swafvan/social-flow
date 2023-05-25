@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:social_flow/presentation/screens/sign_up_screen.dart';
 import 'package:social_flow/presentation/widgets/circular_progress.dart';
+import 'package:social_flow/presentation/widgets/google_signin_button.dart';
 import 'package:social_flow/presentation/widgets/logo.dart';
 import 'package:social_flow/presentation/widgets/text.dart';
 import 'package:social_flow/presentation/widgets/text_field_input.dart';
@@ -48,7 +48,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SocilaFlowLogo(radius: 80),
               kHeight30,
-              kHeight30,
               TextFieldWidget(
                 textEdingController: emailController,
                 hintText: "enter your email",
@@ -63,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 textInputType: TextInputType.text,
                 isPass: true,
               ),
-              kHeight30,
+              kHeight20,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: InkWell(
@@ -91,7 +90,29 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              kHeight20,
+              kHeight30,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    customLine(screenWidth),
+                    CustomTextWidget(name: "or", size: 16, fontWeight: FontWeight.bold, textColor: kMainColor),
+                    customLine(screenWidth),
+                  ],
+                ),
+              ),
+              kHeight30,
+              FutureBuilder(
+                  future: AuthMethods().initializeFirebase(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Text("Error Initializing Firebase");
+                    } else if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressWidget();
+                    }
+                    return const GoogleSignInButton();
+                  }),
               Flexible(
                 flex: 1,
                 child: Container(),

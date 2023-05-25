@@ -1,8 +1,12 @@
 import 'dart:developer';
-import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:social_flow/models/user_model.dart';
+import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/resources/storage_method.dart';
 
 class AuthMethods {
@@ -16,6 +20,10 @@ class AuthMethods {
     return UserModel.fromSnapShot(snapShot);
   }
 
+  Future<FirebaseApp> initializeFirebase() async {
+    FirebaseApp firebaseApp = await Firebase.initializeApp();
+    return firebaseApp;
+  }
 
 ///////////////// signup user //////////////////////
 
@@ -89,7 +97,7 @@ class AuthMethods {
         res = "Enter your email and password";
       } else if (email.isEmpty) {
         res = "enter your email";
-      }else if (password.isEmpty) {
+      } else if (password.isEmpty) {
         res = "enter your password";
       }
 
@@ -102,12 +110,76 @@ class AuthMethods {
         res = "This user doesn't exist";
       } else if (error.code == 'invalid-email') {
         res = 'Enter your email properly';
-      }else if (error.code == 'invalid-password') {
+      } else if (error.code == 'invalid-password') {
         res = 'Enter your password properly';
       }
     } catch (error) {
       res = error.toString();
     }
     return res;
+  }
+
+  ///////////////// signup user with google //////////////////////
+
+  Future<User?> signInWithGoogle({required BuildContext context}) async {
+    User? user;
+    if (context.mounted) {}
+    if (kIsWeb) {
+      GoogleAuthProvider authProvider = GoogleAuthProvider();
+
+      try {
+        final UserCredential userCredential = await auth.signInWithPopup(authProvider);
+
+        user = userCredential.user;
+      } catch (e) {
+        log(e.toString());
+      }
+    } else {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+
+      final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken,
+        );
+
+        try {
+          final UserCredential userCredential = await auth.signInWithCredential(credential);
+
+          user = userCredential.user;
+          UserModel userModel = UserModel(
+            email: userCredential.user!.email!,
+            uid: userCredential.user!.uid,
+            photoUrl: user!.photoURL!,
+            username: userCredential.user!.displayName!,
+            followers: [],
+            following: [],
+            bio: "",
+          );
+          if (userCredential.additionalUserInfo!.isNewUser) {
+            firestore.collection("users").doc(userCredential.user!.uid).set(userModel.toJson());
+          }
+        } on FirebaseAuthException catch (e) {
+          if (context.mounted) {}
+          if (e.code == 'account-exists-with-different-credential') {
+            showSnackbar('The account already exists with a different credential.', context);
+          } else if (e.code == 'invalid-credential') {
+            showSnackbar('Error occurred while accessing credentials. Try again.', context);
+          }
+        } catch (e) {
+          if (context.mounted) {}
+          showSnackbar('Error occurred using Google Sign-In. Try again.', context);
+        }
+      } else {
+        // signUpUser(userName: userName, email: email, password: password, file: file)
+        log("account is doesn't exist");
+      }
+    }
+
+    return user;
   }
 }
