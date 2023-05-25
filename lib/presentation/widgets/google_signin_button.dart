@@ -1,8 +1,6 @@
-
 // ignore_for_file: use_build_context_synchronously
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/widgets/circular_progress.dart';
@@ -20,7 +18,7 @@ class GoogleSignInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<GoogleButtonProvider>(builder: (context, value, _) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 32),
         child: value.isSignIn
             ? const CircularProgressWidget()
             : OutlinedButton(
@@ -28,7 +26,7 @@ class GoogleSignInButton extends StatelessWidget {
                   backgroundColor: MaterialStateProperty.all(Colors.white),
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                 ),
@@ -54,17 +52,22 @@ class GoogleSignInButton extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      FaIcon(
-                        FontAwesomeIcons.google,
-                        color: kRedColor,
+                      Image.asset(
+                        "assets/images/google_logo.png",
+                        width: 28,
+                        height: 28,
                       ),
                       CustomTextWidget(
                         name: "Continue With Google",
                         size: 16,
                         fontWeight: FontWeight.bold,
-                        textColor: kBackgroundColor,
+                        textColor: kBackgroundColor.withOpacity(0.7),
                       ),
-                      const SizedBox(),
+                      Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: kBackgroundColor.withOpacity(0.7),
+                        size: 18,
+                      )
                     ],
                   ),
                 )),

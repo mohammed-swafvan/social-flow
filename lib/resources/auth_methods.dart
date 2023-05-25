@@ -175,7 +175,6 @@ class AuthMethods {
           showSnackbar('Error occurred using Google Sign-In. Try again.', context);
         }
       } else {
-        // signUpUser(userName: userName, email: email, password: password, file: file)
         log("account is doesn't exist");
       }
     }

@@ -35,119 +35,126 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SafeArea(
-        child: SizedBox(
-          width: screenWidth,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Flexible(
-                flex: 1,
-                child: Container(),
-              ),
-              const SocilaFlowLogo(radius: 80),
-              kHeight30,
-              TextFieldWidget(
-                textEdingController: emailController,
-                hintText: "enter your email",
-                labelText: "email",
-                textInputType: TextInputType.emailAddress,
-              ),
-              kHeight15,
-              TextFieldWidget(
-                textEdingController: passwordController,
-                hintText: "enter your password",
-                labelText: "password",
-                textInputType: TextInputType.text,
-                isPass: true,
-              ),
-              kHeight20,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: InkWell(
-                  onTap: loginUser,
-                  child: Container(
-                    width: double.infinity,
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    decoration: ShapeDecoration(
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8),
-                        ),
-                      ),
-                      color: kMainColor,
-                    ),
-                    child: isLoading
-                        ? const CircularProgressWidget()
-                        : CustomTextWidget(
-                            name: "Log in",
-                            size: 18,
-                            fontWeight: FontWeight.w500,
-                            textColor: kWhiteColor,
-                          ),
-                  ),
-                ),
-              ),
-              kHeight30,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    customLine(screenWidth),
-                    CustomTextWidget(name: "or", size: 16, fontWeight: FontWeight.bold, textColor: kMainColor),
-                    customLine(screenWidth),
-                  ],
-                ),
-              ),
-              kHeight30,
-              FutureBuilder(
-                  future: AuthMethods().initializeFirebase(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return const Text("Error Initializing Firebase");
-                    } else if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressWidget();
-                    }
-                    return const GoogleSignInButton();
-                  }),
-              Flexible(
-                flex: 1,
-                child: Container(),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+        child: ListView(
+          children: [
+            SizedBox(
+              height: screenHeight * 0.96,
+              width: screenWidth,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: const Text(
-                      "Don't have an account?",
-                      style: TextStyle(
-                        color: Colors.white,
+                  Flexible(
+                    flex: 1,
+                    child: Container(),
+                  ),
+                  const SocilaFlowLogo(radius: 80),
+                  kHeight30,
+                  kHeight20,
+                  TextFieldWidget(
+                    textEdingController: emailController,
+                    hintText: "enter your email",
+                    labelText: "email",
+                    textInputType: TextInputType.emailAddress,
+                  ),
+                  kHeight15,
+                  TextFieldWidget(
+                    textEdingController: passwordController,
+                    hintText: "enter your password",
+                    labelText: "password",
+                    textInputType: TextInputType.text,
+                    isPass: true,
+                  ),
+                  kHeight20,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: InkWell(
+                      onTap: loginUser,
+                      child: Container(
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        decoration: ShapeDecoration(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                          ),
+                          color: kMainColor,
+                        ),
+                        child: isLoading
+                            ? const CircularProgressWidget()
+                            : CustomTextWidget(
+                                name: "Log in",
+                                size: 18,
+                                fontWeight: FontWeight.w500,
+                                textColor: kWhiteColor,
+                              ),
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen()));
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: const Text(
-                        "Sign up",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                  kHeight30,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        customLine(screenWidth),
+                        CustomTextWidget(name: "or", size: 16, fontWeight: FontWeight.bold, textColor: kMainColor),
+                        customLine(screenWidth),
+                      ],
+                    ),
+                  ),
+                  kHeight30,
+                  FutureBuilder(
+                      future: AuthMethods().initializeFirebase(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Text("Error Initializing Firebase");
+                        } else if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const CircularProgressWidget();
+                        }
+                        return const GoogleSignInButton();
+                      }),
+                  Flexible(
+                    flex: 1,
+                    child: Container(),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: const Text(
+                          "Don't have an account?",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen()));
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: const Text(
+                            "Sign up",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

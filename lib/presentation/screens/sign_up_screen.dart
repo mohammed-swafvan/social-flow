@@ -48,7 +48,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: SizedBox(
-            height: screenHeight * 0.98,
+            height: screenHeight * 0.96,
             width: screenWidth,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -214,7 +214,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (res != "success") {
       // ignore: use_build_context_synchronously
       showSnackbar(res, context);
-    }else{
+    } else {
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
         context,

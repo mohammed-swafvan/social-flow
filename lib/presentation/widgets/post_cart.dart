@@ -5,13 +5,20 @@ import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/presentation/widgets/text.dart';
 
 class PostCardWidget extends StatelessWidget {
-  const PostCardWidget({super.key, required this.snap});
+  const PostCardWidget({super.key, required this.snap, required this.isHomepage});
 
   final Map<String, dynamic> snap;
+  final bool isHomepage;
 
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
+    final double imageHeight;
+    if (isHomepage) {
+      imageHeight = screenHeight * 0.47;
+    } else {
+      imageHeight = screenHeight * 0.55;
+    }
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
       width: double.infinity,
@@ -53,29 +60,33 @@ class PostCardWidget extends StatelessWidget {
                       context: context,
                       builder: (context) => Dialog(
                         backgroundColor: kSmallContextsColor,
-                        child: ListView(padding: const EdgeInsets.symmetric(vertical: 16), shrinkWrap: true, children: [
-                          InkWell(
-                            onTap: () {},
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 12,
-                                horizontal: 16,
-                              ),
-                              child: CustomTextWidget(
-                                name: "Delete",
-                                textColor: kRedColor,
-                                fontWeight: FontWeight.w500,
-                                size: 18,
+                        child: ListView(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shrinkWrap: true,
+                          children: [
+                            InkWell(
+                              onTap: () {},
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                  horizontal: 16,
+                                ),
+                                child: CustomTextWidget(
+                                  name: "Delete",
+                                  textColor: kRedColor,
+                                  fontWeight: FontWeight.w500,
+                                  size: 18,
+                                ),
                               ),
                             ),
-                          ),
-                        ]),
+                          ],
+                        ),
                       ),
                     );
                   },
                   icon: Icon(
                     Icons.more_vert_rounded,
-                    color: kWhiteColor.withOpacity(0.7),
+                    color: kWhiteColor.withOpacity(0.8),
                     size: 30,
                   ),
                 )
@@ -87,7 +98,7 @@ class PostCardWidget extends StatelessWidget {
           /////// Image section //////
           SizedBox(
             width: double.infinity,
-            height: screenHeight * 0.47,
+            height: imageHeight,
             child: Image.network(
               snap['postUrl'],
               fit: BoxFit.cover,
@@ -101,7 +112,7 @@ class PostCardWidget extends StatelessWidget {
                 onPressed: () {},
                 icon: Icon(
                   Icons.favorite_border,
-                  color: kWhiteColor.withOpacity(0.7),
+                  color: kWhiteColor.withOpacity(0.8),
                   size: 28,
                 ),
               ),
@@ -109,7 +120,7 @@ class PostCardWidget extends StatelessWidget {
                 onPressed: () {},
                 icon: Icon(
                   Icons.comment_outlined,
-                  color: kWhiteColor.withOpacity(0.7),
+                  color: kWhiteColor.withOpacity(0.8),
                   size: 28,
                 ),
               ),
@@ -120,7 +131,7 @@ class PostCardWidget extends StatelessWidget {
                     onPressed: () {},
                     icon: Icon(
                       Icons.bookmark_border,
-                      color: kWhiteColor.withOpacity(0.7),
+                      color: kWhiteColor.withOpacity(0.8),
                       size: 28,
                     ),
                   ),
@@ -140,7 +151,7 @@ class PostCardWidget extends StatelessWidget {
                   name: "${snap['likes'].length} likes",
                   size: 14,
                   fontWeight: FontWeight.normal,
-                  textColor: kWhiteColor.withOpacity(0.8),
+                  textColor: kWhiteColor.withOpacity(0.9),
                 ),
                 SizedBox(
                   width: double.infinity,
@@ -151,7 +162,7 @@ class PostCardWidget extends StatelessWidget {
                       ),
                       TextSpan(
                         text: '  ${snap['description']}',
-                        style: customTextStyle(kWhiteColor.withOpacity(0.7), 15, FontWeight.w500),
+                        style: customTextStyle(kWhiteColor.withOpacity(0.9), 15, FontWeight.w500),
                       ),
                     ]),
                   ),
@@ -167,7 +178,7 @@ class PostCardWidget extends StatelessWidget {
                 name: "view all 200 comments",
                 size: 14,
                 fontWeight: FontWeight.w200,
-                textColor: kWhiteColor.withOpacity(0.4),
+                textColor: kWhiteColor.withOpacity(0.7),
               ),
             ),
           ),
@@ -177,7 +188,7 @@ class PostCardWidget extends StatelessWidget {
               name: DateFormat.yMEd().format(snap['datePublished'].toDate()),
               size: 12,
               fontWeight: FontWeight.w200,
-              textColor: kWhiteColor.withOpacity(0.4),
+              textColor: kWhiteColor.withOpacity(0.7),
             ),
           ),
         ],

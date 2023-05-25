@@ -4,7 +4,7 @@ import 'package:social_flow/presentation/widgets/post_cart.dart';
 import 'package:social_flow/presentation/widgets/text.dart';
 
 class SinglePostScreen extends StatelessWidget {
-  const SinglePostScreen({super.key,required this.snap});
+  const SinglePostScreen({super.key, required this.snap});
 
   final snap;
 
@@ -29,7 +29,10 @@ class SinglePostScreen extends StatelessWidget {
           textColor: kYellowColor,
         ),
       ),
-      body: PostCardWidget(snap: snap),
+      body: PostCardWidget(
+        snap: snap,
+        isHomepage: false,
+      ),
     );
   }
 }
