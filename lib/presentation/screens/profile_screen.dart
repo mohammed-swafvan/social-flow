@@ -1,11 +1,10 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:social_flow/presentation/screens/single_post_screen.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/presentation/widgets/my_delagate_widget.dart';
+import 'package:social_flow/presentation/widgets/post_tab_bar_view.dart';
 import 'package:social_flow/presentation/widgets/profile_view_widget.dart';
 import 'package:social_flow/presentation/widgets/text.dart';
 
@@ -98,43 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 },
                 body: TabBarView(
                   children: [
-                    FutureBuilder(
-                        future: FirebaseFirestore.instance.collection('posts').where('uid', isEqualTo: widget.uid).get(),
-                        builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapShot) {
-                          if (snapShot.connectionState == ConnectionState.waiting) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          return GridView.builder(
-                            shrinkWrap: true,
-                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-                            itemBuilder: (context, index) {
-                              DocumentSnapshot snap = snapShot.data!.docs[index];
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => SinglePostScreen(
-                                        snap: snap.data(),
-                                      ),
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: NetworkImage(snap['postUrl']),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                            itemCount: snapShot.data!.docs.length,
-                          );
-                        }),
+                    PostTabBarViewWidget(widget: widget),
                     Container(),
                   ],
                 ),
@@ -166,3 +129,5 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 }
+
+

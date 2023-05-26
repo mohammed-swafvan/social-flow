@@ -25,7 +25,7 @@ class AuthMethods {
     return firebaseApp;
   }
 
-///////////////// signup user //////////////////////
+
 
   Future<String> singnUpUser({
     required String username,
@@ -48,14 +48,15 @@ class AuthMethods {
 
       // ignore: unnecessary_null_comparison
       if (email.isNotEmpty || username.isNotEmpty || password.isNotEmpty || bio.isNotEmpty || file != null) {
-        // register user
+
+      
         final UserCredential cred = await auth.createUserWithEmailAndPassword(email: email, password: password);
 
         log("uid : ${cred.user!.uid}");
 
         String photoUrl = await StorageMethods().uploadImageToStorage('ProfilePic', file, false);
 
-        // add user to our database
+
 
         UserModel userModel = UserModel(
           email: email,
@@ -85,7 +86,7 @@ class AuthMethods {
     return res;
   }
 
-  ///////////////// login user //////////////////////
+
 
   Future<String> loginUser({
     required String email,
@@ -119,7 +120,6 @@ class AuthMethods {
     return res;
   }
 
-  ///////////////// signup user with google //////////////////////
 
   Future<User?> signInWithGoogle({required BuildContext context}) async {
     User? user;
