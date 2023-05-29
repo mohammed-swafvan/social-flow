@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
+import 'package:social_flow/providers/profile_screen_provider.dart';
 
 class ProfileViewWidget extends StatelessWidget {
-  const ProfileViewWidget({super.key, required this.userDetails, required this.postLength});
-
-  final Map userDetails;
-  final int postLength;
+  const ProfileViewWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,40 +14,49 @@ class ProfileViewWidget extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CircleAvatar(
-                radius: 35,
-                backgroundImage: NetworkImage(userDetails['photoUrl']),
-              ),
-              customStatColumn("$postLength", "Post"),
-              customStatColumn("0", "Followers"),
-              customStatColumn("0", "Following"),
-            ],
+          child: Consumer<ProfileScreenProvider>(
+            builder: (context, value, child) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CircleAvatar(
+                    radius: 35,
+                    backgroundImage: NetworkImage(value.userData['photoUrl']),
+                  ),
+                  customStatColumn("${value.postLength}", "Post"),
+                  customStatColumn("0", "Followers"),
+                  customStatColumn("0", "Following"),
+                ],
+              );
+            },
           ),
         ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: RichText(
-              text: TextSpan(children: [
-            TextSpan(
-              text: userDetails['username'],
-              style: TextStyle(color: kWhiteColor, fontWeight: FontWeight.bold),
-            ),
-            userDetails['bio'] == ""
-            ? TextSpan(
-              
-              text: '\n${userDetails['email']}',
-              style: TextStyle(color: kWhiteColor.withOpacity(0.8), fontWeight: FontWeight.w400),
-            )
-            : TextSpan(
-              
-              text: '\n${userDetails['email']} \n${userDetails['bio']}',
-              style: TextStyle(color: kWhiteColor.withOpacity(0.8), fontWeight: FontWeight.w400),
-            ),
-          ])),
-        )
+        Consumer<ProfileScreenProvider>(
+          builder: (context, value, child) {
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: value.userData['username'],
+                      style: TextStyle(color: kWhiteColor, fontWeight: FontWeight.bold),
+                    ),
+                    value.userData['bio'] == ""
+                        ? TextSpan(
+                            text: '\n${value.userData['email']}',
+                            style: TextStyle(color: kWhiteColor.withOpacity(0.8), fontWeight: FontWeight.w400),
+                          )
+                        : TextSpan(
+                            text: '\n${value.userData['email']} \n${value.userData['bio']}',
+                            style: TextStyle(color: kWhiteColor.withOpacity(0.8), fontWeight: FontWeight.w400),
+                          ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
       ],
     );
   }

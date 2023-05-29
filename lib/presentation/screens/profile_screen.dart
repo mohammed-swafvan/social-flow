@@ -1,12 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
-import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/presentation/widgets/my_delagate_widget.dart';
 import 'package:social_flow/presentation/widgets/post_tab_bar_view.dart';
 import 'package:social_flow/presentation/widgets/profile_view_widget.dart';
 import 'package:social_flow/presentation/widgets/text.dart';
+import 'package:social_flow/providers/profile_screen_provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String uid;
@@ -20,19 +19,17 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  var userData = {};
-  int postLength = 0;
-  bool isLoading = false;
   @override
   void initState() {
     super.initState();
-    getData();
+    getUserData();
   }
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ProfileScreenProvider>(context);
     final screenHeight = MediaQuery.of(context).size.height;
-    return isLoading
+    return provider.isLoading
         ? const Center(
             child: CircularProgressIndicator(),
           )
@@ -40,12 +37,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             appBar: AppBar(
               centerTitle: false,
               backgroundColor: kBackgroundColor,
-              title: CustomTextWidget(
-                name: userData['username'],
-                size: 24,
-                fontWeight: FontWeight.bold,
-                textColor: kYellowColor,
-              ),
+              title: Consumer<ProfileScreenProvider>(builder: (context, value, _) {
+                return CustomTextWidget(
+                  name: value.userData['username'],
+                  size: 24,
+                  fontWeight: FontWeight.bold,
+                  textColor: kYellowColor,
+                );
+              }),
               actions: [
                 IconButton(
                   onPressed: () {},
@@ -58,76 +57,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             body: DefaultTabController(
               length: 2,
-              child: NestedScrollView(
-                physics: const NeverScrollableScrollPhysics(),
-                headerSliverBuilder: (context, isScrolled) {
-                  return [
-                    userData['bio'] == ""
-                        ? SliverAppBar(
-                            backgroundColor: kBackgroundColor,
-                            collapsedHeight: screenHeight * 0.2,
-                            expandedHeight: screenHeight * 0.2,
-                            flexibleSpace: ProfileViewWidget(
-                              userDetails: userData,
-                              postLength: postLength,
-                            ),
-                          )
-                        : SliverAppBar(
-                            backgroundColor: kBackgroundColor,
-                            collapsedHeight: screenHeight * 0.24,
-                            expandedHeight: screenHeight * 0.24,
-                            flexibleSpace: ProfileViewWidget(
-                              userDetails: userData,
-                              postLength: postLength,
+              child: Consumer<ProfileScreenProvider>(
+                builder: (context, value, child) {
+                  return NestedScrollView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    headerSliverBuilder: (context, isScrolled) {
+                      return [
+                        value.userData['bio'] == ""
+                            ? SliverAppBar(
+                                backgroundColor: kBackgroundColor,
+                                collapsedHeight: screenHeight * 0.2,
+                                expandedHeight: screenHeight * 0.2,
+                                flexibleSpace: const ProfileViewWidget(),
+                              )
+                            : SliverAppBar(
+                                backgroundColor: kBackgroundColor,
+                                collapsedHeight: screenHeight * 0.23,
+                                expandedHeight: screenHeight * 0.23,
+                                flexibleSpace: const ProfileViewWidget(),
+                              ),
+                        SliverPersistentHeader(
+                          floating: true,
+                          pinned: true,
+                          delegate: MyDelagatWidget(
+                            tabBar: TabBar(
+                              indicatorColor: kWhiteColor,
+                              unselectedLabelColor: kWhiteColor.withOpacity(0.5),
+                              labelColor: kWhiteColor,
+                              tabs: const [Tab(icon: Icon(Icons.grid_on)), Tab(icon: Icon(Icons.bookmark))],
                             ),
                           ),
-                    SliverPersistentHeader(
-                      floating: true,
-                      pinned: true,
-                      delegate: MyDelagatWidget(
-                        tabBar: TabBar(
-                          indicatorColor: kWhiteColor,
-                          unselectedLabelColor: kWhiteColor.withOpacity(0.5),
-                          labelColor: kWhiteColor,
-                          tabs: const [Tab(icon: Icon(Icons.grid_on)), Tab(icon: Icon(Icons.bookmark))],
                         ),
-                      ),
+                      ];
+                    },
+                    body: TabBarView(
+                      children: [
+                        PostTabBarViewWidget(uid: widget.uid),
+                        Container(),
+                      ],
                     ),
-                  ];
+                  );
                 },
-                body: TabBarView(
-                  children: [
-                    PostTabBarViewWidget(widget: widget),
-                    Container(),
-                  ],
-                ),
               ),
             ),
           );
   }
 
-  getData() async {
-    setState(() {
-      isLoading = true;
-    });
-    try {
-      var userSnap = await FirebaseFirestore.instance.collection('users').doc(widget.uid).get();
-      userData = userSnap.data()!;
-
-      var postSnap = await FirebaseFirestore.instance
-          .collection('posts')
-          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-          .get();
-      postLength = postSnap.docs.length;
-
-      setState(() {});
-    } catch (e) {
-      showSnackbar(e.toString(), context);
-    }
-    setState(() {
-      isLoading = false;
-    });
+  getUserData() async {
+    await Provider.of<ProfileScreenProvider>(context, listen: false).getData(widget.uid, context);
   }
 }
-
-

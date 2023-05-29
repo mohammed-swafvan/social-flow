@@ -7,6 +7,7 @@ import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/providers/add_post_provider.dart';
 import 'package:social_flow/providers/google_button_provider.dart';
 import 'package:social_flow/providers/login_screen_provider.dart';
+import 'package:social_flow/providers/profile_screen_provider.dart';
 import 'package:social_flow/providers/signin_screen_provider.dart';
 import 'package:social_flow/providers/user_provider.dart';
 
@@ -34,11 +35,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => UserProvider()),
-        ChangeNotifierProvider(create: (_) => GoogleButtonProvider()),
-        ChangeNotifierProvider(create: (_) => AddPostProvider()),
         ChangeNotifierProvider(create: (_) => LoginScreenProvider()),
         ChangeNotifierProvider(create: (_) => SigninScreenProvider()),
+        ChangeNotifierProvider(create: (_) => GoogleButtonProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => AddPostProvider()),
+        ChangeNotifierProvider(create: (_) => ProfileScreenProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
