@@ -103,7 +103,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           );
   }
 
-  getUserData() async {
-    await Provider.of<ProfileScreenProvider>(context, listen: false).getData(widget.uid, context);
+  getUserData() {
+    Provider.of<ProfileScreenProvider>(context, listen: false).getData(widget.uid, context);
   }
 }

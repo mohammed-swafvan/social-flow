@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
+import 'package:social_flow/presentation/widgets/circular_progress.dart';
 import 'package:social_flow/presentation/widgets/logo.dart';
+import 'package:social_flow/presentation/widgets/post_cart.dart';
 import 'package:social_flow/presentation/widgets/text.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -9,31 +12,32 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const MyAppBar(),
-        body: Center(
-          child: Text(
-            "home",
-            style: TextStyle(color: kWhiteColor),
-          ),
-        )
-        // StreamBuilder(
-        //   stream: FirebaseFirestore.instance.collection('posts').snapshots(),
-        //   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapShot) {
-        //     if (snapShot.connectionState == ConnectionState.waiting) {
-        //       return const Center(
-        //         child: CircularProgressWidget(),
-        //       );
-        //     }
+      appBar: const MyAppBar(),
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapShot) {
+          if (snapShot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressWidget(),
+            );
+          }
 
-        //     return ListView.builder(
-        //       itemCount: snapShot.data!.docs.length,
-        //       itemBuilder: (context, index) => PostCardWidget(
-        //         snap: snapShot.data!.docs[index].data(),
-        //       ),
-        //     );
-        //   },
-        // ),
-        );
+          if (snapShot.data!.docs.isEmpty) {
+            return Center(
+              child: CustomTextWidget(name: "No posts", size: 18, fontWeight: FontWeight.w500, textColor: kWhiteColor),
+            );
+          }
+
+          return ListView.builder(
+            itemCount: snapShot.data!.docs.length,
+            itemBuilder: (context, index) => PostCardWidget(
+              snap: snapShot.data!.docs[index].data(),
+              isHomepage: true,
+            ),
+          );
+        },
+      ),
+    );
   }
 }
 

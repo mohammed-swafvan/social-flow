@@ -3,11 +3,16 @@ import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/widgets/post_cart.dart';
 import 'package:social_flow/presentation/widgets/text.dart';
 
-class SinglePostScreen extends StatelessWidget {
+class SinglePostScreen extends StatefulWidget {
   const SinglePostScreen({super.key, required this.snap});
 
   final snap;
 
+  @override
+  State<SinglePostScreen> createState() => _SinglePostScreenState();
+}
+
+class _SinglePostScreenState extends State<SinglePostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +35,7 @@ class SinglePostScreen extends StatelessWidget {
         ),
       ),
       body: PostCardWidget(
-        snap: snap,
+        snap: widget.snap,
         isHomepage: false,
       ),
     );

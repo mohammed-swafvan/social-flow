@@ -10,7 +10,6 @@ class ProfileScreenProvider extends ChangeNotifier {
 
   getData(String uid, BuildContext context) async {
     isLoading = true;
-
     try {
       var userSnap = await FirebaseFirestore.instance.collection('users').doc(uid).get();
       userData = userSnap.data()!;
@@ -21,9 +20,11 @@ class ProfileScreenProvider extends ChangeNotifier {
           .get();
       postLength = postSnap.docs.length;
       isLoading = false;
+      notifyListeners();
     } catch (e) {
       showSnackbar(e.toString(), context);
       isLoading = false;
+      notifyListeners();
     }
     notifyListeners();
   }
