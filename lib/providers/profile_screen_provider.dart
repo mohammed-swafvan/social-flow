@@ -7,8 +7,9 @@ class ProfileScreenProvider extends ChangeNotifier {
   var userData = {};
   int postLength = 0;
   bool isLoading = false;
+  String uid = FirebaseAuth.instance.currentUser!.uid;
 
-  getData(String uid, BuildContext context) async {
+  getData(BuildContext context) async {
     isLoading = true;
     try {
       var userSnap = await FirebaseFirestore.instance.collection('users').doc(uid).get();

@@ -6,6 +6,7 @@ import 'package:social_flow/presentation/utils/utils.dart';
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({super.key});
+  
 
   @override
   State<MobileScreenLayout> createState() => _MobileScreenLayoutState();

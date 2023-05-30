@@ -51,7 +51,15 @@ class _CommentScreenState extends State<CommentScreen> {
         ),
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('posts').doc(widget.snap['postId']).collection('comments').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('posts')
+            .doc(widget.snap['postId'])
+            .collection('comments')
+            .orderBy(
+              'datePublished',
+              descending: true,
+            )
+            .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapShot) {
           if (snapShot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressWidget());
@@ -59,7 +67,12 @@ class _CommentScreenState extends State<CommentScreen> {
 
           return snapShot.data!.docs.isEmpty
               ? Center(
-                  child: CustomTextWidget(name: "No comments", size: 18, fontWeight: FontWeight.w500, textColor: kWhiteColor),
+                  child: CustomTextWidget(
+                    name: "No comments",
+                    size: 18,
+                    fontWeight: FontWeight.w500,
+                    textColor: kWhiteColor,
+                  ),
                 )
               : ListView.builder(
                   itemCount: snapShot.data!.docs.length,
@@ -77,7 +90,7 @@ class _CommentScreenState extends State<CommentScreen> {
         child: Container(
           decoration: BoxDecoration(
             color: kWhiteColor.withOpacity(0.13),
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
           ),
           height: kToolbarHeight,
           margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),

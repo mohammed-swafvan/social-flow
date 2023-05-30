@@ -1,3 +1,6 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -7,27 +10,22 @@ import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/presentation/widgets/like_animation.dart';
 import 'package:social_flow/presentation/widgets/text.dart';
+import 'package:social_flow/providers/post_card_provider.dart';
 import 'package:social_flow/providers/user_provider.dart';
 import 'package:social_flow/resources/firestore_methods.dart';
 
-class PostCardWidget extends StatefulWidget {
+class PostCardWidget extends StatelessWidget {
   const PostCardWidget({super.key, required this.snap, required this.isHomepage});
 
   final Map<String, dynamic> snap;
   final bool isHomepage;
 
   @override
-  State<PostCardWidget> createState() => _PostCardWidgetState();
-}
-
-class _PostCardWidgetState extends State<PostCardWidget> {
-  bool isLikeAnimating = false;
-  @override
   Widget build(BuildContext context) {
     final UserModel user = Provider.of<UserProvider>(context).getUser;
     var screenHeight = MediaQuery.of(context).size.height;
     final double imageHeight;
-    if (widget.isHomepage) {
+    if (isHomepage) {
       imageHeight = screenHeight * 0.47;
     } else {
       imageHeight = screenHeight * 0.55;
@@ -47,7 +45,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                 CircleAvatar(
                   radius: 16,
                   backgroundImage: NetworkImage(
-                    widget.snap['profImage'],
+                    snap['profImage'],
                   ),
                 ),
                 Expanded(
@@ -58,7 +56,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomTextWidget(
-                          name: widget.snap['username'],
+                          name: snap['username'],
                           size: 18,
                           fontWeight: FontWeight.w400,
                           textColor: kWhiteColor,
@@ -68,34 +66,8 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => Dialog(
-                        backgroundColor: kSmallContextsColor,
-                        child: ListView(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          shrinkWrap: true,
-                          children: [
-                            InkWell(
-                              onTap: () {},
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 12,
-                                  horizontal: 16,
-                                ),
-                                child: CustomTextWidget(
-                                  name: "Delete",
-                                  textColor: kRedColor,
-                                  fontWeight: FontWeight.w500,
-                                  size: 18,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
+                  onPressed: () async {
+                    await postCardDialogue(isHomepage, snap, context);
                   },
                   icon: Icon(
                     Icons.more_vert_rounded,
@@ -109,67 +81,68 @@ class _PostCardWidgetState extends State<PostCardWidget> {
           const SizedBox(height: 5),
 
           /////// Image section //////
-          GestureDetector(
-            onDoubleTap: () async {
-              await FirestoreMethods().likePost(
-                context,
-                widget.snap['postId'],
-                user.uid,
-                widget.snap['likes'],
-              );
-              setState(() {
-                isLikeAnimating = true;
-              });
-            },
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: imageHeight,
-                  child: Image.network(
-                    widget.snap['postUrl'],
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                AnimatedOpacity(
-                  duration: const Duration(milliseconds: 200),
-                  opacity: isLikeAnimating ? 1 : 0,
-                  child: LikeAnimation(
-                    isAnimating: isLikeAnimating,
-                    duration: const Duration(milliseconds: 400),
-                    onEnd: () {
-                      setState(() {
-                        isLikeAnimating = false;
-                      });
-                    },
-                    child: Icon(
-                      Icons.favorite,
-                      color: kMainColor.withOpacity(0.6),
-                      size: 250,
+          Consumer<PostCardProvider>(
+            builder: (context, value, _) {
+              return GestureDetector(
+                onDoubleTap: () async {
+                  await FirestoreMethods().likePost(
+                    context,
+                    snap['postId'],
+                    user.uid,
+                    snap['likes'],
+                  );
+                  value.likeAnimationTrue();
+                },
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      height: imageHeight,
+                      child: Image.network(
+                        snap['postUrl'],
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center,
+                      ),
                     ),
-                  ),
-                )
-              ],
-            ),
+                    AnimatedOpacity(
+                      duration: const Duration(milliseconds: 200),
+                      opacity: value.isLikeAnimating ? 1 : 0,
+                      child: LikeAnimation(
+                        isAnimating: value.isLikeAnimating,
+                        duration: const Duration(milliseconds: 400),
+                        onEnd: () {
+                          value.likeAnimationFalse();
+                        },
+                        child: Icon(
+                          Icons.favorite,
+                          color: kMainColor.withOpacity(0.35),
+                          size: 200,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            },
           ),
 
           //////// Like Comment and save section /////////
           Row(
             children: [
               LikeAnimation(
-                isAnimating: widget.snap['likes'].contains(user.uid),
+                isAnimating: snap['likes'].contains(user.uid),
                 smallLike: true,
                 child: IconButton(
                   onPressed: () async {
                     await FirestoreMethods().likePost(
                       context,
-                      widget.snap['postId'],
+                      snap['postId'],
                       user.uid,
-                      widget.snap['likes'],
+                      snap['likes'],
                     );
                   },
-                  icon: widget.snap['likes'].contains(user.uid)
+                  icon: snap['likes'].contains(user.uid)
                       ? Icon(
                           Icons.favorite,
                           color: kMainColor,
@@ -188,7 +161,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => CommentScreen(
-                        snap: widget.snap,
+                        snap: snap,
                       ),
                     ),
                   );
@@ -223,7 +196,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomTextWidget(
-                  name: "${widget.snap['likes'].length} likes",
+                  name: "${snap['likes'].length} likes",
                   size: 14,
                   fontWeight: FontWeight.normal,
                   textColor: kWhiteColor.withOpacity(0.9),
@@ -231,12 +204,14 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                 SizedBox(
                   width: double.infinity,
                   child: RichText(
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     text: TextSpan(style: customTextStyle(kWhiteColor, 16, FontWeight.bold), children: [
                       TextSpan(
-                        text: widget.snap['username'],
+                        text: snap['username'],
                       ),
                       TextSpan(
-                        text: '  ${widget.snap['description']}',
+                        text: '  ${snap['description']}',
                         style: customTextStyle(kWhiteColor.withOpacity(0.9), 15, FontWeight.w500),
                       ),
                     ]),
@@ -245,22 +220,53 @@ class _PostCardWidgetState extends State<PostCardWidget> {
               ],
             ),
           ),
-          InkWell(
-            onTap: () {},
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-              child: CustomTextWidget(
-                name: "view all 200 comments",
-                size: 14,
-                fontWeight: FontWeight.w200,
-                textColor: kWhiteColor.withOpacity(0.7),
-              ),
-            ),
+          StreamBuilder(
+            stream: FirebaseFirestore.instance.collection('posts').doc(snap['postId']).collection('comments').snapshots(),
+            builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Container(
+                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  child: CustomTextWidget(
+                    name: "add comments",
+                    size: 14,
+                    fontWeight: FontWeight.w200,
+                    textColor: kWhiteColor.withOpacity(0.7),
+                  ),
+                );
+              }
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CommentScreen(snap: snap),
+                    ),
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  child: snapshot.data!.docs.isEmpty
+                      ? CustomTextWidget(
+                          name: "add comments",
+                          size: 14,
+                          fontWeight: FontWeight.w200,
+                          textColor: kWhiteColor.withOpacity(0.7),
+                        )
+                      : CustomTextWidget(
+                          name: "view all ${snapshot.data!.docs.length} comments",
+                          size: 14,
+                          fontWeight: FontWeight.w200,
+                          textColor: kWhiteColor.withOpacity(0.7),
+                        ),
+                ),
+              );
+            },
           ),
+
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: CustomTextWidget(
-              name: DateFormat.yMEd().format(widget.snap['datePublished'].toDate()),
+              name: DateFormat.yMEd().format(snap['datePublished'].toDate()),
               size: 12,
               fontWeight: FontWeight.w200,
               textColor: kWhiteColor.withOpacity(0.7),

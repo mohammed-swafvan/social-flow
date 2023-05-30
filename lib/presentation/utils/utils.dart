@@ -1,9 +1,14 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/widgets/text.dart';
+import 'package:social_flow/providers/profile_screen_provider.dart';
+import 'package:social_flow/resources/firestore_methods.dart';
 
 ThemeData themeData() {
   return ThemeData(
@@ -86,6 +91,50 @@ Container customLine(screenWidth) {
     decoration: BoxDecoration(
       borderRadius: const BorderRadius.all(Radius.circular(10)),
       color: kMainColor,
+    ),
+  );
+}
+
+Future postCardDialogue(bool isHomepage, snap, ctx) async {
+  showDialog(
+    context: ctx,
+    builder: (ctx1) => Dialog(
+      backgroundColor: kSmallContextsColor,
+      child: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        shrinkWrap: true,
+        children: [
+          InkWell(
+            onTap: () {
+              if (!isHomepage) {
+                FirestoreMethods().deletePost(snap['postId'], ctx);
+                Navigator.of(ctx1).pop();
+                Navigator.of(ctx).pop();
+                Provider.of<ProfileScreenProvider>(ctx, listen: false).getData(ctx);
+              } else {}
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: 12,
+                horizontal: 16,
+              ),
+              child: isHomepage
+                  ? CustomTextWidget(
+                      name: "follow",
+                      textColor: kMainColor,
+                      fontWeight: FontWeight.w500,
+                      size: 18,
+                    )
+                  : CustomTextWidget(
+                      name: "Delete",
+                      textColor: kRedColor,
+                      fontWeight: FontWeight.w500,
+                      size: 18,
+                    ),
+            ),
+          ),
+        ],
+      ),
     ),
   );
 }

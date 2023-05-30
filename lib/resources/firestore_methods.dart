@@ -54,7 +54,7 @@ class FirestoreMethods {
     }
   }
 
-  Future<void> postComment(BuildContext context,String postId, String text, String uid, String name, String profilePic) async {
+  Future<void> postComment(BuildContext context, String postId, String text, String uid, String name, String profilePic) async {
     try {
       if (text.isNotEmpty) {
         String commentId = const Uuid().v1();
@@ -67,6 +67,14 @@ class FirestoreMethods {
           'datePublished': DateTime.now(),
         });
       }
+    } catch (e) {
+      showSnackbar(e.toString(), context);
+    }
+  }
+
+  deletePost(String postId, context) async {
+    try {
+      await firestore.collection('posts').doc(postId).delete();
     } catch (e) {
       showSnackbar(e.toString(), context);
     }

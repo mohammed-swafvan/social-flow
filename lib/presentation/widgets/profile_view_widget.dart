@@ -40,16 +40,16 @@ class ProfileViewWidget extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: value.userData['username'],
-                      style: TextStyle(color: kWhiteColor, fontWeight: FontWeight.bold),
+                      style: customTextStyle(kWhiteColor, 16, FontWeight.bold),
                     ),
                     value.userData['bio'] == ""
                         ? TextSpan(
                             text: '\n${value.userData['email']}',
-                            style: TextStyle(color: kWhiteColor.withOpacity(0.8), fontWeight: FontWeight.w400),
+                            style: customTextStyle(kWhiteColor.withOpacity(0.8), 14, FontWeight.w400),
                           )
                         : TextSpan(
                             text: '\n${value.userData['email']} \n${value.userData['bio']}',
-                            style: TextStyle(color: kWhiteColor.withOpacity(0.8), fontWeight: FontWeight.w400),
+                            style: customTextStyle(kWhiteColor.withOpacity(0.8), 14, FontWeight.w400),
                           ),
                   ],
                 ),

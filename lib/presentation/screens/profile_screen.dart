@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/widgets/my_delagate_widget.dart';
-import 'package:social_flow/presentation/widgets/post_tab_bar_view.dart';
+import 'package:social_flow/presentation/widgets/profile_screen_tab_bar_view.dart';
 import 'package:social_flow/presentation/widgets/profile_view_widget.dart';
 import 'package:social_flow/presentation/widgets/text.dart';
 import 'package:social_flow/providers/profile_screen_provider.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final String uid;
   const ProfileScreen({
     super.key,
-    required this.uid,
   });
 
   @override
@@ -29,6 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     final provider = Provider.of<ProfileScreenProvider>(context);
     final screenHeight = MediaQuery.of(context).size.height;
+
     return provider.isLoading
         ? const Center(
             child: CircularProgressIndicator(),
@@ -72,8 +71,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               )
                             : SliverAppBar(
                                 backgroundColor: kBackgroundColor,
-                                collapsedHeight: screenHeight * 0.23,
-                                expandedHeight: screenHeight * 0.23,
+                                collapsedHeight: screenHeight * 0.22,
+                                expandedHeight: screenHeight * 0.22,
                                 flexibleSpace: const ProfileViewWidget(),
                               ),
                         SliverPersistentHeader(
@@ -92,7 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     },
                     body: TabBarView(
                       children: [
-                        PostTabBarViewWidget(uid: widget.uid),
+                        const ProfileScreenTabBarViewWidget(),
                         Container(),
                       ],
                     ),
@@ -104,6 +103,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   getUserData() {
-    Provider.of<ProfileScreenProvider>(context, listen: false).getData(widget.uid, context);
+    Provider.of<ProfileScreenProvider>(context, listen: false).getData(context);
   }
 }
