@@ -19,11 +19,16 @@ class TextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final inputBorder = OutlineInputBorder(
-        borderSide: BorderSide(
-          color: kMainColor,
-          width: 2,
+      borderSide: BorderSide(
+        color: kMainColor,
+        width: 2,
+      ),
+      borderRadius: const BorderRadius.all(
+        Radius.circular(
+          10,
         ),
-        borderRadius: const BorderRadius.all(Radius.circular(10)));
+      ),
+    );
     final textStyle = TextStyle(color: kGreyColor);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),

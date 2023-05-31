@@ -22,9 +22,25 @@ class HomeScreen extends StatelessWidget {
             );
           }
 
+          if (snapShot.hasError) {
+            return Center(
+              child: CustomTextWidget(
+                name: "Some error occured",
+                size: 18,
+                fontWeight: FontWeight.w500,
+                textColor: kWhiteColor,
+              ),
+            );
+          }
+
           if (snapShot.data!.docs.isEmpty) {
             return Center(
-              child: CustomTextWidget(name: "No posts", size: 18, fontWeight: FontWeight.w500, textColor: kWhiteColor),
+              child: CustomTextWidget(
+                name: "No posts",
+                size: 18,
+                fontWeight: FontWeight.w500,
+                textColor: kWhiteColor,
+              ),
             );
           }
 

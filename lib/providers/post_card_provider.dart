@@ -13,5 +13,4 @@ class PostCardProvider extends ChangeNotifier {
     isLikeAnimating = false;
     notifyListeners();
   }
-  
 }

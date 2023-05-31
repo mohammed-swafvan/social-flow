@@ -14,7 +14,7 @@ class AddPostScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserModel userDetails = Provider.of<UserProvider>(context).getUser;
+    final UserModel? userDetails = Provider.of<UserProvider>(context).getUser;
     final provider = Provider.of<AddPostProvider>(context);
 
     var screenHeight = MediaQuery.of(context).size.height;
@@ -39,7 +39,7 @@ class AddPostScreen extends StatelessWidget {
                         size: 18,
                         fontWeight: FontWeight.bold,
                         textColor: kYellowColor.withOpacity(0.8),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -81,7 +81,7 @@ class AddPostScreen extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 25,
-                          backgroundImage: NetworkImage(userDetails.photoUrl),
+                          backgroundImage: NetworkImage(userDetails!.photoUrl),
                         ),
                         Container(
                           height: screenHeight * 0.45,
@@ -93,7 +93,7 @@ class AddPostScreen extends StatelessWidget {
                               alignment: FractionalOffset.center,
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                     kHeight20,
@@ -125,7 +125,7 @@ class AddPostScreen extends StatelessWidget {
                                 maxLines: 5,
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),

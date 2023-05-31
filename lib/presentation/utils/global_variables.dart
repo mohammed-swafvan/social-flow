@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:social_flow/presentation/screens/profile_screen.dart';
 import 'package:social_flow/presentation/screens/add_post_screen.dart';
 import 'package:social_flow/presentation/screens/home_screen.dart';
-import 'package:social_flow/presentation/utils/colors.dart';
+import 'package:social_flow/presentation/screens/search_screen.dart';
 
 Widget kHeight10 = const SizedBox(height: 10);
 Widget kHeight20 = const SizedBox(height: 20);
@@ -12,12 +12,7 @@ const webSreenSize = 600;
 
 List<Widget> homeScreenItems = [
   const HomeScreen(),
-  Center(
-    child: Text(
-      "search",
-      style: TextStyle(color: kWhiteColor),
-    ),
-  ),
+  const SearchScreen(),
   const AddPostScreen(),
-  const ProfileScreen()
+  const ProfileScreen(),
 ];

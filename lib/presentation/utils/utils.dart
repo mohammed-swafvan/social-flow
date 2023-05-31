@@ -45,12 +45,11 @@ showSnackbar(String content, BuildContext context) {
   );
 }
 
-BottomNavigationBarItem bottomNavItems({required IconData navIcon, required int currentPage, required int pages}) {
+BottomNavigationBarItem bottomNavItems({required IconData navIcon, required int currentPage, required int page}) {
   return BottomNavigationBarItem(
     icon: Icon(
       navIcon,
-      color: pages == currentPage ? kMainColor : kMainColor.withOpacity(0.6),
-      size: pages == currentPage ? 36 : 32,
+      size: currentPage == page ? 32 : 28,
     ),
   );
 }

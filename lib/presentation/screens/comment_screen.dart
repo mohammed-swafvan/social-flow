@@ -30,7 +30,7 @@ class _CommentScreenState extends State<CommentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final UserModel user = Provider.of<UserProvider>(context).getUser;
+    final UserModel? user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kBackgroundColor,
@@ -99,7 +99,7 @@ class _CommentScreenState extends State<CommentScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
-                backgroundImage: NetworkImage(user.photoUrl),
+                backgroundImage: NetworkImage(user!.photoUrl),
                 radius: 22,
               ),
               Expanded(
@@ -136,7 +136,7 @@ class _CommentScreenState extends State<CommentScreen> {
             ],
           ),
         ),
-      )),
+      ),),
     );
   }
 }
