@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 

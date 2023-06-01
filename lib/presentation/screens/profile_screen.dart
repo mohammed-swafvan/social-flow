@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
-import 'package:social_flow/presentation/widgets/my_delagate_widget.dart';
-import 'package:social_flow/presentation/widgets/profile_screen_tab_bar_view.dart';
-import 'package:social_flow/presentation/widgets/profile_view_widget.dart';
+import 'package:social_flow/presentation/widgets/profile_widgets/my_delagate_widget.dart';
+import 'package:social_flow/presentation/widgets/profile_widgets/profile_screen_tab_bar_view.dart';
+import 'package:social_flow/presentation/widgets/profile_widgets/profile_view_widget.dart';
 import 'package:social_flow/presentation/widgets/text.dart';
 import 'package:social_flow/providers/profile_screen_provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({
     super.key,
+    required this.uid,
+    required this.isCurrentUserProfile,
   });
+
+  final String uid;
+  final bool isCurrentUserProfile;
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -20,6 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
+    Provider.of<ProfileScreenProvider>(context, listen: false).uid = widget.uid;
     getUserData();
   }
 
@@ -33,27 +39,58 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: CircularProgressIndicator(),
           )
         : Scaffold(
-            appBar: AppBar(
-              centerTitle: false,
-              backgroundColor: kBackgroundColor,
-              title: Consumer<ProfileScreenProvider>(builder: (context, value, _) {
-                return CustomTextWidget(
-                  name: value.userData['username'],
-                  size: 24,
-                  fontWeight: FontWeight.bold,
-                  textColor: kYellowColor,
-                );
-              }),
-              actions: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.dehaze,
-                    size: 30,
+            appBar: widget.isCurrentUserProfile
+                ? AppBar(
+                    centerTitle: false,
+                    backgroundColor: kBackgroundColor,
+                    title: Consumer<ProfileScreenProvider>(
+                      builder: (context, value, _) {
+                        return CustomTextWidget(
+                          name: value.userData['username'],
+                          size: 24,
+                          fontWeight: FontWeight.bold,
+                          textColor: kYellowColor,
+                        );
+                      },
+                    ),
+                    actions: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.dehaze,
+                          size: 30,
+                        ),
+                      ),
+                    ],
+                  )
+                : AppBar(
+                    backgroundColor: kBackgroundColor,
+                    leading: IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      icon: const Icon(Icons.arrow_back_ios_new),
+                    ),
+                    title: Consumer<ProfileScreenProvider>(
+                      builder: (context, value, _) {
+                        return CustomTextWidget(
+                          name: value.userData['username'],
+                          size: 24,
+                          fontWeight: FontWeight.bold,
+                          textColor: kYellowColor,
+                        );
+                      },
+                    ),
+                    actions: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.dehaze,
+                          size: 30,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
             body: DefaultTabController(
               length: 2,
               child: Consumer<ProfileScreenProvider>(
@@ -64,12 +101,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       return [
                         value.userData['bio'] == ""
                             ? SliverAppBar(
+                                automaticallyImplyLeading: false,
                                 backgroundColor: kBackgroundColor,
-                                collapsedHeight: screenHeight * 0.2,
-                                expandedHeight: screenHeight * 0.2,
+                                collapsedHeight: screenHeight * 0.21,
+                                expandedHeight: screenHeight * 0.21,
                                 flexibleSpace: const ProfileViewWidget(),
                               )
                             : SliverAppBar(
+                                automaticallyImplyLeading: false,
                                 backgroundColor: kBackgroundColor,
                                 collapsedHeight: screenHeight * 0.22,
                                 expandedHeight: screenHeight * 0.22,

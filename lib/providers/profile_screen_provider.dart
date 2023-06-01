@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
 
 class ProfileScreenProvider extends ChangeNotifier {
+  String? uid;
   var userData = {};
   int postLength = 0;
   bool isLoading = false;
-  String uid = FirebaseAuth.instance.currentUser!.uid;
+  bool isFollowing = false;
 
   getData(BuildContext context) async {
     isLoading = true;
@@ -20,6 +21,7 @@ class ProfileScreenProvider extends ChangeNotifier {
           .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
           .get();
       postLength = postSnap.docs.length;
+      isFollowing = userSnap.data()!['followers'].contains(FirebaseAuth.instance.currentUser!.uid);
       isLoading = false;
       notifyListeners();
     } catch (e) {

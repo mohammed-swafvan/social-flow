@@ -94,7 +94,7 @@ Container customLine(screenWidth) {
   );
 }
 
-Future postCardDialogue(bool isHomepage, snap, ctx) async {
+Future deletePostDialogue(snap, ctx) async {
   showDialog(
     context: ctx,
     builder: (ctx1) => Dialog(
@@ -105,31 +105,54 @@ Future postCardDialogue(bool isHomepage, snap, ctx) async {
         children: [
           InkWell(
             onTap: () {
-              if (!isHomepage) {
-                FirestoreMethods().deletePost(snap['postId'], ctx);
-                Navigator.of(ctx1).pop();
-                Navigator.of(ctx).pop();
-                Provider.of<ProfileScreenProvider>(ctx, listen: false).getData(ctx);
-              } else {}
+              FirestoreMethods().deletePost(snap['postId'], ctx);
+              Navigator.of(ctx1).pop();
+              Provider.of<ProfileScreenProvider>(ctx, listen: false).getData(ctx);
             },
             child: Container(
               padding: const EdgeInsets.symmetric(
                 vertical: 12,
                 horizontal: 16,
               ),
-              child: isHomepage
-                  ? CustomTextWidget(
-                      name: "follow",
-                      textColor: kMainColor,
-                      fontWeight: FontWeight.w500,
-                      size: 18,
-                    )
-                  : CustomTextWidget(
-                      name: "Delete",
-                      textColor: kRedColor,
-                      fontWeight: FontWeight.w500,
-                      size: 18,
-                    ),
+              child: CustomTextWidget(
+                name: "Delete",
+                textColor: kRedColor,
+                fontWeight: FontWeight.bold,
+                size: 20,
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Future followUnfollowDialogue(snap, ctx) async {
+  showDialog(
+    context: ctx,
+    builder: (ctx1) => Dialog(
+      backgroundColor: kWhiteColor.withOpacity(0.8),
+      child: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        shrinkWrap: true,
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.of(ctx1).pop();
+              Provider.of<ProfileScreenProvider>(ctx, listen: false).getData(ctx);
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: 12,
+                horizontal: 16,
+              ),
+              child: CustomTextWidget(
+                name: "follow",
+                textColor: kMainColor,
+                fontWeight: FontWeight.bold,
+                size: 20,
+              ),
             ),
           ),
         ],
