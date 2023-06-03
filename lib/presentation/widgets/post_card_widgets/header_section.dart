@@ -9,11 +9,11 @@ class HeaderSectionWidget extends StatelessWidget {
   const HeaderSectionWidget({
     super.key,
     required this.snap,
-    required this.isHomepage,
+   
   });
 
   final Map<String, dynamic> snap;
-  final bool isHomepage;
+ 
 
   @override
   Widget build(BuildContext context) {

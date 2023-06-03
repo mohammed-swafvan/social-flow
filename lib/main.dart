@@ -10,19 +10,21 @@ import 'package:social_flow/providers/login_screen_provider.dart';
 import 'package:social_flow/providers/post_card_provider.dart';
 import 'package:social_flow/providers/profile_screen_provider.dart';
 import 'package:social_flow/providers/signin_screen_provider.dart';
+import 'package:social_flow/providers/single_post_provider.dart';
 import 'package:social_flow/providers/user_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
     await Firebase.initializeApp(
-        options: const FirebaseOptions(
-      apiKey: "AIzaSyDubznabg-S_y-4Xi5PcrYPj3PM-qVD9H4",
-      appId: "1:79279217626:web:3cdf547bf3645c3c75bee3",
-      messagingSenderId: "79279217626",
-      projectId: "social-flow-clone",
-      storageBucket: "social-flow-clone.appspot.com",
-    ));
+      options: const FirebaseOptions(
+        apiKey: "AIzaSyDubznabg-S_y-4Xi5PcrYPj3PM-qVD9H4",
+        appId: "1:79279217626:web:3cdf547bf3645c3c75bee3",
+        messagingSenderId: "79279217626",
+        projectId: "social-flow-clone",
+        storageBucket: "social-flow-clone.appspot.com",
+      ),
+    );
   } else {
     await Firebase.initializeApp();
   }
@@ -37,12 +39,13 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => LoginScreenProvider()),
-        ChangeNotifierProvider(create: (_) => SigninScreenProvider()),
+        ChangeNotifierProvider(create: (_) => SignupScreenProvider()),
         ChangeNotifierProvider(create: (_) => GoogleButtonProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => AddPostProvider()),
         ChangeNotifierProvider(create: (_) => ProfileScreenProvider()),
         ChangeNotifierProvider(create: (_) => PostCardProvider()),
+        ChangeNotifierProvider(create: (_) => SinglePostProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

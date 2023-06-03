@@ -10,6 +10,12 @@ class LoginScreenProvider extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
+  bool visibility = true;
+
+  visibilityChanging() {
+    visibility = !visibility;
+    notifyListeners();
+  }
 
   Future<void> loginUser(BuildContext ctx) async {
     isLoading = true;

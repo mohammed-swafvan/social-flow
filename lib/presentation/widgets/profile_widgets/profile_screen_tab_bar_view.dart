@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:social_flow/presentation/screens/sigle_post_screen.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/presentation/widgets/text.dart';
@@ -16,8 +17,8 @@ class ProfileScreenTabBarViewWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ProfileScreenProvider>(
       builder: (context, value, _) {
-        return FutureBuilder(
-          future: FirebaseFirestore.instance.collection('posts').where('uid', isEqualTo: value.uid).get(),
+        return StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('posts').where('uid', isEqualTo: value.uid).snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapShot) {
             if (snapShot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -39,6 +40,12 @@ class ProfileScreenTabBarViewWidget extends StatelessWidget {
                     itemBuilder: (context, index) {
                       DocumentSnapshot snap = snapShot.data!.docs[index];
                       return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SinglePostScreen(snap: snapShot.data!.docs[index].data())),
+                          );
+                        },
                         onLongPress: () async {
                           if (snapShot.data!.docs[index].data()['uid'] == FirebaseAuth.instance.currentUser!.uid) {
                             await deletePostDialogue(snapShot.data!.docs[index].data(), context);

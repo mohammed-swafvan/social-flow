@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/widgets/circular_progress.dart';
 import 'package:social_flow/presentation/widgets/logo.dart';
-import 'package:social_flow/presentation/widgets/post_card_widgets/post_cart.dart';
+import 'package:social_flow/presentation/widgets/post_card_widgets/post_card_widget.dart';
 import 'package:social_flow/presentation/widgets/text.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -48,8 +48,6 @@ class HomeScreen extends StatelessWidget {
             itemCount: snapShot.data!.docs.length,
             itemBuilder: (context, index) => PostCardWidget(
               snap: snapShot.data!.docs[index].data(),
-              isHomepage: true,
-              isSinglePostScreen: false,
             ),
           );
         },

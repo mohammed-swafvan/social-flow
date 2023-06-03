@@ -9,7 +9,7 @@ import 'package:social_flow/responsive/mobile_screen_layout.dart';
 import 'package:social_flow/responsive/responsive_layout_screen.dart';
 import 'package:social_flow/responsive/web_screen_layout.dart';
 
-class SigninScreenProvider extends ChangeNotifier {
+class SignupScreenProvider extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController bioController = TextEditingController();
@@ -61,7 +61,7 @@ class SigninScreenProvider extends ChangeNotifier {
   }
 
   disposeControllers(context) {
-    final provider = Provider.of<SigninScreenProvider>(context, listen: false);
+    final provider = Provider.of<SignupScreenProvider>(context, listen: false);
     provider.emailController.clear();
     provider.passwordController.clear();
     provider.bioController.clear();

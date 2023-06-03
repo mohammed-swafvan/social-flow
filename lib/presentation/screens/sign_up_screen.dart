@@ -29,7 +29,7 @@ class SignUpScreen extends StatelessWidget {
                   flex: 1,
                   child: Container(),
                 ),
-                Consumer<SigninScreenProvider>(
+                Consumer<SignupScreenProvider>(
                   builder: (context, value, child) {
                     return Stack(
                       children: [
@@ -61,7 +61,7 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 kHeight30,
                 kHeight30,
-                Consumer<SigninScreenProvider>(
+                Consumer<SignupScreenProvider>(
                   builder: (context, value, child) {
                     return TextFieldWidget(
                       textEdingController: value.usernameController,
@@ -72,7 +72,7 @@ class SignUpScreen extends StatelessWidget {
                   },
                 ),
                 kHeight15,
-                Consumer<SigninScreenProvider>(
+                Consumer<SignupScreenProvider>(
                   builder: (context, value, child) {
                     return TextFieldWidget(
                       textEdingController: value.emailController,
@@ -83,7 +83,7 @@ class SignUpScreen extends StatelessWidget {
                   },
                 ),
                 kHeight15,
-                Consumer<SigninScreenProvider>(
+                Consumer<SignupScreenProvider>(
                   builder: (context, value, child) {
                     return TextFieldWidget(
                       textEdingController: value.passwordController,
@@ -95,7 +95,7 @@ class SignUpScreen extends StatelessWidget {
                   },
                 ),
                 kHeight15,
-                Consumer<SigninScreenProvider>(
+                Consumer<SignupScreenProvider>(
                   builder: (context, value, child) {
                     return TextFieldWidget(
                       textEdingController: value.bioController,
@@ -108,7 +108,7 @@ class SignUpScreen extends StatelessWidget {
                 kHeight30,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Consumer<SigninScreenProvider>(
+                  child: Consumer<SignupScreenProvider>(
                     builder: (context, value, child) {
                       return InkWell(
                         onTap: () {
@@ -160,20 +160,25 @@ class SignUpScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: const Text(
-                          "Log in",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                    Consumer<SignupScreenProvider>(
+                      builder: (context, value, child) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+                            value.disposeControllers(context);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: const Text(
+                              "Log in",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
                   ],
                 ),
