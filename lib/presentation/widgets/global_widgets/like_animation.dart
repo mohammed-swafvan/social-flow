@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 
-class LikeAnimation extends StatefulWidget {
-  const LikeAnimation({
+class IconsAnimationWidget extends StatefulWidget {
+  const IconsAnimationWidget({
     super.key,
     required this.child,
     required this.isAnimating,
     this.duration = const Duration(milliseconds: 200),
     this.onEnd,
-    this.smallLike = false,
+    this.smallIcon = false,
   });
   final Widget child;
   final bool isAnimating;
   final Duration duration;
   final VoidCallback? onEnd;
-  final bool smallLike;
+  final bool smallIcon;
 
   @override
-  State<LikeAnimation> createState() => _LikeAnimationState();
+  State<IconsAnimationWidget> createState() => _IconsAnimationWidgetState();
 }
 
-class _LikeAnimationState extends State<LikeAnimation> with SingleTickerProviderStateMixin {
+class _IconsAnimationWidgetState extends State<IconsAnimationWidget> with SingleTickerProviderStateMixin {
   late AnimationController controller;
   late Animation<double> scale;
 
@@ -34,7 +34,7 @@ class _LikeAnimationState extends State<LikeAnimation> with SingleTickerProvider
   }
 
   @override
-  void didUpdateWidget(covariant LikeAnimation oldWidget) {
+  void didUpdateWidget(covariant IconsAnimationWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (widget.isAnimating != oldWidget.isAnimating) {
@@ -57,7 +57,7 @@ class _LikeAnimationState extends State<LikeAnimation> with SingleTickerProvider
   }
 
   startAnimation() async {
-    if (widget.isAnimating || widget.smallLike) {
+    if (widget.isAnimating || widget.smallIcon) {
       await controller.forward();
       await controller.reverse();
       await Future.delayed(const Duration(milliseconds: 200));

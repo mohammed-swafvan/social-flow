@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
-import 'package:social_flow/presentation/widgets/profile_widgets/my_delagate_widget.dart';
-import 'package:social_flow/presentation/widgets/profile_widgets/profile_screen_tab_bar_view.dart';
-import 'package:social_flow/presentation/widgets/profile_widgets/profile_view_widget.dart';
-import 'package:social_flow/presentation/widgets/text.dart';
+import 'package:social_flow/presentation/widgets/profile_screen_widgets/my_delagate_widget.dart';
+import 'package:social_flow/presentation/widgets/profile_screen_widgets/post_in_profile_widget.dart';
+import 'package:social_flow/presentation/widgets/profile_screen_widgets/profile_view_widget.dart';
+import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
+import 'package:social_flow/presentation/widgets/profile_screen_widgets/saved_images_widget.dart';
 import 'package:social_flow/providers/profile_screen_provider.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -122,7 +123,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               indicatorColor: kWhiteColor,
                               unselectedLabelColor: kWhiteColor.withOpacity(0.5),
                               labelColor: kWhiteColor,
-                              tabs: const [Tab(icon: Icon(Icons.grid_on)), Tab(icon: Icon(Icons.bookmark))],
+                              tabs: const [
+                                Tab(icon: Icon(Icons.grid_on)),
+                                Tab(
+                                  icon: Icon(Icons.bookmark),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -130,8 +136,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     },
                     body: TabBarView(
                       children: [
-                        const ProfileScreenTabBarViewWidget(),
-                        Container(),
+                        const PostsInProfileWidget(),
+                        SavedImagesWidget(uid: widget.uid),
                       ],
                     ),
                   );
@@ -142,6 +148,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   getUserData() {
-    Provider.of<ProfileScreenProvider>(context, listen: false).getData(context);
+    Provider.of<ProfileScreenProvider>(context, listen: false).getData(context, widget.uid);
   }
 }

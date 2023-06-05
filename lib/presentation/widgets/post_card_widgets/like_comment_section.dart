@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:social_flow/models/user_model.dart';
 import 'package:social_flow/presentation/screens/comment_screen.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
-import 'package:social_flow/presentation/widgets/like_animation.dart';
+import 'package:social_flow/presentation/widgets/global_widgets/like_animation.dart';
 import 'package:social_flow/resources/firestore_methods.dart';
 
 class LikeCommentSection extends StatelessWidget {
@@ -12,16 +12,16 @@ class LikeCommentSection extends StatelessWidget {
     required this.user,
   });
 
-  final Map<String, dynamic> snap ;
+  final Map<String, dynamic> snap;
   final UserModel? user;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        LikeAnimation(
+        IconsAnimationWidget(
           isAnimating: snap['likes'].contains(user!.uid),
-          smallLike: true,
+          smallIcon: true,
           child: IconButton(
             onPressed: () async {
               await FirestoreMethods().likePost(
@@ -61,21 +61,7 @@ class LikeCommentSection extends StatelessWidget {
             size: 28,
           ),
         ),
-        Expanded(
-          child: Align(
-            alignment: Alignment.bottomRight,
-            child: IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.bookmark_border,
-                color: kWhiteColor.withOpacity(0.8),
-                size: 28,
-              ),
-            ),
-          ),
-        ),
       ],
     );
   }
 }
-

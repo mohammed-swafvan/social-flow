@@ -4,9 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:social_flow/models/user_model.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
-import 'package:social_flow/presentation/widgets/circular_progress.dart';
+import 'package:social_flow/presentation/widgets/global_widgets/circular_progress.dart';
 import 'package:social_flow/presentation/widgets/comment_card_widget.dart';
-import 'package:social_flow/presentation/widgets/text.dart';
+import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 import 'package:social_flow/providers/user_provider.dart';
 import 'package:social_flow/resources/firestore_methods.dart';
 
@@ -79,6 +79,7 @@ class _CommentScreenState extends State<CommentScreen> {
                   itemBuilder: (context, index) {
                     return CommentCartWidget(
                       snap: snapShot.data!.docs[index].data(),
+                      postId: widget.snap['postId'],
                     );
                   },
                 );

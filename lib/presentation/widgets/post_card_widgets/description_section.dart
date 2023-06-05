@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
-import 'package:social_flow/presentation/widgets/text.dart';
+import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 
 class DescriptionSectionWidget extends StatelessWidget {
   const DescriptionSectionWidget({

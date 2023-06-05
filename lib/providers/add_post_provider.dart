@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
-import 'package:social_flow/presentation/widgets/text.dart';
+import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 import 'package:social_flow/resources/firestore_methods.dart';
 
 class AddPostProvider extends ChangeNotifier {

@@ -25,7 +25,7 @@ class SinglePostProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  likeLengthInitializing(snap) {
+  likeLengthInitialize(snap) {
     likeLength = snap['likes'].length;
     notifyListeners();
   }

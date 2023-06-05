@@ -72,9 +72,51 @@ class FirestoreMethods {
     }
   }
 
+  savePost(
+    context,
+    String postId,
+    String username,
+    String currentUserUid,
+    datePublished,
+    String postUrl,
+    String description,
+    List likes,
+  ) async {
+    DocumentReference savedPostRef = firestore.collection('users').doc(currentUserUid).collection('savedImages').doc(postId);
+    DocumentSnapshot savedPostSnap = await savedPostRef.get();
+
+    try {
+      if (savedPostSnap.exists) {
+        await savedPostRef.delete();
+        showSnackbar("Post Removed", context);
+      } else {
+        await savedPostRef.set({
+          'username': username,
+          'currentUserUid': currentUserUid,
+          'postId': postId,
+          'postUrl': postUrl,
+          'datePublished': datePublished,
+          'description': description,
+          'likes': likes,
+        });
+        showSnackbar("Post Saved", context);
+      }
+    } catch (e) {
+      showSnackbar(e.toString(), context);
+    }
+  }
+
   deletePost(String postId, context) async {
     try {
       await firestore.collection('posts').doc(postId).delete();
+    } catch (e) {
+      showSnackbar(e.toString(), context);
+    }
+  }
+
+  deleteComment(BuildContext context, postId, commentId) async {
+    try {
+      await firestore.collection('posts').doc(postId).collection('comments').doc(commentId).delete();
     } catch (e) {
       showSnackbar(e.toString(), context);
     }

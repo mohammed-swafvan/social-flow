@@ -10,16 +10,13 @@ class ProfileScreenProvider extends ChangeNotifier {
   bool isLoading = false;
   bool isFollowing = false;
 
-  getData(BuildContext context) async {
+  getData(BuildContext context, uid) async {
     isLoading = true;
     try {
       var userSnap = await FirebaseFirestore.instance.collection('users').doc(uid).get();
       userData = userSnap.data()!;
 
-      var postSnap = await FirebaseFirestore.instance
-          .collection('posts')
-          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-          .get();
+      var postSnap = await FirebaseFirestore.instance.collection('posts').where('uid', isEqualTo: uid).get();
       postLength = postSnap.docs.length;
       isFollowing = userSnap.data()!['followers'].contains(FirebaseAuth.instance.currentUser!.uid);
       isLoading = false;

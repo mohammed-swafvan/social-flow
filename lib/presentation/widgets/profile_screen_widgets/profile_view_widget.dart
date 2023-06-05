@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/global_variables.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
-import 'package:social_flow/presentation/widgets/profile_widgets/flat_button_widget.dart';
+import 'package:social_flow/presentation/widgets/profile_screen_widgets/flat_button_widget.dart';
 import 'package:social_flow/providers/profile_screen_provider.dart';
 
 class ProfileViewWidget extends StatelessWidget {

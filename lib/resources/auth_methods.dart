@@ -25,8 +25,6 @@ class AuthMethods {
     return firebaseApp;
   }
 
-
-
   Future<String> singnUpUser({
     required String username,
     required String email,

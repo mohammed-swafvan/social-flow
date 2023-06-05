@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/screens/login_screen.dart';
-import 'package:social_flow/presentation/widgets/circular_progress.dart';
-import 'package:social_flow/presentation/widgets/text.dart';
-import 'package:social_flow/presentation/widgets/text_field_input.dart';
+import 'package:social_flow/presentation/widgets/global_widgets/circular_progress.dart';
+import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
+import 'package:social_flow/presentation/widgets/global_widgets/text_field_input.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/presentation/utils/global_variables.dart';

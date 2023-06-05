@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:social_flow/presentation/screens/comment_screen.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
-import 'package:social_flow/presentation/widgets/text.dart';
+import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 
 class CommentLengthWidget extends StatelessWidget {
   const CommentLengthWidget({

@@ -5,22 +5,30 @@ import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/screens/comment_screen.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
-import 'package:social_flow/presentation/widgets/like_animation.dart';
-import 'package:social_flow/presentation/widgets/text.dart';
+import 'package:social_flow/presentation/widgets/global_widgets/like_animation.dart';
+import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 import 'package:social_flow/providers/post_card_provider.dart';
 import 'package:social_flow/providers/single_post_provider.dart';
 
 class SinglePostScreen extends StatelessWidget {
-  const SinglePostScreen({super.key, required this.snap});
+  const SinglePostScreen({
+    super.key,
+    required this.snap,
+    required this.title,
+    required this.isSavePostScreen,
+  });
 
   final Map<String, dynamic> snap;
+  final String title;
+  final bool isSavePostScreen;
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = Provider.of<SinglePostProvider>(context, listen: false);
+      Provider.of<PostCardProvider>(context, listen: false).isSavedCheking(snap['postId']);
       provider.likeContains(snap, FirebaseAuth.instance.currentUser!.uid);
-      provider.likeLengthInitializing(snap);
+      provider.likeLengthInitialize(snap);
     });
 
     final screenHeight = MediaQuery.of(context).size.height;
@@ -40,12 +48,19 @@ class SinglePostScreen extends StatelessWidget {
           ),
         ),
         title: CustomTextWidget(
-          name: "Post",
+          name: title,
           size: 24,
           fontWeight: FontWeight.bold,
           textColor: kYellowColor,
         ),
-        
+        actions: [
+          isSavePostScreen
+              ? IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.more_vert_outlined),
+                )
+              : const SizedBox()
+        ],
       ),
       body: SizedBox(
         height: screenHeight,
@@ -80,7 +95,7 @@ class SinglePostScreen extends StatelessWidget {
                           AnimatedOpacity(
                             duration: const Duration(milliseconds: 200),
                             opacity: value.isLikeAnimating ? 1 : 0,
-                            child: LikeAnimation(
+                            child: IconsAnimationWidget(
                               isAnimating: value.isLikeAnimating,
                               duration: const Duration(milliseconds: 400),
                               onEnd: () {
@@ -104,23 +119,27 @@ class SinglePostScreen extends StatelessWidget {
               children: [
                 Consumer<SinglePostProvider>(
                   builder: (context, value, child) {
-                    return IconButton(
-                      onPressed: () async {
-                        await value.likePost(context, snap, currentUserUid);
-                        value.likeLengthCounting();
-                        value.likeButtonManaging();
-                      },
-                      icon: value.alreadyLike
-                          ? Icon(
-                              Icons.favorite,
-                              color: kMainColor,
-                              size: 28,
-                            )
-                          : Icon(
-                              Icons.favorite_border,
-                              color: kWhiteColor.withOpacity(0.8),
-                              size: 28,
-                            ),
+                    return IconsAnimationWidget(
+                      isAnimating: value.alreadyLike,
+                      smallIcon: true,
+                      child: IconButton(
+                        onPressed: () async {
+                          await value.likePost(context, snap, currentUserUid);
+                          value.likeButtonManaging();
+                          value.likeLengthCounting();
+                        },
+                        icon: value.alreadyLike
+                            ? Icon(
+                                Icons.favorite,
+                                color: kMainColor,
+                                size: 28,
+                              )
+                            : Icon(
+                                Icons.favorite_border,
+                                color: kWhiteColor.withOpacity(0.8),
+                                size: 28,
+                              ),
+                      ),
                     );
                   },
                 ),
@@ -139,19 +158,6 @@ class SinglePostScreen extends StatelessWidget {
                     Icons.comment_outlined,
                     color: kWhiteColor.withOpacity(0.8),
                     size: 28,
-                  ),
-                ),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.bookmark_border,
-                        color: kWhiteColor.withOpacity(0.8),
-                        size: 28,
-                      ),
-                    ),
                   ),
                 ),
               ],

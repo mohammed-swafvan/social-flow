@@ -14,6 +14,8 @@ Widget kWidth10 = const SizedBox(width: 10);
 
 const webSreenSize = 600;
 
+bool isSave = false;
+
 List<Widget> homeScreenItems = [
   const HomeScreen(),
   const SearchScreen(),

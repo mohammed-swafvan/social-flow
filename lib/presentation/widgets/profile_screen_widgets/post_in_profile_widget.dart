@@ -2,14 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:social_flow/presentation/screens/sigle_post_screen.dart';
+import 'package:social_flow/presentation/screens/single_post_screen.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
-import 'package:social_flow/presentation/widgets/text.dart';
+import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 import 'package:social_flow/providers/profile_screen_provider.dart';
 
-class ProfileScreenTabBarViewWidget extends StatelessWidget {
-  const ProfileScreenTabBarViewWidget({
+class PostsInProfileWidget extends StatelessWidget {
+  const PostsInProfileWidget({
     super.key,
   });
 
@@ -43,12 +43,18 @@ class ProfileScreenTabBarViewWidget extends StatelessWidget {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => SinglePostScreen(snap: snapShot.data!.docs[index].data())),
+                            MaterialPageRoute(
+                              builder: (context) => SinglePostScreen(
+                                snap: snapShot.data!.docs[index].data(),
+                                title: 'Post',
+                                isSavePostScreen: false,
+                              ),
+                            ),
                           );
                         },
                         onLongPress: () async {
                           if (snapShot.data!.docs[index].data()['uid'] == FirebaseAuth.instance.currentUser!.uid) {
-                            await deletePostDialogue(snapShot.data!.docs[index].data(), context);
+                            await deleteDialogue(snap: snapShot.data!.docs[index].data(), ctx: context, isPost: true);
                           }
                         },
                         child: Container(

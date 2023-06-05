@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
-import 'package:social_flow/presentation/widgets/circular_progress.dart';
-import 'package:social_flow/presentation/widgets/logo.dart';
+import 'package:social_flow/presentation/widgets/global_widgets/circular_progress.dart';
+import 'package:social_flow/presentation/widgets/global_widgets/logo.dart';
 import 'package:social_flow/presentation/widgets/post_card_widgets/post_card_widget.dart';
-import 'package:social_flow/presentation/widgets/text.dart';
+import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

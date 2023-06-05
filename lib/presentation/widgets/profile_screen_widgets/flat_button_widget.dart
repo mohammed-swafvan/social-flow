@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
-import 'package:social_flow/presentation/widgets/text.dart';
+import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 
 class FlatButtonWidget extends StatelessWidget {
   const FlatButtonWidget({super.key, this.function, required this.bgColor, required this.borderColor, required this.text});

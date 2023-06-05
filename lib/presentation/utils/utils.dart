@@ -1,12 +1,15 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:developer';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
-import 'package:social_flow/presentation/widgets/text.dart';
+import 'package:social_flow/presentation/utils/global_variables.dart';
+import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
+import 'package:social_flow/providers/post_card_provider.dart';
 import 'package:social_flow/providers/profile_screen_provider.dart';
 import 'package:social_flow/resources/firestore_methods.dart';
 
@@ -40,7 +43,13 @@ pickImage(ImageSource source) async {
 showSnackbar(String content, BuildContext context) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      content: Text(content),
+      backgroundColor: kSmallContextsColor,
+      content: CustomTextWidget(
+        name: content,
+        size: 16,
+        fontWeight: FontWeight.w600,
+        textColor: kYellowColor,
+      ),
     ),
   );
 }
@@ -94,7 +103,7 @@ Container customLine(screenWidth) {
   );
 }
 
-Future deletePostDialogue(snap, ctx) async {
+Future deleteDialogue({required snap, required ctx, required isPost, postId}) async {
   showDialog(
     context: ctx,
     builder: (ctx1) => Dialog(
@@ -105,9 +114,15 @@ Future deletePostDialogue(snap, ctx) async {
         children: [
           InkWell(
             onTap: () {
-              FirestoreMethods().deletePost(snap['postId'], ctx);
-              Navigator.of(ctx1).pop();
-              Provider.of<ProfileScreenProvider>(ctx, listen: false).getData(ctx);
+              if (isPost) {
+                FirestoreMethods().deletePost(snap['postId'], ctx);
+                Navigator.of(ctx1).pop();
+                Provider.of<ProfileScreenProvider>(ctx, listen: false).getData(ctx, snap['uid']);
+              } else {
+                FirestoreMethods().deleteComment(ctx, postId, snap['commentId']);
+                Navigator.of(ctx1).pop();
+                Provider.of<ProfileScreenProvider>(ctx, listen: false).getData(ctx, snap['uid']);
+              }
             },
             child: Container(
               padding: const EdgeInsets.symmetric(
@@ -128,7 +143,8 @@ Future deletePostDialogue(snap, ctx) async {
   );
 }
 
-Future followUnfollowDialogue(snap, ctx) async {
+Future otherUsersMoreDialogue(snap, ctx) async {
+  isSave = await Provider.of<PostCardProvider>(ctx, listen: false).isSavedCheking(snap['postId']);
   showDialog(
     context: ctx,
     builder: (ctx1) => Dialog(
@@ -140,7 +156,8 @@ Future followUnfollowDialogue(snap, ctx) async {
           InkWell(
             onTap: () {
               Navigator.of(ctx1).pop();
-              Provider.of<ProfileScreenProvider>(ctx, listen: false).getData(ctx);
+
+              Provider.of<ProfileScreenProvider>(ctx, listen: false).getData(ctx, snap['uid']);
             },
             child: Container(
               padding: const EdgeInsets.symmetric(
@@ -149,6 +166,34 @@ Future followUnfollowDialogue(snap, ctx) async {
               ),
               child: CustomTextWidget(
                 name: "follow",
+                textColor: kMainColor,
+                fontWeight: FontWeight.bold,
+                size: 20,
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () async {
+              Navigator.of(ctx1).pop();
+              await FirestoreMethods().savePost(
+                ctx,
+                snap['postId'],
+                snap['username'],
+                FirebaseAuth.instance.currentUser!.uid,
+                snap['datePublished'],
+                snap['postUrl'],
+                snap['description'],
+                snap['likes'],
+              );
+              Provider.of<ProfileScreenProvider>(ctx, listen: false).getData(ctx, snap['uid']);
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: 12,
+                horizontal: 16,
+              ),
+              child: CustomTextWidget(
+                name: isSave ? "unsave" : "save",
                 textColor: kMainColor,
                 fontWeight: FontWeight.bold,
                 size: 20,

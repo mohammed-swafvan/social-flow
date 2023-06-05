@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_flow/models/user_model.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
-import 'package:social_flow/presentation/widgets/like_animation.dart';
+import 'package:social_flow/presentation/widgets/global_widgets/like_animation.dart';
 import 'package:social_flow/providers/post_card_provider.dart';
 import 'package:social_flow/resources/firestore_methods.dart';
 
@@ -47,7 +47,7 @@ class ImageSectionWidget extends StatelessWidget {
               AnimatedOpacity(
                 duration: const Duration(milliseconds: 200),
                 opacity: value.isLikeAnimating ? 1 : 0,
-                child: LikeAnimation(
+                child: IconsAnimationWidget(
                   isAnimating: value.isLikeAnimating,
                   duration: const Duration(milliseconds: 400),
                   onEnd: () {
