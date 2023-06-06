@@ -1,11 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/screens/profile_screen.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
-import 'package:social_flow/providers/post_card_provider.dart';
 
 class HeaderSectionWidget extends StatelessWidget {
   const HeaderSectionWidget({
@@ -17,7 +15,6 @@ class HeaderSectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<PostCardProvider>(context, listen: false).isSavedCheking(snap['postId']);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
@@ -71,7 +68,7 @@ class HeaderSectionWidget extends StatelessWidget {
                 )
               : IconButton(
                   onPressed: () async {
-                    await otherUsersMoreDialogue(snap, context);
+                    await otherUsersMoreDialogue(snap, context, false);
                   },
                   icon: Icon(
                     Icons.more_vert_rounded,

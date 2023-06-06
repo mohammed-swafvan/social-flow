@@ -1,24 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/global_variables.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/presentation/widgets/search_screen_widgets/search_idle_widget.dart';
 import 'package:social_flow/presentation/widgets/search_screen_widgets/search_result_widget.dart';
+import 'package:social_flow/providers/search_screen_provider.dart';
 
-class SearchScreen extends StatefulWidget {
+class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
-
-  @override
-  State<SearchScreen> createState() => _SearchScreenState();
-}
-
-class _SearchScreenState extends State<SearchScreen> {
-  final TextEditingController searchController = TextEditingController();
-  @override
-  void dispose() {
-    super.dispose();
-    searchController.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +25,8 @@ class _SearchScreenState extends State<SearchScreen> {
                 color: kWhiteColor.withOpacity(0.13),
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
               ),
-              height: screenHeight * 0.06,
-              padding: const EdgeInsets.only(left: 12, right: 8),
+              height: screenHeight * 0.065,
+              padding: const EdgeInsets.only(left: 12, right: 6),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -47,26 +37,50 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: TextFormField(
-                        controller: searchController,
-                        style: customTextStyle(kWhiteColor, 16, FontWeight.bold),
-                        decoration: InputDecoration(
-                          hintText: 'search for users',
-                          hintStyle: customTextStyle(kWhiteColor.withOpacity(0.5), 16, FontWeight.w500),
-                          border: InputBorder.none,
-                        ),
-                        onChanged: (String value) {
-                          setState(() {});
+                      padding: const EdgeInsets.only(left: 10.0, right: 8),
+                      child: Consumer<SearchScreenProvider>(
+                        builder: (context, value, _) {
+                          return TextFormField(
+                            controller: value.searchController,
+                            style: customTextStyle(kWhiteColor, 16, FontWeight.bold),
+                            decoration: InputDecoration(
+                              hintText: 'search for users',
+                              hintStyle: customTextStyle(kWhiteColor.withOpacity(0.5), 16, FontWeight.w500),
+                              border: InputBorder.none,
+                            ),
+                            onChanged: (String searchedValue) {
+                              if (searchedValue.isEmpty) {
+                                value.hideUser();
+                              } else {
+                                value.showUser();
+                              }
+                            },
+                          );
                         },
                       ),
                     ),
                   ),
+                  Consumer<SearchScreenProvider>(builder: (context, value, _) {
+                    return IconButton(
+                      onPressed: () {
+                        value.disposeSearchController();
+                      },
+                      icon: Icon(
+                        Icons.close_rounded,
+                        color: kWhiteColor.withOpacity(0.7),
+                        size: 18,
+                      ),
+                    );
+                  })
                 ],
               ),
             ),
           ),
-          searchController.text.isEmpty ? const SearchIdleWidget() : const SearchResultWidget(),
+          Consumer<SearchScreenProvider>(
+            builder: (context, value, _) {
+              return value.isShowUser ? const SearchResultWidget() : const SearchIdleWidget();
+            },
+          ),
         ],
       ),
     ));

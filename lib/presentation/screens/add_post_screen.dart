@@ -7,6 +7,7 @@ import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/circular_progress.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 import 'package:social_flow/providers/add_post_provider.dart';
+import 'package:social_flow/providers/search_screen_provider.dart';
 import 'package:social_flow/providers/user_provider.dart';
 
 class AddPostScreen extends StatelessWidget {
@@ -14,6 +15,9 @@ class AddPostScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<SearchScreenProvider>(context, listen: false).disposeSearchController();
+    });
     final UserModel? userDetails = Provider.of<UserProvider>(context).getUser;
     final provider = Provider.of<AddPostProvider>(context);
 

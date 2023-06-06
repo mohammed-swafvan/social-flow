@@ -1,16 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/circular_progress.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/logo.dart';
 import 'package:social_flow/presentation/widgets/post_card_widgets/post_card_widget.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
+import 'package:social_flow/providers/search_screen_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<SearchScreenProvider>(context, listen: false).disposeSearchController();
+    });
     return Scaffold(
       appBar: const MyAppBar(),
       body: StreamBuilder(

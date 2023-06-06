@@ -8,6 +8,7 @@ import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/like_animation.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 import 'package:social_flow/providers/post_card_provider.dart';
+import 'package:social_flow/providers/search_screen_provider.dart';
 import 'package:social_flow/providers/single_post_provider.dart';
 
 class SinglePostScreen extends StatelessWidget {
@@ -26,7 +27,7 @@ class SinglePostScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = Provider.of<SinglePostProvider>(context, listen: false);
-      Provider.of<PostCardProvider>(context, listen: false).isSavedCheking(snap['postId']);
+      Provider.of<SearchScreenProvider>(context, listen: false).disposeSearchController();
       provider.likeContains(snap, FirebaseAuth.instance.currentUser!.uid);
       provider.likeLengthInitialize(snap);
     });
@@ -56,7 +57,9 @@ class SinglePostScreen extends StatelessWidget {
         actions: [
           isSavePostScreen
               ? IconButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await otherUsersMoreDialogue(snap, context, true);
+                  },
                   icon: const Icon(Icons.more_vert_outlined),
                 )
               : const SizedBox()

@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_flow/models/post_model.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
@@ -106,6 +107,24 @@ class FirestoreMethods {
     }
   }
 
+  ////// is post saved or not saved checking /////
+  Future<bool> isSavedCheking(postId) async {
+    DocumentReference savedPostRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(
+          FirebaseAuth.instance.currentUser!.uid,
+        )
+        .collection('savedImages')
+        .doc(postId);
+
+    DocumentSnapshot savedPostSanp = await savedPostRef.get();
+    if (savedPostSanp.exists) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   deletePost(String postId, context) async {
     try {
       await firestore.collection('posts').doc(postId).delete();
@@ -121,4 +140,7 @@ class FirestoreMethods {
       showSnackbar(e.toString(), context);
     }
   }
+
+
+
 }
