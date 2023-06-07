@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/screens/splash_screen.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/providers/add_post_provider.dart';
+import 'package:social_flow/providers/followers_provider.dart';
 import 'package:social_flow/providers/google_button_provider.dart';
 import 'package:social_flow/providers/login_screen_provider.dart';
 import 'package:social_flow/providers/post_card_provider.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => PostCardProvider()),
         ChangeNotifierProvider(create: (_) => SinglePostProvider()),
         ChangeNotifierProvider(create: (_) => SearchScreenProvider()),
+        ChangeNotifierProvider(create: (_) => FollowerProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

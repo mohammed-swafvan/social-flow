@@ -106,14 +106,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 backgroundColor: kBackgroundColor,
                                 collapsedHeight: screenHeight * 0.21,
                                 expandedHeight: screenHeight * 0.21,
-                                flexibleSpace: const ProfileViewWidget(),
+                                flexibleSpace: ProfileViewWidget(uid: widget.uid,),
                               )
                             : SliverAppBar(
                                 automaticallyImplyLeading: false,
                                 backgroundColor: kBackgroundColor,
                                 collapsedHeight: screenHeight * 0.22,
                                 expandedHeight: screenHeight * 0.22,
-                                flexibleSpace: const ProfileViewWidget(),
+                                flexibleSpace: ProfileViewWidget(uid: widget.uid,),
                               ),
                         SliverPersistentHeader(
                           floating: true,

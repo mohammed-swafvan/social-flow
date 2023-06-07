@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:social_flow/presentation/screens/profile_screen.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/circular_progress.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
@@ -70,6 +72,17 @@ class SearchResultWidget extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: ListTile(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ProfileScreen(
+                                  uid: snap['uid'],
+                                  isCurrentUserProfile: FirebaseAuth.instance.currentUser!.uid == snap['uid'] ? true : false,
+                                ),
+                              ),
+                            );
+                          },
                           minVerticalPadding: 20,
                           leading: CircleAvatar(
                             radius: 25,

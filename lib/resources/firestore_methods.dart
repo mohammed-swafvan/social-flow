@@ -55,6 +55,35 @@ class FirestoreMethods {
     }
   }
 
+  Future<void> followUser({
+    required BuildContext context,
+    required String uid,
+    required String followId,
+  }) async {
+    try {
+      DocumentSnapshot snap = await firestore.collection('users').doc(uid).get();
+      List following = (snap.data()! as dynamic)['following'];
+
+      if (following.contains(followId)) {
+        await firestore.collection('users').doc(followId).update({
+          'followers': FieldValue.arrayRemove([uid]),
+        });
+        await firestore.collection('users').doc(uid).update({
+          'following': FieldValue.arrayRemove([followId]),
+        });
+      }else{
+        await firestore.collection('users').doc(followId).update({
+          'followers': FieldValue.arrayUnion([uid]),
+        });
+        await firestore.collection('users').doc(uid).update({
+          'following': FieldValue.arrayUnion([followId]),
+        });
+      }
+    } catch (e) {
+      showSnackbar(e.toString(), context);
+    }
+  }
+
   Future<void> postComment(BuildContext context, String postId, String text, String uid, String name, String profilePic) async {
     try {
       if (text.isNotEmpty) {
@@ -140,7 +169,4 @@ class FirestoreMethods {
       showSnackbar(e.toString(), context);
     }
   }
-
-
-
 }
