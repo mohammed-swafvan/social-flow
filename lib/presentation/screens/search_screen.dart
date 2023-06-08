@@ -25,7 +25,7 @@ class SearchScreen extends StatelessWidget {
                 color: kWhiteColor.withOpacity(0.13),
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
               ),
-              height: screenHeight * 0.065,
+              height: screenHeight * 0.062,
               padding: const EdgeInsets.only(left: 12, right: 6),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,

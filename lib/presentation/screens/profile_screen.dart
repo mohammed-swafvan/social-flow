@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/widgets/profile_screen_widgets/my_delagate_widget.dart';
 import 'package:social_flow/presentation/widgets/profile_screen_widgets/post_in_profile_widget.dart';
-import 'package:social_flow/presentation/widgets/profile_screen_widgets/profile_view_widget.dart';
+import 'package:social_flow/presentation/widgets/profile_screen_widgets/profile_header_widget.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 import 'package:social_flow/presentation/widgets/profile_screen_widgets/saved_images_widget.dart';
 import 'package:social_flow/providers/profile_screen_provider.dart';
@@ -100,21 +100,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     physics: const NeverScrollableScrollPhysics(),
                     headerSliverBuilder: (context, isScrolled) {
                       return [
-                        value.userData['bio'] == ""
-                            ? SliverAppBar(
-                                automaticallyImplyLeading: false,
-                                backgroundColor: kBackgroundColor,
-                                collapsedHeight: screenHeight * 0.21,
-                                expandedHeight: screenHeight * 0.21,
-                                flexibleSpace: ProfileViewWidget(uid: widget.uid,),
-                              )
-                            : SliverAppBar(
-                                automaticallyImplyLeading: false,
-                                backgroundColor: kBackgroundColor,
-                                collapsedHeight: screenHeight * 0.22,
-                                expandedHeight: screenHeight * 0.22,
-                                flexibleSpace: ProfileViewWidget(uid: widget.uid,),
-                              ),
+                        SliverAppBar(
+                          automaticallyImplyLeading: false,
+                          backgroundColor: kBackgroundColor,
+                          collapsedHeight: screenHeight * 0.22,
+                          expandedHeight: screenHeight * 0.22,
+                          flexibleSpace: ProfileHeaderWidget(
+                            uid: widget.uid,
+                          ),
+                        ),
                         SliverPersistentHeader(
                           floating: true,
                           pinned: true,

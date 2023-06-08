@@ -71,7 +71,7 @@ class FirestoreMethods {
         await firestore.collection('users').doc(uid).update({
           'following': FieldValue.arrayRemove([followId]),
         });
-      }else{
+      } else {
         await firestore.collection('users').doc(followId).update({
           'followers': FieldValue.arrayUnion([uid]),
         });
@@ -148,6 +148,17 @@ class FirestoreMethods {
 
     DocumentSnapshot savedPostSanp = await savedPostRef.get();
     if (savedPostSanp.exists) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> isFollowChecking(String uid) async {
+    DocumentReference user = FirebaseFirestore.instance.collection('users').doc(uid);
+    DocumentSnapshot followersSnap = await user.get();
+
+    if (followersSnap['followers'].contains(FirebaseAuth.instance.currentUser!.uid)) {
       return true;
     } else {
       return false;

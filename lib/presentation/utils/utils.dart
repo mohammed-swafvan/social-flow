@@ -12,7 +12,6 @@ import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 import 'package:social_flow/providers/profile_screen_provider.dart';
 import 'package:social_flow/resources/firestore_methods.dart';
 
-
 //////// Theme Data//////////
 ThemeData themeData() {
   return ThemeData(
@@ -29,7 +28,6 @@ ThemeData themeData() {
     ),
   );
 }
-
 
 ////// image picking from camera or gallery ///////
 pickImage(ImageSource source) async {
@@ -58,7 +56,6 @@ showSnackbar(String content, BuildContext context) {
   );
 }
 
-
 /////// bottom navigation bar items ////////
 BottomNavigationBarItem bottomNavItems({required IconData navIcon, required int currentPage, required int page}) {
   return BottomNavigationBarItem(
@@ -80,7 +77,6 @@ TextStyle customTextStyle(Color textColor, double size, FontWeight fontWeight) {
   );
 }
 
-
 /////// column for user profile header section ///////
 Column customStatColumn(String number, String item) {
   return Column(
@@ -101,7 +97,6 @@ Column customStatColumn(String number, String item) {
   );
 }
 
-
 //////// line for login and signup screen ////////
 Container customLine(screenWidth) {
   return Container(
@@ -113,7 +108,6 @@ Container customLine(screenWidth) {
     ),
   );
 }
-
 
 //////// post deleting dialogue box ///////////
 Future deleteDialogue({required snap, required ctx, required isPost, postId}) async {
@@ -159,6 +153,9 @@ Future deleteDialogue({required snap, required ctx, required isPost, postId}) as
 /////// other users more option dialogue ///////
 Future otherUsersMoreDialogue(snap, ctx, isSinglePostScreen) async {
   isSave = await FirestoreMethods().isSavedCheking(snap['postId']);
+  if (!isSinglePostScreen) {
+    isFollow = await FirestoreMethods().isFollowChecking(snap['uid']);
+  }
   showDialog(
     context: ctx,
     builder: (ctx1) => Dialog(
@@ -170,22 +167,32 @@ Future otherUsersMoreDialogue(snap, ctx, isSinglePostScreen) async {
           isSinglePostScreen
               ? const SizedBox()
               : InkWell(
-                  onTap: () {
+                  onTap: () async {
                     Navigator.of(ctx1).pop();
-                    Provider.of<ProfileScreenProvider>(ctx, listen: false).getData(ctx, snap['uid']);
+                    await FirestoreMethods().followUser(
+                      context: ctx,
+                      uid: FirebaseAuth.instance.currentUser!.uid,
+                      followId: snap['uid'],
+                    );
                   },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 12,
-                      horizontal: 16,
-                    ),
-                    child: CustomTextWidget(
-                      name: "follow",
-                      textColor: kMainColor,
-                      fontWeight: FontWeight.bold,
-                      size: 20,
-                    ),
-                  ),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 16,
+                      ),
+                      child: isFollow
+                          ? CustomTextWidget(
+                              name: "unfollow",
+                              textColor: kMainColor,
+                              fontWeight: FontWeight.bold,
+                              size: 20,
+                            )
+                          : CustomTextWidget(
+                              name: "follow",
+                              textColor: kMainColor,
+                              fontWeight: FontWeight.bold,
+                              size: 20,
+                            )),
                 ),
           InkWell(
             onTap: () async {

@@ -4,23 +4,23 @@ import 'package:social_flow/presentation/screens/profile_screen.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/circular_progress.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
-import 'package:social_flow/providers/followers_provider.dart';
+import 'package:social_flow/providers/following_screen_provider.dart';
 import 'package:social_flow/providers/profile_screen_provider.dart';
 
-class FollowersScreen extends StatefulWidget {
-  const FollowersScreen({super.key, required this.uid, required this.profileScreenUid});
+class FollowingScreen extends StatefulWidget {
+  const FollowingScreen({super.key, required this.uid, required this.profileScreenUid});
   final String uid;
   final String profileScreenUid;
 
   @override
-  State<FollowersScreen> createState() => _FollowersScreenState();
+  State<FollowingScreen> createState() => _FollowingScreenState();
 }
 
-class _FollowersScreenState extends State<FollowersScreen> {
+class _FollowingScreenState extends State<FollowingScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<FollowerScreenProvider>(context, listen: false).getUserFollowers(
+    Provider.of<FollowingScreenProvider>(context, listen: false).getUserFollowing(
       userUid: widget.uid,
     );
   }
@@ -42,13 +42,13 @@ class _FollowersScreenState extends State<FollowersScreen> {
           ),
         ),
         title: CustomTextWidget(
-          name: 'Followers',
+          name: 'Following',
           size: 24,
           fontWeight: FontWeight.bold,
           textColor: kYellowColor,
         ),
       ),
-      body: Consumer<FollowerScreenProvider>(
+      body: Consumer<FollowingScreenProvider>(
         builder: (context, value, _) {
           return value.isLoading
               ? const Center(
@@ -57,7 +57,7 @@ class _FollowersScreenState extends State<FollowersScreen> {
               : value.userModelList!.isEmpty
                   ? Center(
                       child: CustomTextWidget(
-                        name: 'No followers',
+                        name: 'No following',
                         size: 18,
                         fontWeight: FontWeight.w500,
                         textColor: kWhiteColor,
