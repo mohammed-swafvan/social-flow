@@ -7,19 +7,20 @@ import 'package:social_flow/models/user_model.dart';
 class SearchScreenProvider extends ChangeNotifier {
   final TextEditingController searchController = TextEditingController();
   bool isShowUser = false;
-  List<UserModel> allUsersUsername = [];
+  List<UserModel> allUsersForSearching = [];
   List<UserModel> foundedUsers = [];
 
   getAllUsersUsername() async {
     try {
       QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance.collection('users').get();
+      Set<UserModel> usersWithoutDoublicate = {};
       for (QueryDocumentSnapshot<Map<String, dynamic>> document in snapshot.docs) {
         Map<String, dynamic> data = document.data();
         String userName = data['username'];
         String photoUrl = data['photoUrl'];
         String uid = data['uid'];
 
-        allUsersUsername.add(
+        usersWithoutDoublicate.add(
           UserModel(
             email: '',
             uid: uid,
@@ -30,8 +31,10 @@ class SearchScreenProvider extends ChangeNotifier {
             following: [],
           ),
         );
+        
       }
-      allUsersUsername = allUsersUsername.toSet().toList();
+      allUsersForSearching = usersWithoutDoublicate.toList();
+      log(allUsersForSearching.toString());
     } catch (e) {
       log(e.toString());
     }
@@ -42,12 +45,12 @@ class SearchScreenProvider extends ChangeNotifier {
     if (searchController.text.isEmpty) {
       result = [];
     } else {
-      result = allUsersUsername
+      result = allUsersForSearching
           .where((element) => element.username.toLowerCase().startsWith(searchController.text.toLowerCase()))
           .toList();
     }
 
-    foundedUsers = result;
+    foundedUsers = result.toSet().toList();
     notifyListeners();
   }
 

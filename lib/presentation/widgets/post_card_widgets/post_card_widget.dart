@@ -1,10 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:social_flow/models/user_model.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
-import 'package:social_flow/presentation/utils/global_variables.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/circular_progress.dart';
 import 'package:social_flow/presentation/widgets/post_card_widgets/comment_length.dart';
 import 'package:social_flow/presentation/widgets/post_card_widgets/description_section.dart';
