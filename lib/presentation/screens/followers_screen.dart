@@ -1,3 +1,4 @@
+// ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/screens/profile_screen.dart';
@@ -31,9 +32,9 @@ class _FollowersScreenState extends State<FollowersScreen> {
       appBar: AppBar(
         backgroundColor: kBackgroundColor,
         leading: IconButton(
-          onPressed: () {
+          onPressed: () async {
             Provider.of<ProfileScreenProvider>(context, listen: false).uid = widget.profileScreenUid;
-            Provider.of<ProfileScreenProvider>(context, listen: false).getData(context, widget.profileScreenUid);
+            await Provider.of<ProfileScreenProvider>(context, listen: false).getData(context, widget.profileScreenUid);
             Navigator.of(context).pop();
           },
           icon: Icon(

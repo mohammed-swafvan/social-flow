@@ -7,8 +7,19 @@ import 'package:social_flow/presentation/widgets/search_screen_widgets/search_id
 import 'package:social_flow/presentation/widgets/search_screen_widgets/search_result_widget.dart';
 import 'package:social_flow/providers/search_screen_provider.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
+
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<SearchScreenProvider>(context, listen: false).getAllUsersUsername();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +60,7 @@ class SearchScreen extends StatelessWidget {
                               border: InputBorder.none,
                             ),
                             onChanged: (String searchedValue) {
+                              value.runFilter();
                               if (searchedValue.isEmpty) {
                                 value.hideUser();
                               } else {

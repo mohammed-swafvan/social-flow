@@ -51,6 +51,7 @@ class SavedImagesWidget extends StatelessWidget {
                                 snap: snapShot.data!.docs[index].data(),
                                 title: 'Saved',
                                 isSavePostScreen: true,
+                                uid: uid,
                               ),
                             ),
                           );

@@ -48,6 +48,7 @@ class PostsInProfileWidget extends StatelessWidget {
                                 snap: snapShot.data!.docs[index].data(),
                                 title: 'Post',
                                 isSavePostScreen: false,
+                                uid: snapShot.data!.docs[index].data()['uid'],
                               ),
                             ),
                           );

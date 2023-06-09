@@ -31,9 +31,10 @@ class _FollowingScreenState extends State<FollowingScreen> {
       appBar: AppBar(
         backgroundColor: kBackgroundColor,
         leading: IconButton(
-          onPressed: () {
+          onPressed: () async{
             Provider.of<ProfileScreenProvider>(context, listen: false).uid = widget.profileScreenUid;
-            Provider.of<ProfileScreenProvider>(context, listen: false).getData(context, widget.profileScreenUid);
+            await Provider.of<ProfileScreenProvider>(context, listen: false).getData(context, widget.profileScreenUid);
+            // ignore: use_build_context_synchronously
             Navigator.of(context).pop();
           },
           icon: Icon(

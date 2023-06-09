@@ -82,15 +82,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         );
                       },
                     ),
-                    actions: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.dehaze,
-                          size: 30,
-                        ),
-                      ),
-                    ],
                   ),
             body: DefaultTabController(
               length: 2,

@@ -9,7 +9,7 @@ class ProfileScreenProvider extends ChangeNotifier {
   bool isLoading = false;
 
 
-  getData(BuildContext context, uid) async {
+  Future getData(BuildContext context, uid) async {
     isLoading = true;
     try {
       var userSnap = await FirebaseFirestore.instance.collection('users').doc(uid).get();

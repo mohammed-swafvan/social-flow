@@ -17,11 +17,13 @@ class SinglePostScreen extends StatelessWidget {
     required this.snap,
     required this.title,
     required this.isSavePostScreen,
+    required this.uid,
   });
 
   final Map<String, dynamic> snap;
   final String title;
   final bool isSavePostScreen;
+  final String uid;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,14 @@ class SinglePostScreen extends StatelessWidget {
                   },
                   icon: const Icon(Icons.more_vert_outlined),
                 )
-              : const SizedBox()
+              : uid == FirebaseAuth.instance.currentUser!.uid
+                  ? const SizedBox()
+                  : IconButton(
+                      onPressed: () async {
+                        await otherUsersMoreDialogue(snap, context, true);
+                      },
+                      icon: const Icon(Icons.more_vert_outlined),
+                    ),
         ],
       ),
       body: SizedBox(
