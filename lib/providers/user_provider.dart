@@ -19,4 +19,5 @@ class UserProvider extends ChangeNotifier {
     userModel = user;
     notifyListeners();
   }
+
 }

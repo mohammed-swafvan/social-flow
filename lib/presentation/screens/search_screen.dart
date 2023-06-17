@@ -18,7 +18,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<SearchScreenProvider>(context, listen: false).getAllUsersUsername();
+    Provider.of<SearchScreenProvider>(context, listen: false).getAllUsers();
   }
 
   @override

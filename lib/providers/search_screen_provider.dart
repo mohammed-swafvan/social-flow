@@ -10,30 +10,26 @@ class SearchScreenProvider extends ChangeNotifier {
   List<UserModel> allUsersForSearching = [];
   List<UserModel> foundedUsers = [];
 
-  getAllUsersUsername() async {
+  getAllUsers() async {
     try {
       QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance.collection('users').get();
-      Set<UserModel> usersWithoutDoublicate = {};
+      allUsersForSearching.clear();
       for (QueryDocumentSnapshot<Map<String, dynamic>> document in snapshot.docs) {
         Map<String, dynamic> data = document.data();
-        String userName = data['username'];
-        String photoUrl = data['photoUrl'];
-        String uid = data['uid'];
-
-        usersWithoutDoublicate.add(
+        allUsersForSearching.add(
           UserModel(
-            email: '',
-            uid: uid,
-            photoUrl: photoUrl,
-            username: userName,
-            bio: '',
-            followers: [],
-            following: [],
+            email: data['email'],
+            uid: data['uid'],
+            photoUrl: data['photoUrl'],
+            username: data['username'],
+            bio: data['bio'],
+            followers: data['followers'],
+            following: data['following'],
+            category: data['category'],
+            name: data['name'],
           ),
         );
-        
       }
-      allUsersForSearching = usersWithoutDoublicate.toList();
       log(allUsersForSearching.toString());
     } catch (e) {
       log(e.toString());
@@ -50,7 +46,7 @@ class SearchScreenProvider extends ChangeNotifier {
           .toList();
     }
 
-    foundedUsers = result.toSet().toList();
+    foundedUsers = result;
     notifyListeners();
   }
 

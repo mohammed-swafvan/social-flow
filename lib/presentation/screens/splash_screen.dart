@@ -68,9 +68,13 @@ class Main extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             if (snapshot.hasData) {
-              return const ResponsiveLayout(
-                mobileScreenLayout: MobileScreenLayout(),
-                webScreenLayout: WebScreenLayout(),
+              User user = snapshot.data!;
+              String uid = user.uid;
+              return ResponsiveLayout(
+                mobileScreenLayout: MobileScreenLayout(
+                  userId: uid,
+                ),
+                webScreenLayout: const WebScreenLayout(),
               );
             } else if (snapshot.hasError) {
               return Center(
@@ -90,4 +94,3 @@ class Main extends StatelessWidget {
         });
   }
 }
-

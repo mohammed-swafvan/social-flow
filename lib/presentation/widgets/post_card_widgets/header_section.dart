@@ -1,9 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:social_flow/models/user_model.dart';
 import 'package:social_flow/presentation/screens/profile_screen.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
+import 'package:social_flow/providers/user_provider.dart';
 
 class HeaderSectionWidget extends StatelessWidget {
   const HeaderSectionWidget({
@@ -15,6 +17,7 @@ class HeaderSectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserModel? currentUser = Provider.of<UserProvider>(context, listen: false).getUser;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
@@ -55,7 +58,7 @@ class HeaderSectionWidget extends StatelessWidget {
               ),
             ),
           ),
-          snap['uid'] == FirebaseAuth.instance.currentUser!.uid
+          snap['uid'] == currentUser!.uid
               ? IconButton(
                   onPressed: () async {
                     await deleteDialogue(snap: snap, ctx: context, isPost: true);

@@ -98,9 +98,9 @@ class LoginScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        customLine(screenWidth),
+                        customLine(screenWidth * 0.38, kMainColor),
                         CustomTextWidget(name: "or", size: 16, fontWeight: FontWeight.bold, textColor: kMainColor),
-                        customLine(screenWidth),
+                        customLine(screenWidth * 0.38, kMainColor),
                       ],
                     ),
                   ),

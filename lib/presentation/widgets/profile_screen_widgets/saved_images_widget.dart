@@ -6,11 +6,18 @@ import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 import 'package:social_flow/providers/profile_screen_provider.dart';
 
-class SavedImagesWidget extends StatelessWidget {
+class SavedImagesWidget extends StatefulWidget {
   const SavedImagesWidget({super.key, required this.uid});
 
   final String uid;
 
+  @override
+  State<SavedImagesWidget> createState() => _SavedImagesWidgetState();
+}
+
+class _SavedImagesWidgetState extends State<SavedImagesWidget> {
+
+  
   @override
   Widget build(BuildContext context) {
     return Consumer<ProfileScreenProvider>(
@@ -18,7 +25,7 @@ class SavedImagesWidget extends StatelessWidget {
         return StreamBuilder(
           stream: FirebaseFirestore.instance
               .collection('users')
-              .doc(uid)
+              .doc(widget.uid)
               .collection('savedImages')
               .where('currentUserUid', isEqualTo: value.uid)
               .snapshots(),
@@ -51,7 +58,7 @@ class SavedImagesWidget extends StatelessWidget {
                                 snap: snapShot.data!.docs[index].data(),
                                 title: 'Saved',
                                 isSavePostScreen: true,
-                                uid: uid,
+                                uid: widget.uid,
                               ),
                             ),
                           );

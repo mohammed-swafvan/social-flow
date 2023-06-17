@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -45,12 +47,13 @@ class SignupScreenProvider extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
     } else {
+      String userId = AuthMethods().getUserUid();
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const ResponsiveLayout(
-            mobileScreenLayout: MobileScreenLayout(),
-            webScreenLayout: WebScreenLayout(),
+          builder: (context) =>  ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(userId: userId,),
+            webScreenLayout: const WebScreenLayout(),
           ),
         ),
       );

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
@@ -28,17 +30,18 @@ class LoginScreenProvider extends ChangeNotifier {
 
     if (ctx.mounted) {}
     if (res == "success") {
+      String userId = AuthMethods().getUserUid();
       isLoading = false;
+      disposeController(ctx);
       Navigator.pushReplacement(
         ctx,
         MaterialPageRoute(
-          builder: (context) => const ResponsiveLayout(
-            mobileScreenLayout: MobileScreenLayout(),
-            webScreenLayout: WebScreenLayout(),
+          builder: (context) =>  ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(userId: userId,),
+            webScreenLayout: const WebScreenLayout(),
           ),
         ),
       );
-      disposeController(ctx);
       notifyListeners();
     } else {
       isLoading = false;

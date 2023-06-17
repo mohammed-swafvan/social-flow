@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:social_flow/presentation/screens/settings_screen.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/widgets/profile_screen_widgets/my_delagate_widget.dart';
 import 'package:social_flow/presentation/widgets/profile_screen_widgets/post_in_profile_widget.dart';
@@ -25,9 +26,10 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
-    super.initState();
     Provider.of<ProfileScreenProvider>(context, listen: false).uid = widget.uid;
     getUserData();
+
+    super.initState();
   }
 
   @override
@@ -56,10 +58,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     actions: [
                       IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.dehaze,
-                          size: 30,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SettingsScreen(),
+                            ),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.settings_outlined,
+                          size: 26,
+                          color: kWhiteColor.withOpacity(0.6),
                         ),
                       ),
                     ],
@@ -85,54 +95,58 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
             body: DefaultTabController(
               length: 2,
-              child: Consumer<ProfileScreenProvider>(
-                builder: (context, value, child) {
-                  return NestedScrollView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    headerSliverBuilder: (context, isScrolled) {
-                      return [
-                        SliverAppBar(
-                          automaticallyImplyLeading: false,
-                          backgroundColor: kBackgroundColor,
-                          collapsedHeight: screenHeight * 0.22,
-                          expandedHeight: screenHeight * 0.22,
-                          flexibleSpace: ProfileHeaderWidget(
-                            uid: widget.uid,
-                          ),
+              child: NestedScrollView(
+                physics: const NeverScrollableScrollPhysics(),
+                headerSliverBuilder: (context, isScrolled) {
+                  return [
+                    Consumer<ProfileScreenProvider>(builder: (context, value, _) {
+                      double height;
+                      if (value.userData['category'].isEmpty) {
+                        height = screenHeight * 0.22;
+                      } else {
+                        height = screenHeight * 0.25;
+                      }
+                      return SliverAppBar(
+                        automaticallyImplyLeading: false,
+                        backgroundColor: kBackgroundColor,
+                        collapsedHeight: height,
+                        expandedHeight: height,
+                        flexibleSpace: ProfileHeaderWidget(
+                          uid: widget.uid,
                         ),
-                        SliverPersistentHeader(
-                          floating: true,
-                          pinned: true,
-                          delegate: MyDelagatWidget(
-                            tabBar: TabBar(
-                              indicatorColor: kWhiteColor,
-                              unselectedLabelColor: kWhiteColor.withOpacity(0.5),
-                              labelColor: kWhiteColor,
-                              tabs: const [
-                                Tab(icon: Icon(Icons.grid_on)),
-                                Tab(
-                                  icon: Icon(Icons.bookmark),
-                                ),
-                              ],
+                      );
+                    }),
+                    SliverPersistentHeader(
+                      floating: true,
+                      pinned: true,
+                      delegate: MyDelagatWidget(
+                        tabBar: TabBar(
+                          indicatorColor: kWhiteColor,
+                          unselectedLabelColor: kWhiteColor.withOpacity(0.5),
+                          labelColor: kWhiteColor,
+                          tabs: const [
+                            Tab(icon: Icon(Icons.grid_on)),
+                            Tab(
+                              icon: Icon(Icons.bookmark),
                             ),
-                          ),
+                          ],
                         ),
-                      ];
-                    },
-                    body: TabBarView(
-                      children: [
-                        const PostsInProfileWidget(),
-                        SavedImagesWidget(uid: widget.uid),
-                      ],
+                      ),
                     ),
-                  );
+                  ];
                 },
+                body: TabBarView(
+                  children: [
+                    const PostsInProfileWidget(),
+                    SavedImagesWidget(uid: widget.uid),
+                  ],
+                ),
               ),
             ),
           );
   }
 
-  getUserData() {
-    Provider.of<ProfileScreenProvider>(context, listen: false).getData(context, widget.uid);
+  getUserData() async {
+    await Provider.of<ProfileScreenProvider>(context, listen: false).getData(context, widget.uid);
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:social_flow/models/user_model.dart';
+import 'package:social_flow/presentation/screens/splash_screen.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/resources/storage_method.dart';
 
@@ -46,15 +49,11 @@ class AuthMethods {
 
       // ignore: unnecessary_null_comparison
       if (email.isNotEmpty || username.isNotEmpty || password.isNotEmpty || bio.isNotEmpty || file != null) {
-
-      
         final UserCredential cred = await auth.createUserWithEmailAndPassword(email: email, password: password);
 
         log("uid : ${cred.user!.uid}");
 
         String photoUrl = await StorageMethods().uploadImageToStorage('ProfilePic', file, false);
-
-
 
         UserModel userModel = UserModel(
           email: email,
@@ -64,6 +63,8 @@ class AuthMethods {
           bio: bio,
           followers: [],
           following: [],
+          name: "",
+          category: "",
         );
 
         await firestore.collection("users").doc(cred.user!.uid).set(userModel.toJson());
@@ -79,12 +80,11 @@ class AuthMethods {
         res = "This email is already exist";
       }
     } catch (err) {
+      log(err.toString());
       res = err.toString();
     }
     return res;
   }
-
-
 
   Future<String> loginUser({
     required String email,
@@ -117,7 +117,6 @@ class AuthMethods {
     }
     return res;
   }
-
 
   Future<User?> signInWithGoogle({required BuildContext context}) async {
     User? user;
@@ -157,6 +156,8 @@ class AuthMethods {
             followers: [],
             following: [],
             bio: "",
+            name: "",
+            category: "",
           );
           if (userCredential.additionalUserInfo!.isNewUser) {
             firestore.collection("users").doc(userCredential.user!.uid).set(userModel.toJson());
@@ -178,5 +179,36 @@ class AuthMethods {
     }
 
     return user;
+  }
+
+  
+
+  Future<void> logOutUser(BuildContext context) async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+
+    try {
+      if (!kIsWeb) {
+        await googleSignIn.signOut();
+        await FirebaseAuth.instance.signOut();
+        await auth.signOut();
+      }
+      await FirebaseAuth.instance.signOut();
+      await auth.signOut();
+
+      if (context.mounted) {}
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => const Main(),
+        ),
+        (context) => false,
+      );
+    } catch (e) {
+      log(e.toString());
+      showSnackbar(e.toString(), context);
+    }
+  }
+  String getUserUid() {
+    User user = auth.currentUser!;
+    return user.uid;
   }
 }

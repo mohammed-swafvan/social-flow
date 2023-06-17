@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
@@ -7,15 +9,17 @@ class ProfileScreenProvider extends ChangeNotifier {
   var userData = {};
   int postLength = 0;
   bool isLoading = false;
-
+  int savedPostLength = 0;
 
   Future getData(BuildContext context, uid) async {
     isLoading = true;
+    log('${this.uid},   $uid');
     try {
       var userSnap = await FirebaseFirestore.instance.collection('users').doc(uid).get();
       userData = userSnap.data()!;
-
       var postSnap = await FirebaseFirestore.instance.collection('posts').where('uid', isEqualTo: uid).get();
+      var savePostSnap = await FirebaseFirestore.instance.collection('users').doc(uid).collection('savedImages').get();
+      savedPostLength = savePostSnap.docs.length;
       postLength = postSnap.docs.length;
       isLoading = false;
       notifyListeners();

@@ -6,7 +6,7 @@ import 'package:social_flow/models/user_model.dart';
 
 class FollowingScreenProvider extends ChangeNotifier {
   List following = [];
-  List<UserModel>? userModelList;
+  List<UserModel>? userModelList = [];
   bool isLoading = false;
   getUserFollowing({required String userUid}) async {
     isLoading = true;
@@ -16,24 +16,27 @@ class FollowingScreenProvider extends ChangeNotifier {
       following = userSnap.data()!['following'];
 
       for (var uid in following) {
-        var followersDetails = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+        var followingDetails = await FirebaseFirestore.instance.collection('users').doc(uid).get();
         userModelList!.add(
           UserModel(
-            email: followersDetails['email'],
+            email: followingDetails['email'],
             uid: uid,
-            photoUrl: followersDetails['photoUrl'],
-            username: followersDetails['username'],
-            bio: followersDetails['bio'],
-            followers: followersDetails['followers'],
-            following: followersDetails['following'],
+            photoUrl: followingDetails['photoUrl'],
+            username: followingDetails['username'],
+            bio: followingDetails['bio'],
+            followers: followingDetails['followers'],
+            following: followingDetails['following'],
+            name: followingDetails['name'],
+            category: followingDetails['category'],
           ),
         );
       }
+      isLoading = false;
       notifyListeners();
     } catch (e) {
-      log(e.toString());
+      log('$e ++++++++++');
+      isLoading = false;
+      notifyListeners();
     }
-    isLoading = false;
-    notifyListeners();
   }
 }

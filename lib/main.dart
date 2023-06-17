@@ -5,6 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/screens/splash_screen.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/providers/add_post_provider.dart';
+import 'package:social_flow/providers/bottom_nav_provider.dart';
+import 'package:social_flow/providers/chat_provider.dart';
+import 'package:social_flow/providers/edit_screen_provider.dart';
 import 'package:social_flow/providers/followers_provider.dart';
 import 'package:social_flow/providers/following_screen_provider.dart';
 import 'package:social_flow/providers/google_button_provider.dart';
@@ -44,6 +47,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LoginScreenProvider()),
         ChangeNotifierProvider(create: (_) => SignupScreenProvider()),
         ChangeNotifierProvider(create: (_) => GoogleButtonProvider()),
+        ChangeNotifierProvider(create: (_) => BottomNavProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => AddPostProvider()),
         ChangeNotifierProvider(create: (_) => ProfileScreenProvider()),
@@ -52,6 +56,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SearchScreenProvider()),
         ChangeNotifierProvider(create: (_) => FollowerScreenProvider()),
         ChangeNotifierProvider(create: (_) => FollowingScreenProvider()),
+        ChangeNotifierProvider(create: (_) => ChatProvider()),
+        ChangeNotifierProvider(create: (_) => EditScreenProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

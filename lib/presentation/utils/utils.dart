@@ -10,6 +10,7 @@ import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/global_variables.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 import 'package:social_flow/providers/profile_screen_provider.dart';
+import 'package:social_flow/resources/auth_methods.dart';
 import 'package:social_flow/resources/firestore_methods.dart';
 
 //////// Theme Data//////////
@@ -61,7 +62,7 @@ BottomNavigationBarItem bottomNavItems({required IconData navIcon, required int 
   return BottomNavigationBarItem(
     icon: Icon(
       navIcon,
-      size: currentPage == page ? 32 : 28,
+      size: currentPage == page ? 34 : 28,
     ),
   );
 }
@@ -98,13 +99,13 @@ Column customStatColumn(String number, String item) {
 }
 
 //////// line for login and signup screen ////////
-Container customLine(screenWidth) {
+Container customLine(width, color) {
   return Container(
     height: 2,
-    width: screenWidth * 0.38,
+    width: width,
     decoration: BoxDecoration(
       borderRadius: const BorderRadius.all(Radius.circular(10)),
-      color: kMainColor,
+      color: color,
     ),
   );
 }
@@ -171,8 +172,8 @@ Future otherUsersMoreDialogue(snap, ctx, isSinglePostScreen) async {
                     Navigator.of(ctx1).pop();
                     await FirestoreMethods().followUser(
                       context: ctx,
-                      uid: FirebaseAuth.instance.currentUser!.uid,
-                      followId: snap['uid'],
+                      currentUserUid: FirebaseAuth.instance.currentUser!.uid,
+                      followUserId: snap['uid'],
                     );
                   },
                   child: Container(
@@ -229,5 +230,56 @@ Future otherUsersMoreDialogue(snap, ctx, isSinglePostScreen) async {
         ],
       ),
     ),
+  );
+}
+
+Future<void> showMyAlertDialog(BuildContext context, String username) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        insetPadding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 18),
+        titlePadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+        backgroundColor: kSmallContextsColor,
+        title: CustomTextWidget(
+          name: 'Log Out ?',
+          size: 20,
+          fontWeight: FontWeight.bold,
+          textColor: kRedColor,
+        ),
+        content: CustomTextWidget(
+          name: 'Are you sure $username. You want to Log out ?',
+          size: 16,
+          fontWeight: FontWeight.w500,
+          textColor: kMainColor,
+        ),
+        actions: [
+          TextButton(
+            child: CustomTextWidget(
+              name: 'Cancel',
+              size: 16,
+              fontWeight: FontWeight.bold,
+              textColor: kWhiteColor,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: CustomTextWidget(
+              name: 'Ok',
+              size: 16,
+              fontWeight: FontWeight.bold,
+              textColor: kWhiteColor,
+            ),
+            onPressed: () async {
+              await AuthMethods().logOutUser(context);
+            },
+          ),
+        ],
+      );
+    },
   );
 }

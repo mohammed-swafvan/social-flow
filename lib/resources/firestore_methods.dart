@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_flow/models/post_model.dart';
+import 'package:social_flow/models/user_model.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/resources/storage_method.dart';
 import 'package:uuid/uuid.dart';
@@ -57,26 +58,26 @@ class FirestoreMethods {
 
   Future<void> followUser({
     required BuildContext context,
-    required String uid,
-    required String followId,
+    required String currentUserUid,
+    required String followUserId,
   }) async {
     try {
-      DocumentSnapshot snap = await firestore.collection('users').doc(uid).get();
+      DocumentSnapshot snap = await firestore.collection('users').doc(currentUserUid).get();
       List following = (snap.data()! as dynamic)['following'];
 
-      if (following.contains(followId)) {
-        await firestore.collection('users').doc(followId).update({
-          'followers': FieldValue.arrayRemove([uid]),
+      if (following.contains(followUserId)) {
+        await firestore.collection('users').doc(followUserId).update({
+          'followers': FieldValue.arrayRemove([currentUserUid]),
         });
-        await firestore.collection('users').doc(uid).update({
-          'following': FieldValue.arrayRemove([followId]),
+        await firestore.collection('users').doc(currentUserUid).update({
+          'following': FieldValue.arrayRemove([followUserId]),
         });
       } else {
-        await firestore.collection('users').doc(followId).update({
-          'followers': FieldValue.arrayUnion([uid]),
+        await firestore.collection('users').doc(followUserId).update({
+          'followers': FieldValue.arrayUnion([currentUserUid]),
         });
-        await firestore.collection('users').doc(uid).update({
-          'following': FieldValue.arrayUnion([followId]),
+        await firestore.collection('users').doc(currentUserUid).update({
+          'following': FieldValue.arrayUnion([followUserId]),
         });
       }
     } catch (e) {
@@ -134,6 +135,38 @@ class FirestoreMethods {
     } catch (e) {
       showSnackbar(e.toString(), context);
     }
+  }
+
+  String updateUserDetails({
+    required String photoUrl,
+    required String email,
+    required String username,
+    required String name,
+    required String category,
+    required String bio,
+    required String uid,
+    required List followers,
+    required List following,
+  }) {
+    String res = "some error occured";
+    try {
+      UserModel user = UserModel(
+        email: email,
+        uid: uid,
+        photoUrl: photoUrl,
+        username: username,
+        bio: bio,
+        followers: followers,
+        following: following,
+        name: name,
+        category: category,
+      );
+      firestore.collection('users').doc(uid).update(user.toJson());
+      res = "updated";
+    } catch (e) {
+      res = e.toString();
+    }
+    return res;
   }
 
   ////// is post saved or not saved checking /////

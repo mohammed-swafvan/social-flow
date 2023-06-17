@@ -38,9 +38,9 @@ class GoogleSignInButton extends StatelessWidget {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ResponsiveLayout(
-                          mobileScreenLayout: MobileScreenLayout(),
-                          webScreenLayout: WebScreenLayout(),
+                        builder: (context) =>  ResponsiveLayout(
+                          mobileScreenLayout: MobileScreenLayout(userId: user.uid,),
+                          webScreenLayout: const WebScreenLayout(),
                         ),
                       ),
                     );
