@@ -17,6 +17,7 @@ class EditScreenProvider extends ChangeNotifier {
   TextEditingController bioController = TextEditingController();
 
   Uint8List? image;
+  bool isLoading = false;
 
   selectImage() async {
     Uint8List img = await pickImage(ImageSource.gallery);
@@ -36,43 +37,58 @@ class EditScreenProvider extends ChangeNotifier {
     required List followers,
     required List following,
   }) async {
-    String res = "Some error occured";
-    if (image == null) {
-      res = FirestoreMethods().updateUserDetails(
-        photoUrl: photoUrl,
-        email: email,
-        username: username,
-        name: name,
-        category: category,
-        bio: bio,
-        uid: uid,
-        followers: followers,
-        following: following,
-      );
+    if (image == null &&
+        usernameController.text.isEmpty &&
+        nameController.text.isEmpty &&
+        categoryController.text.isEmpty &&
+        bioController.text.isEmpty) {
+      showSnackbar("edit any field", context);
     } else {
-      String photo = await StorageMethods().uploadImageToStorage('ProfilePic', image!, false);
-      res = FirestoreMethods().updateUserDetails(
-        photoUrl: photo,
-        email: email,
-        username: username,
-        name: name,
-        category: category,
-        bio: bio,
-        uid: uid,
-        followers: followers,
-        following: following,
-      );
+      isLoading = true;
+      notifyListeners();
+      String res = "Some error occured";
+      if (image == null) {
+        res = await FirestoreMethods().updateUserDetails(
+          photoUrl: photoUrl,
+          email: email,
+          username: username,
+          name: name,
+          category: category,
+          bio: bio,
+          uid: uid,
+          followers: followers,
+          following: following,
+        );
+      } else {
+        String photo = await StorageMethods().uploadImageToStorage('ProfilePic', image!, false);
+        res = await FirestoreMethods().updateUserDetails(
+          photoUrl: photo,
+          email: email,
+          username: username,
+          name: name,
+          category: category,
+          bio: bio,
+          uid: uid,
+          followers: followers,
+          following: following,
+        );
+      }
+
+      if (res != "updated") {
+        isLoading = false;
+        notifyListeners();
+        showSnackbar(res, context);
+      } else {
+        isLoading = false;
+        notifyListeners();
+        disposeEveryThing();
+        Navigator.of(context).pop();
+        showSnackbar(res, context);
+        await Provider.of<UserProvider>(context, listen: false).refreshUser();
+      }
     }
 
-    if (res != "updated") {
-      showSnackbar(res, context);
-      notifyListeners();
-    } else {
-      Navigator.of(context).pop();
-      await Provider.of<UserProvider>(context, listen: false).refreshUser();
-      showSnackbar(res, context);
-      notifyListeners();
-    }
+    notifyListeners();
   }
 
   disposeEveryThing() {

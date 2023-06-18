@@ -4,8 +4,8 @@ import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/logo.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 
-class PrivacyAndPolicy extends StatelessWidget {
-  const PrivacyAndPolicy({super.key});
+class PrivacyAndPolicyScreen extends StatelessWidget {
+  const PrivacyAndPolicyScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -7,9 +7,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 import 'package:social_flow/models/user_model.dart';
 import 'package:social_flow/presentation/screens/splash_screen.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
+import 'package:social_flow/providers/bottom_nav_provider.dart';
 import 'package:social_flow/resources/storage_method.dart';
 
 class AuthMethods {
@@ -181,8 +183,6 @@ class AuthMethods {
     return user;
   }
 
-  
-
   Future<void> logOutUser(BuildContext context) async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
@@ -196,6 +196,7 @@ class AuthMethods {
       await auth.signOut();
 
       if (context.mounted) {}
+      Provider.of<BottomNavProvider>(context, listen: false).currentIndex = 0;
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (context) => const Main(),
@@ -207,6 +208,7 @@ class AuthMethods {
       showSnackbar(e.toString(), context);
     }
   }
+
   String getUserUid() {
     User user = auth.currentUser!;
     return user.uid;

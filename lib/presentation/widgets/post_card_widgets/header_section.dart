@@ -61,7 +61,7 @@ class HeaderSectionWidget extends StatelessWidget {
           snap['uid'] == currentUser!.uid
               ? IconButton(
                   onPressed: () async {
-                    await deleteDialogue(snap: snap, ctx: context, isPost: true);
+                    await deleteDialogue(snap: snap, ctx: context,isSinglePostScreen: false ,isPost: true);
                   },
                   icon: Icon(
                     Icons.more_vert_rounded,

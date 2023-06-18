@@ -137,7 +137,7 @@ class FirestoreMethods {
     }
   }
 
-  String updateUserDetails({
+  Future<String> updateUserDetails({
     required String photoUrl,
     required String email,
     required String username,
@@ -147,10 +147,10 @@ class FirestoreMethods {
     required String uid,
     required List followers,
     required List following,
-  }) {
+  }) async {
     String res = "some error occured";
     try {
-      UserModel user = UserModel(
+      UserModel userModel = UserModel(
         email: email,
         uid: uid,
         photoUrl: photoUrl,
@@ -161,7 +161,28 @@ class FirestoreMethods {
         name: name,
         category: category,
       );
-      firestore.collection('users').doc(uid).update(user.toJson());
+      await firestore.collection('users').doc(uid).update(userModel.toJson());
+      var postQuerySnapshot = await firestore.collection('posts').where('uid', isEqualTo: uid).get();
+      for (var documentSnapshot in postQuerySnapshot.docs) {
+        var docRef = documentSnapshot.reference;
+        await docRef.update({
+          'username': username,
+          'profImage': photoUrl,
+        });
+      }
+      var allPostQuerySnapshot = await firestore.collection('posts').get();
+      for (var eachPost in allPostQuerySnapshot.docs) {
+        var allPostRef = eachPost.reference;
+        var commentQuerySnapshot = await allPostRef.collection('comments').where('uid', isEqualTo: uid).get();
+        for (var element in commentQuerySnapshot.docs) {
+          var commetnRef = element.reference;
+          await commetnRef.update({
+            'name': username,
+            'profilePic': photoUrl,
+          });
+        }
+      }
+
       res = "updated";
     } catch (e) {
       res = e.toString();

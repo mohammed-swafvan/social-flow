@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:social_flow/models/user_model.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/global_variables.dart';
+import 'package:social_flow/presentation/widgets/global_widgets/circular_progress.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/text_field_input.dart';
 import 'package:social_flow/providers/edit_screen_provider.dart';
@@ -170,12 +171,14 @@ class EditScreen extends StatelessWidget {
                       ),
                       color: kMainColor,
                     ),
-                    child: CustomTextWidget(
-                      name: "Update",
-                      size: 18,
-                      fontWeight: FontWeight.w500,
-                      textColor: kWhiteColor,
-                    ),
+                    child: value.isLoading
+                        ? const CircularProgressWidget()
+                        : CustomTextWidget(
+                            name: "Update",
+                            size: 18,
+                            fontWeight: FontWeight.w500,
+                            textColor: kWhiteColor,
+                          ),
                   ),
                 ),
               );

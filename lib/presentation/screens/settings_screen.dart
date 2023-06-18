@@ -3,9 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_flow/models/user_model.dart';
+import 'package:social_flow/presentation/screens/about_us_screen.dart';
 import 'package:social_flow/presentation/screens/account_details_screen.dart';
 import 'package:social_flow/presentation/screens/edit_screen.dart';
 import 'package:social_flow/presentation/screens/privacy_policy_screen.dart';
+import 'package:social_flow/presentation/screens/terms_conditions_screen.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/global_variables.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
@@ -69,18 +71,32 @@ class SettingsScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const PrivacyAndPolicy(),
+                  builder: (context) => const PrivacyAndPolicyScreen(),
                 ),
               );
             },
             title: 'Privacy & Policy',
           ),
           SettingsButtonsWidget(
-            function: () {},
+            function: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const TermsAndConditionsScreen(),
+                ),
+              );
+            },
             title: 'Terms & Conditions',
           ),
           SettingsButtonsWidget(
-            function: () {},
+            function: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AboutUsScreen(),
+                ),
+              );
+            },
             title: 'About Us',
           ),
           kHeight10,

@@ -21,7 +21,7 @@ class ChatScreen extends StatelessWidget {
 
   final String chatRoomId;
   final UserModel targatedUser;
- 
+
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
@@ -51,7 +51,7 @@ class ChatScreen extends StatelessWidget {
             ),
             kWidth10,
             CustomTextWidget(
-              name: targatedUser.username,
+              name: ' ${targatedUser.username}',
               size: 20,
               fontWeight: FontWeight.bold,
               textColor: kWhiteColor,

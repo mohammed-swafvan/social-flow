@@ -64,14 +64,21 @@ class SinglePostScreen extends StatelessWidget {
                   },
                   icon: const Icon(Icons.more_vert_outlined),
                 )
-              : uid == FirebaseAuth.instance.currentUser!.uid
-                  ? const SizedBox()
-                  : IconButton(
-                      onPressed: () async {
-                        await otherUsersMoreDialogue(snap, context, true);
-                      },
-                      icon: const Icon(Icons.more_vert_outlined),
-                    ),
+              : IconButton(
+                  onPressed: () async {
+                    if (uid == FirebaseAuth.instance.currentUser!.uid) {
+                      await deleteDialogue(
+                        snap: snap,
+                        ctx: context,
+                        isSinglePostScreen: true,
+                        isPost: true,
+                      );
+                    } else {
+                      await otherUsersMoreDialogue(snap, context, true);
+                    }
+                  },
+                  icon: const Icon(Icons.more_vert_outlined),
+                ),
         ],
       ),
       body: SizedBox(

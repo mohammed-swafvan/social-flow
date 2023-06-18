@@ -46,12 +46,20 @@ pickImage(ImageSource source) async {
 showSnackbar(String content, BuildContext context) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      backgroundColor: kSmallContextsColor,
-      content: CustomTextWidget(
-        name: content,
-        size: 16,
-        fontWeight: FontWeight.w600,
-        textColor: kYellowColor,
+      duration: const Duration(seconds: 2),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: kMainColor.withOpacity(0.5),
+      content: Container(
+        alignment: Alignment.center,
+        child: CustomTextWidget(
+          name: content,
+          size: 16,
+          fontWeight: FontWeight.w600,
+          textColor: kWhiteColor,
+        ),
       ),
     ),
   );
@@ -111,7 +119,7 @@ Container customLine(width, color) {
 }
 
 //////// post deleting dialogue box ///////////
-Future deleteDialogue({required snap, required ctx, required isPost, postId}) async {
+Future deleteDialogue({required snap, required bool isSinglePostScreen, required ctx, required isPost, postId}) async {
   showDialog(
     context: ctx,
     builder: (ctx1) => Dialog(
@@ -123,9 +131,16 @@ Future deleteDialogue({required snap, required ctx, required isPost, postId}) as
           InkWell(
             onTap: () {
               if (isPost) {
-                FirestoreMethods().deletePost(snap['postId'], ctx);
-                Navigator.of(ctx1).pop();
-                Provider.of<ProfileScreenProvider>(ctx, listen: false).getData(ctx, snap['uid']);
+                if (isSinglePostScreen) {
+                  FirestoreMethods().deletePost(snap['postId'], ctx);
+                  Navigator.of(ctx1).pop();
+                  Navigator.of(ctx).pop();
+                  Provider.of<ProfileScreenProvider>(ctx, listen: false).getData(ctx, snap['uid']);
+                } else {
+                  FirestoreMethods().deletePost(snap['postId'], ctx);
+                  Navigator.of(ctx1).pop();
+                  Provider.of<ProfileScreenProvider>(ctx, listen: false).getData(ctx, snap['uid']);
+                }
               } else {
                 FirestoreMethods().deleteComment(ctx, postId, snap['commentId']);
                 Navigator.of(ctx1).pop();

@@ -55,7 +55,7 @@ class PostsInProfileWidget extends StatelessWidget {
                         },
                         onLongPress: () async {
                           if (snapShot.data!.docs[index].data()['uid'] == FirebaseAuth.instance.currentUser!.uid) {
-                            await deleteDialogue(snap: snapShot.data!.docs[index].data(), ctx: context, isPost: true);
+                            await deleteDialogue(snap: snapShot.data!.docs[index].data(), ctx: context,isSinglePostScreen: false, isPost: true,);
                           }
                         },
                         child: Container(

@@ -6,6 +6,7 @@ import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/circular_progress.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 import 'package:social_flow/providers/google_button_provider.dart';
+import 'package:social_flow/providers/login_screen_provider.dart';
 import 'package:social_flow/resources/auth_methods.dart';
 import 'package:social_flow/responsive/mobile_screen_layout.dart';
 import 'package:social_flow/responsive/responsive_layout_screen.dart';
@@ -38,14 +39,17 @@ class GoogleSignInButton extends StatelessWidget {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  ResponsiveLayout(
-                          mobileScreenLayout: MobileScreenLayout(userId: user.uid,),
+                        builder: (context) => ResponsiveLayout(
+                          mobileScreenLayout: MobileScreenLayout(
+                            userId: user.uid,
+                          ),
                           webScreenLayout: const WebScreenLayout(),
                         ),
                       ),
                     );
                   }
                   value.signInFalse();
+                  Provider.of<LoginScreenProvider>(context, listen: false).disposeController(context);
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),

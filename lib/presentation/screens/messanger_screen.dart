@@ -55,55 +55,63 @@ class MessangerScreen extends StatelessWidget {
                     itemCount: value.userModelList!.length,
                     itemBuilder: (context, index) {
                       return value.userModelList![index].name.isNotEmpty
-                          ? ListTile(
-                              minVerticalPadding: 15,
-                              onTap: () {
-                                String chatRoomId = ChatMethods().checkingId(
-                                  user: value.userModelList![index].uid,
-                                  currentUser: FirebaseAuth.instance.currentUser!.uid,
-                                );
-
-                                UserModel targatedUser = UserModel(
-                                  email: value.userModelList![index].email,
-                                  uid: value.userModelList![index].uid,
-                                  photoUrl: value.userModelList![index].photoUrl,
-                                  username: value.userModelList![index].username,
-                                  bio: value.userModelList![index].bio,
-                                  followers: value.userModelList![index].followers,
-                                  following: value.userModelList![index].following,
-                                  name: value.userModelList![index].name,
-                                  category: value.userModelList![index].category,
-                                );
-
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ChatScreen(
-                                      chatRoomId: chatRoomId,
-                                      targatedUser: targatedUser,
-                                    ),
+                          ? Stack(
+                              children: [
+                                ListTile(
+                                  contentPadding: const EdgeInsets.symmetric(vertical: 6, horizontal: 20),
+                                  leading: const SizedBox(),
+                                  subtitle: CustomTextWidget(
+                                    name: ' ${value.userModelList![index].name}',
+                                    size: 14,
+                                    fontWeight: FontWeight.w400,
+                                    textColor: kWhiteColor.withOpacity(0.6),
                                   ),
-                                );
-                              },
-                              leading: CircleAvatar(
-                                radius: 24,
-                                backgroundImage: NetworkImage(value.userModelList![index].photoUrl),
-                              ),
-                              title: CustomTextWidget(
-                                name: value.userModelList![index].username,
-                                size: 18,
-                                fontWeight: FontWeight.bold,
-                                textColor: kWhiteColor,
-                              ),
-                              subtitle: CustomTextWidget(
-                                name: value.userModelList![index].name,
-                                size: 14,
-                                fontWeight: FontWeight.w400,
-                                textColor: kWhiteColor.withOpacity(0.6),
-                              ),
+                                ),
+                                ListTile(
+                                  contentPadding: const EdgeInsets.symmetric(vertical: 6, horizontal: 20),
+                                  onTap: () {
+                                    String chatRoomId = ChatMethods().checkingId(
+                                      user: value.userModelList![index].uid,
+                                      currentUser: FirebaseAuth.instance.currentUser!.uid,
+                                    );
+
+                                    UserModel targatedUser = UserModel(
+                                      email: value.userModelList![index].email,
+                                      uid: value.userModelList![index].uid,
+                                      photoUrl: value.userModelList![index].photoUrl,
+                                      username: value.userModelList![index].username,
+                                      bio: value.userModelList![index].bio,
+                                      followers: value.userModelList![index].followers,
+                                      following: value.userModelList![index].following,
+                                      name: value.userModelList![index].name,
+                                      category: value.userModelList![index].category,
+                                    );
+
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ChatScreen(
+                                          chatRoomId: chatRoomId,
+                                          targatedUser: targatedUser,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  leading: CircleAvatar(
+                                    radius: 24,
+                                    backgroundImage: NetworkImage(value.userModelList![index].photoUrl),
+                                  ),
+                                  title: CustomTextWidget(
+                                    name: value.userModelList![index].username,
+                                    size: 18,
+                                    fontWeight: FontWeight.bold,
+                                    textColor: kWhiteColor,
+                                  ),
+                                ),
+                              ],
                             )
                           : ListTile(
-                              minVerticalPadding: 15,
+                              contentPadding: const EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                               onTap: () {
                                 String chatRoomId = ChatMethods().checkingId(
                                   user: value.userModelList![index].uid,

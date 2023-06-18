@@ -31,13 +31,16 @@ class LoginScreenProvider extends ChangeNotifier {
     if (ctx.mounted) {}
     if (res == "success") {
       String userId = AuthMethods().getUserUid();
-      isLoading = false;
       disposeController(ctx);
+      notifyListeners();
+      isLoading = false;
       Navigator.pushReplacement(
         ctx,
         MaterialPageRoute(
-          builder: (context) =>  ResponsiveLayout(
-            mobileScreenLayout: MobileScreenLayout(userId: userId,),
+          builder: (context) => ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(
+              userId: userId,
+            ),
             webScreenLayout: const WebScreenLayout(),
           ),
         ),

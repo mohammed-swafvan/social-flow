@@ -16,7 +16,7 @@ class CommentCartWidget extends StatelessWidget {
     return GestureDetector(
       onLongPress: () async {
         if (snap['uid'] == ccurrentUseruid) {
-          await deleteDialogue(snap: snap, ctx: context, isPost: false, postId: postId);
+          await deleteDialogue(snap: snap, ctx: context, isPost: false,isSinglePostScreen: false, postId: postId,);
         }
       },
       child: Container(
