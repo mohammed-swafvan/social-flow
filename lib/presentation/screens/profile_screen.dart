@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/screens/settings_screen.dart';
@@ -76,12 +78,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   )
                 : AppBar(
                     backgroundColor: kBackgroundColor,
-                    leading: IconButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      icon: const Icon(Icons.arrow_back_ios_new),
-                    ),
+                    leading: Consumer<ProfileScreenProvider>(builder: (context, value, _) {
+                      return IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(Icons.arrow_back_ios_new),
+                      );
+                    }),
                     title: Consumer<ProfileScreenProvider>(
                       builder: (context, value, _) {
                         return CustomTextWidget(

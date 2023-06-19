@@ -13,7 +13,6 @@ import 'package:social_flow/presentation/utils/global_variables.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 import 'package:social_flow/presentation/widgets/profile_screen_widgets/settings_buttons_widget.dart';
-import 'package:social_flow/providers/profile_screen_provider.dart';
 import 'package:social_flow/providers/user_provider.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -27,8 +26,7 @@ class SettingsScreen extends StatelessWidget {
         backgroundColor: kBackgroundColor,
         leading: IconButton(
           onPressed: () async {
-            await getUserData(context, user!.uid);
-            Navigator.of(context).pop();
+            Navigator.pop(context);
           },
           icon: Icon(
             Icons.arrow_back_ios_new,
@@ -133,7 +131,5 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  getUserData(context, uid) async {
-    await Provider.of<ProfileScreenProvider>(context, listen: false).getData(context, uid);
-  }
+  
 }

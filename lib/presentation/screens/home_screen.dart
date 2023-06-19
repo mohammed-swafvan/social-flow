@@ -27,7 +27,6 @@ class HomeScreen extends StatelessWidget {
               child: CircularProgressWidget(),
             );
           }
-
           if (snapShot.hasError) {
             return Center(
               child: CustomTextWidget(

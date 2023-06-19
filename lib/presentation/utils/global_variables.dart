@@ -16,9 +16,3 @@ bool isFollow = false;
 
 
 
-enum MenuValues {
-  follow,
-  save,
-}
-
-

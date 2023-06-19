@@ -49,7 +49,7 @@ class ImageSectionWidget extends StatelessWidget {
                 opacity: value.isLikeAnimating ? 1 : 0,
                 child: IconsAnimationWidget(
                   isAnimating: value.isLikeAnimating,
-                  duration: const Duration(milliseconds: 400),
+                  duration: const Duration(milliseconds: 600),
                   onEnd: () {
                     value.likeAnimationFalse();
                   },
@@ -67,4 +67,3 @@ class ImageSectionWidget extends StatelessWidget {
     );
   }
 }
-

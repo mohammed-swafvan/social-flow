@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:social_flow/models/message_model.dart';
 import 'package:social_flow/models/user_model.dart';
+import 'package:social_flow/presentation/screens/profile_screen.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/global_variables.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
@@ -41,22 +42,35 @@ class ChatScreen extends StatelessWidget {
             color: kWhiteColor.withOpacity(0.7),
           ),
         ),
-        title: Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
-          alignment: WrapAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: 20,
-              backgroundImage: NetworkImage(targatedUser.photoUrl),
-            ),
-            kWidth10,
-            CustomTextWidget(
-              name: ' ${targatedUser.username}',
-              size: 20,
-              fontWeight: FontWeight.bold,
-              textColor: kWhiteColor,
-            ),
-          ],
+        title: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProfileScreen(
+                  uid: targatedUser.uid,
+                  isCurrentUserProfile: false,
+                ),
+              ),
+            );
+          },
+          child: Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            alignment: WrapAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 20,
+                backgroundImage: NetworkImage(targatedUser.photoUrl),
+              ),
+              kWidth10,
+              CustomTextWidget(
+                name: ' ${targatedUser.username}',
+                size: 20,
+                fontWeight: FontWeight.bold,
+                textColor: kWhiteColor,
+              ),
+            ],
+          ),
         ),
       ),
       body: StreamBuilder(
@@ -196,13 +210,13 @@ StickyHeaderBuilder dateDivider(MessageModelTwo state) {
       if (convertedDate.day == DateTime.now().day &&
           convertedDate.month == DateTime.now().month &&
           convertedDate.year == DateTime.now().year) {
-        dateOfChat = "Today";
+        dateOfChat = "Today ${DateFormat.jm().format(state.createdOn!)}";
       } else if (convertedDate.day == DateTime.now().day - 1 &&
           convertedDate.month == DateTime.now().month &&
           convertedDate.year == DateTime.now().year) {
-        dateOfChat = "Yesterday";
+        dateOfChat = "Yesterday ${DateFormat.jm().format(state.createdOn!)}";
       } else {
-        dateOfChat = DateFormat.yMMMMEEEEd().format(convertedDate);
+        dateOfChat = "${convertedDate.day} ${DateFormat.MMM().format(convertedDate)} ${convertedDate.year}";
       }
 
       return Align(

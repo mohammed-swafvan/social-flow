@@ -51,7 +51,7 @@ showSnackbar(String content, BuildContext context) {
         borderRadius: BorderRadius.circular(10),
       ),
       behavior: SnackBarBehavior.floating,
-      backgroundColor: kMainColor.withOpacity(0.5),
+      backgroundColor: kMainColor.withOpacity(0.7),
       content: Container(
         alignment: Alignment.center,
         child: CustomTextWidget(

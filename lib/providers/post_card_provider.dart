@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:social_flow/resources/firestore_methods.dart';
 
 class PostCardProvider extends ChangeNotifier {
   bool isLikeAnimating = false;
   int commentLength = 0;
-  bool isPostSaved = false;
+  bool isSavedPost = false;
+  bool isFollowedUser = false;
 
   likeAnimationTrue() {
     isLikeAnimating = true;
@@ -13,11 +13,6 @@ class PostCardProvider extends ChangeNotifier {
 
   likeAnimationFalse() {
     isLikeAnimating = false;
-    notifyListeners();
-  }
-
-  saveImageChecking(snap) async {
-    isPostSaved = await FirestoreMethods().isSavedCheking(snap['postId']);
     notifyListeners();
   }
 }

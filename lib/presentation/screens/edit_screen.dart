@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_flow/models/user_model.dart';
@@ -7,6 +9,7 @@ import 'package:social_flow/presentation/widgets/global_widgets/circular_progres
 import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/text_field_input.dart';
 import 'package:social_flow/providers/edit_screen_provider.dart';
+import 'package:social_flow/providers/profile_screen_provider.dart';
 import 'package:social_flow/providers/user_provider.dart';
 
 class EditScreen extends StatelessWidget {
@@ -158,6 +161,7 @@ class EditScreen extends StatelessWidget {
                       following: user.following,
                     );
                     value.disposeEveryThing();
+                    await getUserData(context, user.uid);
                   },
                   child: Container(
                     width: double.infinity,
@@ -187,5 +191,9 @@ class EditScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  getUserData(context, uid) async {
+    await Provider.of<ProfileScreenProvider>(context, listen: false).getData(context, uid);
   }
 }

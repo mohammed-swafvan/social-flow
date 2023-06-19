@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -72,6 +74,7 @@ class FirestoreMethods {
         await firestore.collection('users').doc(currentUserUid).update({
           'following': FieldValue.arrayRemove([followUserId]),
         });
+        showSnackbar("Unfollowed", context);
       } else {
         await firestore.collection('users').doc(followUserId).update({
           'followers': FieldValue.arrayUnion([currentUserUid]),
@@ -79,6 +82,7 @@ class FirestoreMethods {
         await firestore.collection('users').doc(currentUserUid).update({
           'following': FieldValue.arrayUnion([followUserId]),
         });
+        showSnackbar("Followed", context);
       }
     } catch (e) {
       showSnackbar(e.toString(), context);
@@ -119,7 +123,7 @@ class FirestoreMethods {
     try {
       if (savedPostSnap.exists) {
         await savedPostRef.delete();
-        showSnackbar("Post Removed", context);
+        showSnackbar("Unsaved", context);
       } else {
         await savedPostRef.set({
           'username': username,
@@ -130,7 +134,7 @@ class FirestoreMethods {
           'description': description,
           'likes': likes,
         });
-        showSnackbar("Post Saved", context);
+        showSnackbar("Saved", context);
       }
     } catch (e) {
       showSnackbar(e.toString(), context);
@@ -172,8 +176,9 @@ class FirestoreMethods {
       }
       var allPostQuerySnapshot = await firestore.collection('posts').get();
       for (var eachPost in allPostQuerySnapshot.docs) {
-        var allPostRef = eachPost.reference;
-        var commentQuerySnapshot = await allPostRef.collection('comments').where('uid', isEqualTo: uid).get();
+        var postRef = eachPost.reference;
+        var commentQuerySnapshot = await postRef.collection('comments').where('uid', isEqualTo: uid).get();
+
         for (var element in commentQuerySnapshot.docs) {
           var commetnRef = element.reference;
           await commetnRef.update({

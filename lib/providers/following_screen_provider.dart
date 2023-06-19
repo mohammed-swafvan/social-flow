@@ -10,6 +10,7 @@ class FollowingScreenProvider extends ChangeNotifier {
   bool isLoading = false;
   getUserFollowing({required String userUid}) async {
     isLoading = true;
+    notifyListeners();
     userModelList = [];
     try {
       var userSnap = await FirebaseFirestore.instance.collection('users').doc(userUid).get();
