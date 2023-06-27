@@ -30,7 +30,6 @@ class SearchScreenProvider extends ChangeNotifier {
           ),
         );
       }
-      log(allUsersForSearching.toString());
     } catch (e) {
       log(e.toString());
     }

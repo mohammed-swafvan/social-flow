@@ -7,33 +7,25 @@ import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 import 'package:social_flow/providers/following_screen_provider.dart';
 import 'package:social_flow/providers/profile_screen_provider.dart';
 
-class FollowingScreen extends StatefulWidget {
+class FollowingScreen extends StatelessWidget {
   const FollowingScreen({super.key, required this.uid, required this.profileScreenUid});
   final String uid;
   final String profileScreenUid;
 
   @override
-  State<FollowingScreen> createState() => _FollowingScreenState();
-}
-
-class _FollowingScreenState extends State<FollowingScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Provider.of<FollowingScreenProvider>(context, listen: false).getUserFollowing(
-      userUid: widget.uid,
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<FollowingScreenProvider>(context, listen: false).getUserFollowing(
+        userUid: uid,
+      );
+    });
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kBackgroundColor,
         leading: IconButton(
-          onPressed: () async{
-            Provider.of<ProfileScreenProvider>(context, listen: false).uid = widget.profileScreenUid;
-            await Provider.of<ProfileScreenProvider>(context, listen: false).getData(context, widget.profileScreenUid);
+          onPressed: () async {
+            Provider.of<ProfileScreenProvider>(context, listen: false).uid = profileScreenUid;
+            await Provider.of<ProfileScreenProvider>(context, listen: false).getData(context, profileScreenUid);
             // ignore: use_build_context_synchronously
             Navigator.of(context).pop();
           },

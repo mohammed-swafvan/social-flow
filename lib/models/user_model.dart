@@ -11,7 +11,7 @@ class UserModel {
   final String name;
   final String category;
 
-  UserModel( {
+  UserModel({
     required this.email,
     required this.uid,
     required this.photoUrl,
@@ -20,7 +20,7 @@ class UserModel {
     required this.followers,
     required this.following,
     required this.name,
-    required this.category, 
+    required this.category,
   });
 
   Map<String, dynamic> toJson() => {

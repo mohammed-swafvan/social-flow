@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +11,10 @@ import 'package:social_flow/presentation/utils/global_variables.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/circular_progress.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
-import 'package:social_flow/presentation/widgets/message_card_widget.dart';
+import 'package:social_flow/presentation/widgets/message_widgets/date_divider_widget.dart';
+import 'package:social_flow/presentation/widgets/message_widgets/message_card_widget.dart';
 import 'package:social_flow/providers/chat_provider.dart';
 import 'package:social_flow/providers/user_provider.dart';
-import 'package:sticky_headers/sticky_headers/widget.dart';
 
 class ChatScreen extends StatelessWidget {
   ChatScreen({super.key, required this.chatRoomId, required this.targatedUser});
@@ -82,7 +81,6 @@ class ChatScreen extends StatelessWidget {
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (!snapshot.hasData) {
-            log('no data');
             return const SizedBox();
           }
 
@@ -136,7 +134,7 @@ class ChatScreen extends StatelessWidget {
                     String date = DateFormat.yMMMMEEEEd().format(messageModelList[index].createdOn!);
 
                     return previousDate != date
-                        ? dateDivider(messageModelList[index])
+                        ? DateDividerWidget(state: messageModelList[index])
                         : MessageCardWidget(messageDetails: messageModelList[index]);
                   },
                 );
@@ -199,36 +197,4 @@ class ChatScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-StickyHeaderBuilder dateDivider(MessageModelTwo state) {
-  return StickyHeaderBuilder(
-    builder: (context, stuckAmount) {
-      String dateOfChat;
-      DateTime convertedDate = state.createdOn!;
-      log("${convertedDate.toString()} is the date");
-      if (convertedDate.day == DateTime.now().day &&
-          convertedDate.month == DateTime.now().month &&
-          convertedDate.year == DateTime.now().year) {
-        dateOfChat = "Today ${DateFormat.jm().format(state.createdOn!)}";
-      } else if (convertedDate.day == DateTime.now().day - 1 &&
-          convertedDate.month == DateTime.now().month &&
-          convertedDate.year == DateTime.now().year) {
-        dateOfChat = "Yesterday ${DateFormat.jm().format(state.createdOn!)}";
-      } else {
-        dateOfChat = "${convertedDate.day} ${DateFormat.MMM().format(convertedDate)} ${convertedDate.year}";
-      }
-
-      return Align(
-        alignment: Alignment.center,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Text(
-            dateOfChat,
-          ),
-        ),
-      );
-    },
-    content: MessageCardWidget(messageDetails: state),
-  );
 }

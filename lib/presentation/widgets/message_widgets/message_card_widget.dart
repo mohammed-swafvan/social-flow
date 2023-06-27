@@ -20,8 +20,8 @@ class MessageCardWidget extends StatelessWidget {
         color: kMainColor,
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(12),
-          topRight: Radius.circular(2),
-          bottomRight: Radius.circular(12),
+          topRight: Radius.circular(12),
+          bottomRight: Radius.circular(2),
           topLeft: Radius.circular(12),
         ),
       );

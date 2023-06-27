@@ -165,7 +165,6 @@ class AuthMethods {
             firestore.collection("users").doc(userCredential.user!.uid).set(userModel.toJson());
           }
         } on FirebaseAuthException catch (e) {
-          if (context.mounted) {}
           if (e.code == 'account-exists-with-different-credential') {
             showSnackbar('The account already exists with a different credential.', context);
           } else if (e.code == 'invalid-credential') {

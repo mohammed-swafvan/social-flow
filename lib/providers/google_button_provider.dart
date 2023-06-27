@@ -12,5 +12,4 @@ class GoogleButtonProvider extends ChangeNotifier {
     isSignIn = false;
     notifyListeners();
   }
-
 }

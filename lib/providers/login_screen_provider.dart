@@ -28,12 +28,12 @@ class LoginScreenProvider extends ChangeNotifier {
       password: passwordController.text,
     );
 
-    if (ctx.mounted) {}
     if (res == "success") {
       String userId = AuthMethods().getUserUid();
       disposeController(ctx);
-      notifyListeners();
       isLoading = false;
+      notifyListeners();
+
       Navigator.pushReplacement(
         ctx,
         MaterialPageRoute(

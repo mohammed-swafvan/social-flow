@@ -11,6 +11,9 @@ import 'package:social_flow/resources/auth_methods.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/presentation/utils/global_variables.dart';
+import 'package:social_flow/responsive/mobile_screen_layout.dart';
+import 'package:social_flow/responsive/responsive_layout_screen.dart';
+import 'package:social_flow/responsive/web_screen_layout.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -116,6 +119,35 @@ class LoginScreen extends StatelessWidget {
                       return const GoogleSignInButton();
                     },
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ResponsiveLayout(
+                              mobileScreenLayout:  MobileScreenLayout(userId: 'guest'),
+                              webScreenLayout: WebScreenLayout(),
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: screenWidth * 0.4,
+                        height: screenHeight * 0.055,
+                        alignment: Alignment.center,
+                        decoration:
+                            BoxDecoration(color: kSmallContextsColor, borderRadius: const BorderRadius.all(Radius.circular(10))),
+                        child: CustomTextWidget(
+                          name: 'Guest',
+                          size: 18,
+                          fontWeight: FontWeight.w500,
+                          textColor: kWhiteColor,
+                        ),
+                      ),
+                    ),
+                  ),
                   Flexible(
                     flex: 1,
                     child: Container(),
@@ -136,7 +168,7 @@ class LoginScreen extends StatelessWidget {
                         builder: (context, value, child) {
                           return GestureDetector(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen()));
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SignUpScreen()));
                               value.disposeController(context);
                             },
                             child: Container(

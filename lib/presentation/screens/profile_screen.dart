@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/screens/settings_screen.dart';
+import 'package:social_flow/presentation/screens/splash_screen.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
 import 'package:social_flow/presentation/widgets/profile_screen_widgets/my_delagate_widget.dart';
 import 'package:social_flow/presentation/widgets/profile_screen_widgets/post_in_profile_widget.dart';
@@ -28,8 +29,10 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
-    Provider.of<ProfileScreenProvider>(context, listen: false).uid = widget.uid;
-    getUserData();
+    if (widget.uid != 'guest') {
+      Provider.of<ProfileScreenProvider>(context, listen: false).uid = widget.uid;
+      getUserData();
+    }
 
     super.initState();
   }
@@ -38,6 +41,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     final provider = Provider.of<ProfileScreenProvider>(context);
     final screenHeight = MediaQuery.of(context).size.height;
+
+    if (widget.uid == 'guest') {
+      return Center(
+        child: IconButton(
+          onPressed: () {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (context) => const Main(),
+              ),
+              (context) => false,
+            );
+          },
+          icon: Icon(
+            Icons.person_add,
+            size: 40,
+            color: kWhiteColor.withOpacity(0.7),
+          ),
+        ),
+      );
+    }
 
     return provider.isLoading
         ? const Center(

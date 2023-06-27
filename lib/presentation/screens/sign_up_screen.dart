@@ -164,7 +164,7 @@ class SignUpScreen extends StatelessWidget {
                       builder: (context, value, child) {
                         return GestureDetector(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
                             value.disposeControllers(context);
                           },
                           child: Container(
