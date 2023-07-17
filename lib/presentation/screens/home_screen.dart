@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/screens/messanger_screen.dart';
 import 'package:social_flow/presentation/utils/colors.dart';
-import 'package:social_flow/presentation/widgets/global_widgets/circular_progress.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/logo.dart';
 import 'package:social_flow/presentation/widgets/post_card_widgets/post_card_widget.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
+import 'package:social_flow/presentation/widgets/shimmers/post_card_shimmer.dart';
 import 'package:social_flow/providers/search_screen_provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -23,8 +23,9 @@ class HomeScreen extends StatelessWidget {
         stream: FirebaseFirestore.instance.collection('posts').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapShot) {
           if (snapShot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressWidget(),
+            return ListView.builder(
+              itemCount: 3,
+              itemBuilder: (context, index) => const ShimmerPostCardWidget(),
             );
           }
           if (snapShot.hasError) {

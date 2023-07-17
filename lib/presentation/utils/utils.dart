@@ -123,7 +123,7 @@ Future deleteDialogue({required snap, required bool isSinglePostScreen, required
   showDialog(
     context: ctx,
     builder: (ctx1) => Dialog(
-      backgroundColor: kSmallContextsColor,
+      backgroundColor: kMainColor.withOpacity(0.6),
       child: ListView(
         padding: const EdgeInsets.symmetric(vertical: 8),
         shrinkWrap: true,
@@ -257,7 +257,7 @@ Future<void> showMyAlertDialog(BuildContext context, String username) async {
         insetPadding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
         contentPadding: const EdgeInsets.symmetric(horizontal: 18),
         titlePadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-        backgroundColor: kSmallContextsColor,
+        backgroundColor: kWhiteColor,
         title: CustomTextWidget(
           name: 'Log Out ?',
           size: 20,
@@ -268,7 +268,7 @@ Future<void> showMyAlertDialog(BuildContext context, String username) async {
           name: 'Are you sure $username. You want to Log out ?',
           size: 16,
           fontWeight: FontWeight.w500,
-          textColor: kMainColor,
+          textColor: kBackgroundColor,
         ),
         actions: [
           TextButton(
@@ -276,7 +276,7 @@ Future<void> showMyAlertDialog(BuildContext context, String username) async {
               name: 'Cancel',
               size: 16,
               fontWeight: FontWeight.bold,
-              textColor: kWhiteColor,
+              textColor: kBackgroundColor,
             ),
             onPressed: () {
               Navigator.of(context).pop();
@@ -287,7 +287,7 @@ Future<void> showMyAlertDialog(BuildContext context, String username) async {
               name: 'Ok',
               size: 16,
               fontWeight: FontWeight.bold,
-              textColor: kWhiteColor,
+              textColor: kRedColor,
             ),
             onPressed: () async {
               await AuthMethods().logOutUser(context);

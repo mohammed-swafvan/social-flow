@@ -17,11 +17,11 @@ class AddPostProvider extends ChangeNotifier {
       context: context,
       builder: (context) {
         return SimpleDialog(
-          backgroundColor: kSmallContextsColor,
+          backgroundColor: kMainColor.withOpacity(0.4),
           title: CustomTextWidget(
             name: "Create a post",
             size: 18,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.bold,
             textColor: kWhiteColor,
           ),
           children: [
@@ -30,8 +30,8 @@ class AddPostProvider extends ChangeNotifier {
               child: CustomTextWidget(
                 name: "Take a photo",
                 size: 16,
-                fontWeight: FontWeight.w300,
-                textColor: kMainColor,
+                fontWeight: FontWeight.w500,
+                textColor: kYellowColor,
               ),
               onPressed: () async {
                 Navigator.of(context).pop();
@@ -45,8 +45,8 @@ class AddPostProvider extends ChangeNotifier {
               child: CustomTextWidget(
                 name: "Choose from gallery",
                 size: 16,
-                fontWeight: FontWeight.w300,
-                textColor: kMainColor,
+                fontWeight: FontWeight.w500,
+                textColor: kYellowColor,
               ),
               onPressed: () async {
                 Navigator.of(context).pop();
@@ -57,11 +57,16 @@ class AddPostProvider extends ChangeNotifier {
             ),
             SimpleDialogOption(
               padding: const EdgeInsets.all(20),
-              child: CustomTextWidget(
-                name: "Cancel",
-                size: 16,
-                fontWeight: FontWeight.w500,
-                textColor: kWhiteColor,
+              child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(border: Border.all(width: 1, color: kWhiteColor)),
+                child: CustomTextWidget(
+                  name: "Cancel",
+                  size: 16,
+                  fontWeight: FontWeight.bold,
+                  textColor: kWhiteColor,
+                ),
               ),
               onPressed: () {
                 Navigator.of(context).pop();

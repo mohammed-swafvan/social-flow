@@ -35,9 +35,10 @@ class ImageSectionWidget extends StatelessWidget {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              SizedBox(
+              Container(
                 width: double.infinity,
                 height: imageHeight,
+                color: Colors.grey[500],
                 child: Image.network(
                   snap['postUrl'],
                   fit: BoxFit.cover,

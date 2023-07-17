@@ -28,8 +28,6 @@ class DescriptionSectionWidget extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: RichText(
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
               text: TextSpan(style: customTextStyle(kWhiteColor, 16, FontWeight.bold), children: [
                 TextSpan(
                   text: snap['username'],

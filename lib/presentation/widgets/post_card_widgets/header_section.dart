@@ -24,6 +24,7 @@ class HeaderSectionWidget extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 16,
+            backgroundColor: Colors.grey[500],
             backgroundImage: NetworkImage(
               snap['profImage'],
             ),

@@ -122,31 +122,27 @@ class LoginScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ResponsiveLayout(
-                              mobileScreenLayout:  MobileScreenLayout(userId: 'guest'),
-                              webScreenLayout: WebScreenLayout(),
+                        onTap: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ResponsiveLayout(
+                                mobileScreenLayout: MobileScreenLayout(userId: 'guest'),
+                                webScreenLayout: WebScreenLayout(),
+                              ),
                             ),
+                          );
+                        },
+                        child: Text(
+                          'GUEST',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            decorationStyle: TextDecorationStyle.solid,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: kWhiteColor,
                           ),
-                        );
-                      },
-                      child: Container(
-                        width: screenWidth * 0.4,
-                        height: screenHeight * 0.055,
-                        alignment: Alignment.center,
-                        decoration:
-                            BoxDecoration(color: kSmallContextsColor, borderRadius: const BorderRadius.all(Radius.circular(10))),
-                        child: CustomTextWidget(
-                          name: 'Guest',
-                          size: 18,
-                          fontWeight: FontWeight.w500,
-                          textColor: kWhiteColor,
-                        ),
-                      ),
-                    ),
+                        )),
                   ),
                   Flexible(
                     flex: 1,
@@ -168,7 +164,12 @@ class LoginScreen extends StatelessWidget {
                         builder: (context, value, child) {
                           return GestureDetector(
                             onTap: () {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SignUpScreen()));
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SignUpScreen(),
+                                ),
+                              );
                               value.disposeController(context);
                             },
                             child: Container(
