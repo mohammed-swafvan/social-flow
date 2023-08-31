@@ -86,58 +86,59 @@ class _CommentScreenState extends State<CommentScreen> {
         },
       ),
       bottomNavigationBar: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Container(
-          decoration: BoxDecoration(
-            color: kWhiteColor.withOpacity(0.13),
-            borderRadius: const BorderRadius.all(Radius.circular(15)),
-          ),
-          height: kToolbarHeight,
-          margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          padding: const EdgeInsets.only(left: 12, right: 8),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                backgroundImage: NetworkImage(user!.photoUrl),
-                radius: 22,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
-                  child: TextField(
-                    controller: commentController,
-                    style: customTextStyle(kWhiteColor, 16, FontWeight.bold),
-                    decoration: InputDecoration(
-                      hintText: 'Add a comment as ${user.username}',
-                      hintStyle: customTextStyle(kWhiteColor.withOpacity(0.5), 16, FontWeight.w500),
-                      border: InputBorder.none,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+          child: Container(
+            decoration: BoxDecoration(
+              color: kWhiteColor.withOpacity(0.13),
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
+            ),
+            height: kToolbarHeight,
+            margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+            padding: const EdgeInsets.only(left: 12, right: 8),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  backgroundImage: NetworkImage(user!.photoUrl),
+                  radius: 22,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: TextField(
+                      controller: commentController,
+                      style: customTextStyle(kWhiteColor, 16, FontWeight.bold),
+                      decoration: InputDecoration(
+                        hintText: 'Add a comment as ${user.username}',
+                        hintStyle: customTextStyle(kWhiteColor.withOpacity(0.5), 16, FontWeight.w500),
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              IconButton(
-                onPressed: () async {
-                  await FirestoreMethods().postComment(
-                    context,
-                    widget.snap['postId'],
-                    commentController.text,
-                    user.uid,
-                    user.username,
-                    user.photoUrl,
-                  );
-                  commentController.clear();
-                },
-                icon: Icon(
-                  Icons.send,
-                  color: kMainColor,
-                ),
-              )
-            ],
+                IconButton(
+                  onPressed: () async {
+                    await FirestoreMethods().postComment(
+                      context,
+                      widget.snap['postId'],
+                      commentController.text,
+                      user.uid,
+                      user.username,
+                      user.photoUrl,
+                    );
+                    commentController.clear();
+                  },
+                  icon: Icon(
+                    Icons.send,
+                    color: kMainColor,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
-      ),),
+      ),
     );
   }
 }

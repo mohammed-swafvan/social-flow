@@ -5,10 +5,14 @@ class MessagModel {
   bool? seen;
   String? message;
   FieldValue? createdOn;
+  String? chatId;
+  String? chatRoomId;
 
   MessagModel({
     required this.sendBy,
     required this.message,
+    required this.chatId,
+    required this.chatRoomId,
     this.seen,
     this.createdOn,
   });
@@ -18,6 +22,8 @@ class MessagModel {
     seen = json['seen'];
     message = json['message'];
     createdOn = json['createdOn'];
+    chatId = json['chatId'];
+    chatRoomId = json['chatRoomId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -26,6 +32,8 @@ class MessagModel {
       'seen': seen,
       'message': message,
       'createdOn': createdOn,
+      'chatId': chatId,
+      'chatRoomId':chatRoomId,
     };
   }
 }
@@ -35,10 +43,14 @@ class MessageModelTwo {
   bool? seen;
   String? message;
   DateTime? createdOn;
+  String? chatId;
+  String? chatRoomId;
 
   MessageModelTwo({
     required this.sendBy,
     required this.message,
+    required this.chatId,
+    required this.chatRoomId,
     this.seen,
     this.createdOn,
   });
@@ -48,6 +60,8 @@ class MessageModelTwo {
     seen = json['seen'];
     message = json['message'];
     createdOn = json['createdOn'];
+     chatId = json['chatId'];
+    chatRoomId = json['chatRoomId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -56,6 +70,8 @@ class MessageModelTwo {
       'seen': seen,
       'message': message,
       'createdOn': createdOn,
+      'chatId': chatId,
+      'chatRoomId':chatRoomId,
     };
   }
 }

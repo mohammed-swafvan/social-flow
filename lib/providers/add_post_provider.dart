@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -94,14 +96,12 @@ class AddPostProvider extends ChangeNotifier {
       if (res == "success") {
         isLoading = false;
 
-        // ignore: use_build_context_synchronously
         showSnackbar("Posted", context);
         clearImage();
         notifyListeners();
       } else {
         isLoading = false;
 
-        // ignore: use_build_context_synchronously
         showSnackbar(res, context);
         notifyListeners();
       }

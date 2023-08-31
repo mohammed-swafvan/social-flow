@@ -298,3 +298,58 @@ Future<void> showMyAlertDialog(BuildContext context, String username) async {
     },
   );
 }
+
+////// Delete message dialog
+Future<void> deleteMessage({required BuildContext context, required String chatRoom, required String messageId}) async {
+  showAdaptiveDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) => AlertDialog.adaptive(
+      backgroundColor: kDarkGrey,
+      insetPadding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 18),
+      titlePadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+      title: CustomTextWidget(
+        name: 'Delete Message',
+        size: 20,
+        fontWeight: FontWeight.bold,
+        textColor: kWhiteColor,
+      ),
+      content: CustomTextWidget(
+        name: 'Are you sure you want to delete this message',
+        size: 16,
+        fontWeight: FontWeight.w400,
+        textColor: kWhiteColor.withOpacity(0.8),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: CustomTextWidget(
+            name: 'Cancel',
+            size: 14,
+            fontWeight: FontWeight.w500,
+            textColor: kWhiteColor.withOpacity(0.8),
+          ),
+        ),
+        TextButton(
+          onPressed: () async {
+            await FirestoreMethods().deleteMessage(
+              context: context,
+              chatRoom: chatRoom,
+              messageId: messageId,
+            );
+            Navigator.of(context).pop();
+          },
+          child: CustomTextWidget(
+            name: 'OK',
+            size: 14,
+            fontWeight: FontWeight.bold,
+            textColor: kWhiteColor,
+          ),
+        ),
+      ],
+    ),
+  );
+}

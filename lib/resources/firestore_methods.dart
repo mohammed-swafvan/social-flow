@@ -239,4 +239,12 @@ class FirestoreMethods {
       showSnackbar(e.toString(), context);
     }
   }
+
+  Future<void> deleteMessage({required BuildContext context, required String chatRoom, required String messageId}) async {
+    try {
+      await firestore.collection('chatRoom').doc(chatRoom).collection('chats').doc(messageId).delete();
+    } catch (e) {
+      showSnackbar(e.toString(), context);
+    }
+  }
 }

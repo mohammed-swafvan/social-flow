@@ -50,7 +50,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "in.brototype.social_flow"
+        applicationId "in.swafvan.social_flow"
         multiDexEnabled true
         minSdkVersion 19
         targetSdkVersion flutter.targetSdkVersion

@@ -105,6 +105,8 @@ class ChatScreen extends StatelessWidget {
               message: element['message'],
               createdOn: date,
               seen: element['seen'],
+              chatRoomId: element['chatRoomId'],
+              chatId: element['chatId'],
             ));
           }
 
@@ -142,7 +144,7 @@ class ChatScreen extends StatelessWidget {
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
           child: Container(
             decoration: BoxDecoration(
               color: kWhiteColor.withOpacity(0.13),
@@ -150,7 +152,7 @@ class ChatScreen extends StatelessWidget {
             ),
             height: kToolbarHeight * 0.9,
             margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-            padding: const EdgeInsets.only(left: 10, right: 8),
+            padding: const EdgeInsets.only(left: 12, right: 8),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -160,7 +162,7 @@ class ChatScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
+                    padding: const EdgeInsets.only(left: 12.0),
                     child: Consumer<ChatProvider>(builder: (context, value, _) {
                       return TextField(
                         controller: value.chatController,
@@ -178,10 +180,11 @@ class ChatScreen extends StatelessWidget {
                   builder: (context, value, _) {
                     return IconButton(
                       onPressed: () async {
-                        value.onMessageSent(
+                        await value.onMessageSent(
                           userUid: FirebaseAuth.instance.currentUser!.uid,
                           chatRoomId: chatRoomId,
                         );
+                        value.disposeChatController();
                       },
                       icon: Icon(
                         Icons.send,
