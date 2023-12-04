@@ -119,31 +119,6 @@ class LoginScreen extends StatelessWidget {
                       return const GoogleSignInButton();
                     },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ResponsiveLayout(
-                                mobileScreenLayout: MobileScreenLayout(userId: 'guest'),
-                                webScreenLayout: WebScreenLayout(),
-                              ),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'GUEST',
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            decorationStyle: TextDecorationStyle.solid,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: kWhiteColor,
-                          ),
-                        )),
-                  ),
                   Flexible(
                     flex: 1,
                     child: Container(),

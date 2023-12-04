@@ -8,7 +8,6 @@ import 'package:social_flow/presentation/widgets/global_widgets/logo.dart';
 import 'package:social_flow/presentation/widgets/global_widgets/text.dart';
 import 'package:social_flow/responsive/mobile_screen_layout.dart';
 import 'package:social_flow/responsive/responsive_layout_screen.dart';
-import 'package:social_flow/responsive/web_screen_layout.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -74,7 +73,9 @@ class Main extends StatelessWidget {
                 mobileScreenLayout: MobileScreenLayout(
                   userId: uid,
                 ),
-                webScreenLayout: const WebScreenLayout(),
+                webScreenLayout: MobileScreenLayout(
+                  userId: uid,
+                ),
               );
             } else if (snapshot.hasError) {
               return Center(
