@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "115601924778",
+    "project_id": "social-flow-backend",
+    "storage_bucket": "social-flow-backend.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:115601924778:android:263fae79298f081b35a6d3",
+        "android_client_info": {
+          "package_name": "flutter.swafvan.social_flow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfYUMP-YqEr4FuBAjBrz7biw2tkcmLzr4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
