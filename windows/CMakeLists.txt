@@ -8,7 +8,11 @@ set(BINARY_NAME "social_flow")
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.
+<<<<<<< HEAD
 cmake_policy(VERSION 3.14...3.25)
+=======
+cmake_policy(SET CMP0063 NEW)
+>>>>>>> 066ac657cd51c0c8595e1f2358b32bdbf7ad4842
 
 # Define build configuration option.
 get_property(IS_MULTICONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
@@ -52,7 +56,10 @@ add_subdirectory(${FLUTTER_MANAGED_DIR})
 # Application build; see runner/CMakeLists.txt.
 add_subdirectory("runner")
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 066ac657cd51c0c8595e1f2358b32bdbf7ad4842
 # Generated plugin build rules, which manage building the plugins and adding
 # them to the application.
 include(flutter/generated_plugins.cmake)

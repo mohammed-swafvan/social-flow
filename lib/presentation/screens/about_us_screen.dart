@@ -102,13 +102,12 @@ Social Flow gives good quality and had increased the settings to power up the sy
 We hope you enjoy our social flow app as much as we enjoy offering them to you. if you have any questions or comments, please don't hesitate to contact us.""",
                         style: Theme.of(context).textTheme.labelLarge,
                       ),
-                      Text(
+                      const Text(
                         """
 
 Sincerely,
 Mohammed Swafvan pp
 """,
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),

@@ -41,9 +41,23 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+<<<<<<< HEAD
+=======
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+>>>>>>> 066ac657cd51c0c8595e1f2358b32bdbf7ad4842
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+<<<<<<< HEAD
+=======
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Photo Library Usage<string/>
+	<key>NSCameraUsageDescription</key>
+	<string>Camera Usage<string/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Mic Usage<string/>
+>>>>>>> 066ac657cd51c0c8595e1f2358b32bdbf7ad4842
 </dict>
 </plist>

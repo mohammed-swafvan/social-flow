@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:social_flow/presentation/screens/splash_screen.dart';
 import 'package:social_flow/provider/bottom_nav_notifer.dart';
 import 'package:social_flow/provider/chat_notifier.dart';
 import 'package:social_flow/provider/commet_notifier.dart';
@@ -19,15 +18,19 @@ import 'package:social_flow/provider/sign_in_notifier.dart';
 import 'package:social_flow/provider/sign_up_notifier.dart';
 import 'package:social_flow/provider/user_notifier.dart';
 import 'package:social_flow/theme/app_theme.dart';
+import 'package:social_flow/presentation/screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+
   await Firebase.initializeApp().then(
     (value) => runApp(
       const MyApp(),
     ),
   );
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

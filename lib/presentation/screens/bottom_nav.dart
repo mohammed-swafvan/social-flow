@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_flow/presentation/screens/create_post_screen.dart';
-import 'package:social_flow/presentation/screens/home_sceen.dart';
+import 'package:social_flow/presentation/screens/home_screen.dart';
 import 'package:social_flow/presentation/screens/profile_screen.dart';
 import 'package:social_flow/presentation/screens/search_screen.dart';
 import 'package:social_flow/presentation/utils/gradient_icons.dart';
