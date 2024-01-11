@@ -9,8 +9,19 @@ import 'package:social_flow/presentation/widgets/auth_button.dart';
 import 'package:social_flow/presentation/widgets/auth_text_field_box.dart';
 import 'package:social_flow/provider/sign_in_notifier.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  @override
+  void initState() {
+    initialization();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,63 +78,58 @@ class SignInScreen extends StatelessWidget {
                             ),
                             child: Consumer<SignInNotifier>(
                               builder: (context, notifier, _) {
-                                return Form(
-                                  key: notifier.formKey,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(' Email', style: Theme.of(context).textTheme.labelLarge),
-                                      CustomSize.height5,
-                                      AuthTextFieldBox(
-                                        isAuthentication: true,
-                                        controller: notifier.emailController,
-                                        icon: Icons.mail_outlined,
-                                        hintText: "Email",
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(' Email', style: Theme.of(context).textTheme.labelLarge),
+                                    CustomSize.height5,
+                                    AuthTextFieldBox(
+                                      isAuthentication: true,
+                                      controller: notifier.emailController,
+                                      icon: Icons.mail_outlined,
+                                      hintText: "Email",
+                                    ),
+                                    CustomSize.height25,
+                                    Text(' Password', style: Theme.of(context).textTheme.labelLarge),
+                                    CustomSize.height5,
+                                    AuthTextFieldBox(
+                                      isAuthentication: true,
+                                      controller: notifier.passwordController,
+                                      icon: Icons.password,
+                                      hintText: "Password",
+                                      visibleButtonTap: () {
+                                        notifier.changePasswordVisibility();
+                                      },
+                                      isVibleOff: notifier.passWordVisibility,
+                                    ),
+                                    CustomSize.height5,
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => const ForgotPasswordScreen(),
+                                          ),
+                                        );
+                                      },
+                                      child: Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Text('Forgot Password? ', style: Theme.of(context).textTheme.labelMedium),
                                       ),
-                                      CustomSize.height25,
-                                      Text(' Password', style: Theme.of(context).textTheme.labelLarge),
-                                      CustomSize.height5,
-                                      AuthTextFieldBox(
-                                        isAuthentication: true,
-                                        controller: notifier.passwordController,
-                                        icon: Icons.password,
-                                        hintText: "Password",
-                                        visibleButtonTap: () {
-                                          notifier.changePasswordVisibility();
-                                        },
-                                        isVibleOff: notifier.passWordVisibility,
-                                      ),
-                                      CustomSize.height5,
-                                      InkWell(
-                                        onTap: () {
-                                          Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => const ForgotPasswordScreen(),
-                                            ),
+                                    ),
+                                    CustomSize.height40,
+                                    InkWell(
+                                      onTap: () async {
+                                          await notifier.userLogin(
+                                            context: context,
+                                            email: notifier.emailController.text,
+                                            password: notifier.passwordController.text,
                                           );
-                                        },
-                                        child: Align(
-                                          alignment: Alignment.centerRight,
-                                          child: Text('Forgot Password? ', style: Theme.of(context).textTheme.labelMedium),
-                                        ),
-                                      ),
-                                      CustomSize.height40,
-                                      InkWell(
-                                        onTap: () async {
-                                          if (notifier.formKey.currentState!.validate()) {
-                                            await notifier.userLogin(
-                                              context: context,
-                                              email: notifier.emailController.text,
-                                              password: notifier.passwordController.text,
-                                            );
-                                          }
-                                        },
-                                        child: const AuthButton(text: "SignIn"),
-                                      ),
-                                    ],
-                                  ),
+                                      },
+                                      child: const AuthButton(text: "SignIn"),
+                                    ),
+                                  ],
                                 );
                               },
                             ),
@@ -166,5 +172,10 @@ class SignInScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void initialization() {
+    SignInNotifier notifier = Provider.of<SignInNotifier>(context, listen: false);
+    notifier.disposeControllers();
   }
 }

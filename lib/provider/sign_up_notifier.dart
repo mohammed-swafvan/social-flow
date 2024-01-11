@@ -4,7 +4,6 @@ import 'package:social_flow/presentation/utils/utils.dart';
 import 'package:social_flow/services/auth_services.dart';
 
 class SignUpNotifier extends ChangeNotifier {
-  final formKey = GlobalKey<FormState>();
   bool isLoading = false;
   bool passwordVisibility = true;
   bool confirmPasswordVisibility = true;

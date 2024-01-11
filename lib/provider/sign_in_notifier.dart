@@ -6,7 +6,6 @@ import 'package:social_flow/services/auth_services.dart';
 class SignInNotifier extends ChangeNotifier {
   bool isLoading = false;
   bool passWordVisibility = true;
-  final formKey = GlobalKey<FormState>();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();

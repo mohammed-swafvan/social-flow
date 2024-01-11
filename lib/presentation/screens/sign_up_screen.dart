@@ -8,8 +8,19 @@ import 'package:social_flow/presentation/widgets/auth_button.dart';
 import 'package:social_flow/presentation/widgets/auth_text_field_box.dart';
 import 'package:social_flow/provider/sign_up_notifier.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  @override
+  void initState() {
+    initialization();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,72 +77,67 @@ class SignUpScreen extends StatelessWidget {
                             ),
                             child: Consumer<SignUpNotifier>(
                               builder: (context, notifier, _) {
-                                return Form(
-                                  key: notifier.formKey,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(' User Name', style: Theme.of(context).textTheme.labelLarge),
-                                      CustomSize.height5,
-                                      AuthTextFieldBox(
-                                        isAuthentication: true,
-                                        controller: notifier.userNameController,
-                                        icon: Icons.person_2_outlined,
-                                        hintText: "User Name",
-                                      ),
-                                      CustomSize.height25,
-                                      Text(' Email', style: Theme.of(context).textTheme.labelLarge),
-                                      CustomSize.height5,
-                                      AuthTextFieldBox(
-                                        isAuthentication: true,
-                                        controller: notifier.emailController,
-                                        icon: Icons.mail_outlined,
-                                        hintText: "Email",
-                                      ),
-                                      CustomSize.height25,
-                                      Text(' Password', style: Theme.of(context).textTheme.labelLarge),
-                                      CustomSize.height5,
-                                      AuthTextFieldBox(
-                                        isAuthentication: true,
-                                        controller: notifier.passwordController,
-                                        icon: Icons.password,
-                                        hintText: "Password",
-                                        visibleButtonTap: () {
-                                          notifier.passWordVisibilityChange();
-                                        },
-                                        isVibleOff: notifier.passwordVisibility,
-                                      ),
-                                      CustomSize.height25,
-                                      Text(' Confirm Password', style: Theme.of(context).textTheme.labelLarge),
-                                      CustomSize.height5,
-                                      AuthTextFieldBox(
-                                        isAuthentication: true,
-                                        controller: notifier.confirmPasswordController,
-                                        icon: Icons.password,
-                                        hintText: "Confirm Password",
-                                        visibleButtonTap: () {
-                                          notifier.confirmPassWordVisibilityChange();
-                                        },
-                                        isVibleOff: notifier.confirmPasswordVisibility,
-                                      ),
-                                      CustomSize.height40,
-                                      InkWell(
-                                        onTap: () async {
-                                          if (notifier.formKey.currentState!.validate()) {
-                                            await notifier.userRegistratio(
-                                              context: context,
-                                              username: notifier.userNameController.text,
-                                              email: notifier.emailController.text,
-                                              password: notifier.passwordController.text,
-                                              confirmPassword: notifier.confirmPasswordController.text,
-                                            );
-                                          }
-                                        },
-                                        child: const AuthButton(text: "SIGN UP"),
-                                      ),
-                                    ],
-                                  ),
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(' User Name', style: Theme.of(context).textTheme.labelLarge),
+                                    CustomSize.height5,
+                                    AuthTextFieldBox(
+                                      isAuthentication: true,
+                                      controller: notifier.userNameController,
+                                      icon: Icons.person_2_outlined,
+                                      hintText: "User Name",
+                                    ),
+                                    CustomSize.height25,
+                                    Text(' Email', style: Theme.of(context).textTheme.labelLarge),
+                                    CustomSize.height5,
+                                    AuthTextFieldBox(
+                                      isAuthentication: true,
+                                      controller: notifier.emailController,
+                                      icon: Icons.mail_outlined,
+                                      hintText: "Email",
+                                    ),
+                                    CustomSize.height25,
+                                    Text(' Password', style: Theme.of(context).textTheme.labelLarge),
+                                    CustomSize.height5,
+                                    AuthTextFieldBox(
+                                      isAuthentication: true,
+                                      controller: notifier.passwordController,
+                                      icon: Icons.password,
+                                      hintText: "Password",
+                                      visibleButtonTap: () {
+                                        notifier.passWordVisibilityChange();
+                                      },
+                                      isVibleOff: notifier.passwordVisibility,
+                                    ),
+                                    CustomSize.height25,
+                                    Text(' Confirm Password', style: Theme.of(context).textTheme.labelLarge),
+                                    CustomSize.height5,
+                                    AuthTextFieldBox(
+                                      isAuthentication: true,
+                                      controller: notifier.confirmPasswordController,
+                                      icon: Icons.password,
+                                      hintText: "Confirm Password",
+                                      visibleButtonTap: () {
+                                        notifier.confirmPassWordVisibilityChange();
+                                      },
+                                      isVibleOff: notifier.confirmPasswordVisibility,
+                                    ),
+                                    CustomSize.height40,
+                                    InkWell(
+                                      onTap: () async {
+                                        await notifier.userRegistratio(
+                                          context: context,
+                                          username: notifier.userNameController.text,
+                                          email: notifier.emailController.text,
+                                          password: notifier.passwordController.text,
+                                          confirmPassword: notifier.confirmPasswordController.text,
+                                        );
+                                      },
+                                      child: const AuthButton(text: "SIGN UP"),
+                                    ),
+                                  ],
                                 );
                               },
                             ),
@@ -174,5 +180,10 @@ class SignUpScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void initialization() {
+    SignUpNotifier notifier = Provider.of<SignUpNotifier>(context, listen: false);
+    notifier.disposeController();
   }
 }
