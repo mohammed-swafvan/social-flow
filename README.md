@@ -10,6 +10,16 @@ Social Flow still in development, constantly being optimized and isn't still sta
 
 The application have built to share world wide users thought and ideas accross thise platform. The app fosters social interactions like liking, commenting, sharing, and direct messaging, enabling users to connect, communicate, and build communities around shared interests.
 
+## Technologies Used
+
+- Flutter.
+- Dart.
+- Firebase.
+- Firebase Auth.
+- Firestore Database.
+- Firebase Storage.
+- Provider.
+
 ## Features
 
 - Direct Messaging.
@@ -23,14 +33,26 @@ The application have built to share world wide users thought and ideas accross t
 
 - [View On Amazon App Store](https://www.amazon.com/gp/product/B0CLKVSJYX)
 
+
 ## Screenshots
 
-<img src="Hotpot0.png" alt="Screenshot 1" width="150" height="320"> <img src="Hotpot1.png" alt="Screenshot 2" width="150" height="320">
-<img src="Hotpot2.png" alt="Screenshot 3" width="150" height="320"> <img src="Hotpot3.png" alt="Screenshot 4" width="150" height="320">
-<img src="Hotpot4.png" alt="Screenshot 5" width="150" height="320">
+<img src="Hotpot0.png" alt="Screenshot 1" width="150" height="310"> <img src="Hotpot1.png" alt="Screenshot 2" width="150" height="310">
+<img src="Hotpot2.png" alt="Screenshot 3" width="150" height="310"> <img src="Hotpot3.png" alt="Screenshot 4" width="150" height="310">
+<img src="Hotpot4.png" alt="Screenshot 5" width="150" height="310">
+
+## Sign Up Details
+
+- User Profile Picture (optional).
+- Username (required).
+- User Email (required).
+- User Password (required).
+
+## Contributing
+
+Thank you for considering contributing to Social Flow.
+
+## License
+
+Social Flow is an open-source software application licensed under the [Privacy Policy Generator](https://www.freeprivacypolicy.com/live/c331680f-dc56-4218-a4b5-1bf51c915562)
 
 
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
