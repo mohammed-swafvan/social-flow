@@ -1,10 +1,23 @@
-# social_flow
+# Social Flow
 
 This application is a Social Media application built using Flutter Frame work and Firebase as back-end, making it compatible with both Android and iOS devices, providing a seamless user experience accross different platform.
 
-## the aim
+## ⚠️ Warning
 
-This project is a starting point for a Flutter application.
+Social Flow still in development, constantly being optimized and isn't still stable enough to be used in production environments.
+
+## The Aim
+
+The application have built to share world wide users thought and ideas accross thise platform. The app fosters social interactions like liking, commenting, sharing, and direct messaging, enabling users to connect, communicate, and build communities around shared interests.
+
+## Features
+
+- Direct Messaging.
+- Live Search Bar.
+- Explore World Wide Posts.
+- Interact with Others Posts.
+- Beatiful User Interface.
+- Edit User Information.
 
 A few resources to get you started if this is your first Flutter project:
 
