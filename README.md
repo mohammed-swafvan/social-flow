@@ -1,8 +1,8 @@
 # social_flow
 
-A new Flutter project.
+This application is a Social Media application built using Flutter Frame work and Firebase as back-end, making it compatible with both Android and iOS devices, providing a seamless user experience accross different platform.
 
-## Getting Started
+## the aim
 
 This project is a starting point for a Flutter application.
 
