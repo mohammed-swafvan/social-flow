@@ -25,9 +25,9 @@ The application have built to share world wide users thought and ideas accross t
 
 ## Screenshots
 
-<img src="Hotpot0.png" alt="Screenshot 1" width="130" height="350"> <img src="Hotpot1.png" alt="Screenshot 2" width="130" height="350">
-<img src="Hotpot2.png" alt="Screenshot 3" width="130" height="350"> <img src="Hotpot3.png" alt="Screenshot 4" width="130" height="350">
-<img src="Hotpot4.png" alt="Screenshot 5" width="130" height="350">
+<img src="Hotpot0.png" alt="Screenshot 1" width="150" height="350"> <img src="Hotpot1.png" alt="Screenshot 2" width="150" height="350">
+<img src="Hotpot2.png" alt="Screenshot 3" width="150" height="350"> <img src="Hotpot3.png" alt="Screenshot 4" width="150" height="350">
+<img src="Hotpot4.png" alt="Screenshot 5" width="150" height="350">
 
 
 
