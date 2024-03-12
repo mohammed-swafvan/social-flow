@@ -25,8 +25,12 @@ The application have built to share world wide users thought and ideas accross t
 
 ## Screenshots
 
-![Screenshot 1](Hotpot0.png)
-![Screenshot 2](Hotpot1.png)
+![Screenshot 1](Hotpot0.png){: width="20%"}
+![Screenshot 2](Hotpot1.png){: width="20%"}
+![Screenshot 3](Hotpot2.png){: width="20%"}
+![Screenshot 4](Hotpot3.png){: width="20%"}
+![Screenshot 5](Hotpot4.png){: width="20%"}
+
 
 
 For help getting started with Flutter development, view the
