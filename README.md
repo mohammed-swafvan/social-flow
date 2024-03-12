@@ -42,10 +42,10 @@ The application have built to share world wide users thought and ideas accross t
 
 ## Sign Up Details
 
-- User Profile Picture <font color="grey">(optional)</font>.
-- Username <font color="grey">(required)</font>.
-- User Email <font color="grey">(required)</font>.
-- User Password <font color="grey">(required)</font>.
+- User Profile Picture `(optional)`.
+- Username `(required)`.
+- User Email `(required)`.
+- User Password `(required)`.
 
 ## Contributing
 
