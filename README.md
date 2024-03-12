@@ -2,7 +2,6 @@
 
 This application is a Social Media application built using Flutter Frame work and Firebase as back-end, making it compatible with both Android and iOS devices, providing a seamless user experience accross different platform.
 
----
 <div style="background-color: #f2f2f2; padding: 10px;">
 <span style="color:grey">Warning: Social Flow still in development, constantly being optimized and isn't still stable enough to be used in production environments.</span>
 </div>
