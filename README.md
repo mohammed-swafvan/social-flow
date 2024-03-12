@@ -25,7 +25,7 @@ The application have built to share world wide users thought and ideas accross t
 
 ## Screenshots
 
-
+![Screenshot](https://github.com/mohammed-swafvan/social-flow/Hotpot0.png)
 
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
