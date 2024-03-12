@@ -21,7 +21,11 @@ The application have built to share world wide users thought and ideas accross t
 
 ## Deploy
 
-- [Lab: View On Amazon App Store](https://www.amazon.com/gp/product/B0CLKVSJYX)
+- [View On Amazon App Store](https://www.amazon.com/gp/product/B0CLKVSJYX)
+
+## Screenshots
+
+
 
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
