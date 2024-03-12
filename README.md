@@ -25,11 +25,11 @@ The application have built to share world wide users thought and ideas accross t
 
 ## Screenshots
 
-![Screenshot 1](Hotpot0.png){: width="20%"}
-![Screenshot 2](Hotpot1.png){: width="20%"}
-![Screenshot 3](Hotpot2.png){: width="20%"}
-![Screenshot 4](Hotpot3.png){: width="20%"}
-![Screenshot 5](Hotpot4.png){: width="20%"}
+<img src="Hotpot0.png" alt="Screenshot 1" width="200" height="700">
+<img src="Hotpot1.png" alt="Screenshot 2" width="200" height="700">
+<img src="Hotpot2.png" alt="Screenshot 3" width="200" height="700">
+<img src="Hotpot3.png" alt="Screenshot 4" width="200" height="700">
+<img src="Hotpot4.png" alt="Screenshot 5" width="200" height="700">
 
 
 
