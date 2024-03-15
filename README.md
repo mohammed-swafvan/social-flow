@@ -1,16 +1,56 @@
-# social_flow
+# Social Flow
 
-A new Flutter project.
+This application is a Social Media application built using Flutter Frame work and Firebase as back-end, making it compatible with both Android and iOS devices, providing a seamless user experience accross different platform.
 
-## Getting Started
+> <span style="color:grey">Warning: Social Flow still in development, constantly being optimized and isn't still stable enough to be used in production environments.</span>
 
-This project is a starting point for a Flutter application.
+## The Aim
 
-A few resources to get you started if this is your first Flutter project:
+The application have built to share world wide users thought and ideas accross thise platform. The app fosters social interactions like liking, commenting, sharing, and direct messaging, enabling users to connect, communicate, and build communities around shared interests.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Technologies Used
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Flutter.
+- Dart.
+- Firebase.
+- Firebase Auth.
+- Firestore Database.
+- Firebase Storage.
+- Provider.
+
+## Features
+
+- Direct Messaging.
+- Live Search Bar.
+- Explore World Wide Posts.
+- Interact with Others Posts.
+- Beatiful User Interface.
+- Edit User Information.
+
+## Deploy
+
+- [View On Amazon App Store](https://www.amazon.com/gp/product/B0CLKVSJYX)
+
+
+## Screenshots
+
+<img src="screenshots/Hotpot0.png" alt="Screenshot 1" width="150" height="310"> <img src="screenshots/Hotpot1.png" alt="Screenshot 2" width="150" height="310">
+<img src="screenshots/Hotpot2.png" alt="Screenshot 3" width="150" height="310"> <img src="screenshots/Hotpot3.png" alt="Screenshot 4" width="150" height="310">
+<img src="screenshots/Hotpot4.png" alt="Screenshot 5" width="150" height="310">
+
+## Sign Up Details
+
+- User Profile Picture. `(optional)`
+- Username. `(required)`
+- User Email. `(required)`
+- User Password. `(required)`
+
+## Contributing
+
+Thank you for considering contributing to Social Flow.
+
+## License
+
+Social Flow is an open-source software application licensed under the [Privacy Policy Generator](https://www.freeprivacypolicy.com/live/c331680f-dc56-4218-a4b5-1bf51c915562)
+
+
